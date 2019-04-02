@@ -9,6 +9,7 @@ CC 		= 	gcc
 
 BASE_SRC =	./src/gui/init/init.c \
 			./src/gui/gui.c \
+			./src/engine/engine.c \
 			./src/engine/entitys/components.c \
 			./src/engine/entitys/init.c \
 			./src/engine/entitys/sprites.c \

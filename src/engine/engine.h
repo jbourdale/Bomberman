@@ -8,11 +8,15 @@ typedef struct position_component_s position_component_t;
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "../log/log.h"
 #include "./components/position/position.h"
 #include "./components/components.h"
 #include "./entitys/entitys.h"
 #include "./sdl/sdl.h"
 #include "./systems/systems.h"
+
+int init_SDL(SDL_Window **window, SDL_Renderer **renderer);
+int start_engine();
 
 #endif

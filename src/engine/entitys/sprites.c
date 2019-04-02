@@ -14,13 +14,15 @@ int             _create_entity_sprite(entity_t *entity, char *filename)
     int         nb_sprite;
     int         new_size;
 
+    log_debug("_create_entity_sprite");
+
     sprite = create_sprite(filename);
     if(sprite == NULL)
         return 1;
 
     entity_sprite = entity->sprites;
     nb_sprite = 0;
-    while(*entity_sprite++)
+    while(entity_sprite != NULL && *entity_sprite++)
     {
         nb_sprite++;
     }
@@ -33,17 +35,24 @@ int             _create_entity_sprite(entity_t *entity, char *filename)
 
 int         _create_entity_sprites(entity_t *entity)
 {
-    char    **filename;
+    int     nb_filename;
+    int     i;
 
-    filename = entity->file_names;
-    while(*filename++)
+    log_debug("_create_entity_sprites");
+
+    nb_filename = sizeof(entity->file_names) / sizeof(entity->file_names[0]);
+    i = 0;
+    while(i < nb_filename)
     {
-        if(_create_entity_sprite(entity, *filename) == 1)
+        log_debug("for filename : %s", entity->file_names[i]);
+        if(_create_entity_sprite(entity, entity->file_names[i]) == 1)
         {
+            log_debug("went wrong");
             destroy_entity(entity);
             return 1;
         }
-        filename++;
+        i++;
     }
+    log_debug("sprites successfuly created");
     return 0;
 }

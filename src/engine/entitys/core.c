@@ -15,18 +15,18 @@ int         add_filename_to_entity(entity_t *entity, char *filename)
 
     if (filename == NULL)
         return 1;
+    log_debug("add_filename_to_entity, filename : %s", filename);
 
     tmp_filename = entity->file_names;
     nb_filename = 0;
-    while (*tmp_filename++)
-    {
+    while (tmp_filename != NULL && *tmp_filename++)
         nb_filename++;
-        tmp_filename++;
-    }
 
+    log_debug("nb_filename : %d", nb_filename);
     new_size = (nb_filename + 1) * sizeof(char *);
+    log_debug("new_size : %d", new_size);
     entity->file_names = realloc(entity->file_names, new_size);
-    entity->file_names[nb_filename + 1] = filename;
+    entity->file_names[nb_filename] = strdup(filename);
     return 0;
 }
 

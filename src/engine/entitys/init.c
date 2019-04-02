@@ -60,13 +60,19 @@ entity_t        *create_entity(
     entity = _init_entity();
     entity->name = name;
 
-    if (filename != NULL && add_filename_to_entity(entity, filename) == 1)
+    if (filename != NULL)
     {
-        log_warn("filename specified but failed to created the sprite, destroying entity");
-        destroy_entity(entity);
-        return NULL;
+        log_debug("filename for entity : %s", filename);
+        if (
+            add_filename_to_entity(entity, filename) == 1
+            || _create_entity_sprites(entity) == 1
+        )
+        {
+            log_warn("filename specified but failed to created the sprite, destroying entity");
+            destroy_entity(entity);
+            return NULL;
+        }
     }
-
     log_debug("entity successfuly created");
     return entity;
 }
@@ -76,10 +82,9 @@ int                 destroy_entity(entity_t *entity)
     char            **filename;
     SDL_Surface     **sprite;
 
-    free(entity->name);
     filename = entity->file_names;
     sprite = entity->sprites;
-    while(*filename++)
+    while(filename != NULL && *filename++)
     {
         SDL_FreeSurface(*sprite);
         free(filename);
@@ -87,5 +92,6 @@ int                 destroy_entity(entity_t *entity)
         filename++;
     }
 
+    free(entity);
     return 0;
 }

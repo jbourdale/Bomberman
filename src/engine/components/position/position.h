@@ -13,5 +13,6 @@ struct          position_component_s
 } typedef       position_component_t;
 
 position_component_t *create_position_component(int x, int y, int width, int height);
+int destroy_position_component(entity_t *entity);
 
 #endif
