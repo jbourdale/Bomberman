@@ -7,9 +7,7 @@
 
 CC 		= 	gcc
 
-BASE_SRC =	./src/gui/init/init.c \
-			./src/gui/gui.c \
-			./src/engine/engine.c \
+BASE_SRC =	./src/engine/engine.c \
 			./src/engine/entitys/components.c \
 			./src/engine/entitys/init.c \
 			./src/engine/entitys/sprites.c \
@@ -19,6 +17,7 @@ BASE_SRC =	./src/gui/init/init.c \
 			./src/engine/components/components.c \
 			./src/engine/components/position/position.c \
 			./src/engine/sdl/sprite/sprite.c \
+			./src/engine/sdl/sdl.c \
 			./src/engine/systems/position/position.c \
 			./src/log/log.c
 

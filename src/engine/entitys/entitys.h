@@ -3,7 +3,7 @@
 
 #include "../engine.h"
 
-struct          entity_s {
+typedef struct          entity_s {
     char        *name;
     void        (*on_init)();
     void        (*on_click)();
@@ -14,7 +14,7 @@ struct          entity_s {
     int         current_frame; // animation frame
     char        **file_names; // it's an array of file to be able to create animations
     SDL_Surface **sprites; // Not sure exactly how we will work with that
-} typedef       entity_t;
+}                       entity_t;
 
 /*
  * components.c

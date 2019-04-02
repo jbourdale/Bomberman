@@ -6,6 +6,7 @@
 **
 */
 
+#include "../../engine.h"
 #include "position.h"
 
 entity_t                    *set_entity_position(entity_t *entity, int x, int y)
