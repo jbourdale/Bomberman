@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <SDL2/SDL.h>
+#include "gui/gui.h"
 
 int main() {
-    printf("Hello World\n");
+    printf("Starting bomberman...\n");
+    run();
 }

@@ -7,15 +7,35 @@
 
 CC 		= 	gcc
 
-SRC		=	src/main.c
+BASE_SRC =	./src/gui/init/init.c \
+			./src/gui/gui.c \
+			./src/engine/entitys/components.c \
+			./src/engine/entitys/init.c \
+			./src/engine/entitys/sprites.c \
+			./src/engine/entitys/render.c \
+			./src/engine/entitys/core.c \
+			./src/engine/entitys/events.c \
+			./src/engine/components/components.c \
+			./src/engine/components/position/position.c \
+			./src/engine/sdl/sprite/sprite.c \
+			./src/engine/systems/position/position.c \
+			./src/log/log.c
+
+SRC 	= 	$(BASE_SRC)\
+			src/main.c
+
+TEST_SRC =	$(BASE_SRC)\
+			src/engine/test.c
 
 NAME	=	Bomberman
 
 OBJ		=	$(SRC:.c=.o)
 
+TEST_OBJ =	$(TEST_SRC:.c=.o)
+
 CFLAGS	+=	-W -Wall -Werror -Iinclude/
 
-LDFLAGS	=
+LDFLAGS	=	-I/usr/local/include/SDL2 -D_THREAD_SAFE -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf
 
 all: 		$(NAME)
 
@@ -27,6 +47,9 @@ clean:
 
 fclean:		clean
 			rm -f $(NAME)
+
+test:		$(TEST_OBJ)
+			$(CC) $(LDFLAGS) -o $(NAME)_test $(TEST_OBJ)
 
 re:			fclean all
 
