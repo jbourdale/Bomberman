@@ -29,6 +29,8 @@ entity_t        *create_animated_entity(
 ) {
     entity_t    *entity;
 
+    log_warn("create_animated_entity doesn't work for now");
+
     if(name == NULL)
         return NULL;
 
