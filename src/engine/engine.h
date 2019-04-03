@@ -27,7 +27,7 @@ typedef struct position_component_s position_component_t;
 // SYSTEMS
 #include "./systems/systems.h"
 
-int init_SDL(SDL_Window **window, SDL_Renderer **renderer);
-int start_engine();
+int start_engine(SDL_Window *window, SDL_Renderer *renderer);
+int stop_engine(SDL_Window *window, SDL_Renderer *renderer);
 
 #endif

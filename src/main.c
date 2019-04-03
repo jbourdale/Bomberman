@@ -6,13 +6,8 @@ int main() {
 
     log_info("### Starting Bomberman");
 
-    start_engine(&window, &renderer);
-
-    SDL_Event e;
-    SDL_PollEvent(&e);
-
-    SDL_Delay(3000);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit(); // On quitte la SDL
+    window = NULL;
+    renderer = NULL;
+    start_engine(window, renderer);
+    stop_engine(window, renderer);
 }
