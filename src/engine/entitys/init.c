@@ -23,13 +23,16 @@ entity_t        *_init_entity()
     return entity;
 }
 
-entity_t        *create_animated_entity(
-    char        *name,
-    char        **filenames
+entity_t            *create_animated_entity(
+    SDL_Renderer    *renderer,
+    char            *name,
+    char            **filenames
 ) {
     entity_t    *entity;
 
     log_warn("create_animated_entity doesn't work for now");
+    return NULL;
+    renderer = NULL;
 
     if(name == NULL)
         return NULL;
@@ -43,12 +46,14 @@ entity_t        *create_animated_entity(
         return NULL;
     }
 
+    add_entity_to_manager(entity);
     return entity;
 }
 
-entity_t        *create_entity(
-    char        *name,
-    char        *filename
+entity_t            *create_entity(
+    SDL_Renderer    *renderer,
+    char            *name,
+    char            *filename
 ) {
     log_debug("create_entity");
     entity_t    *entity;
@@ -67,7 +72,7 @@ entity_t        *create_entity(
         log_debug("filename for entity : %s", filename);
         if (
             add_filename_to_entity(entity, filename) == 1
-            || _create_entity_sprites(entity) == 1
+            || _create_entity_sprites(renderer, entity) == 1
         )
         {
             log_warn("filename specified but failed to created the sprite, destroying entity");
@@ -76,19 +81,21 @@ entity_t        *create_entity(
         }
     }
     log_debug("entity successfuly created");
+
+    add_entity_to_manager(entity);
     return entity;
 }
 
 int                 destroy_entity(entity_t *entity)
 {
     char            **filename;
-    SDL_Surface     **sprite;
+    SDL_Texture     **sprite;
 
     filename = entity->file_names;
     sprite = entity->sprites;
     while(filename != NULL && *filename++)
     {
-        SDL_FreeSurface(*sprite);
+        SDL_DestroyTexture(*sprite);
         free(filename);
         sprite++;
         filename++;

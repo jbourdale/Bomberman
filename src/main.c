@@ -8,6 +8,6 @@ int main() {
 
     window = NULL;
     renderer = NULL;
-    start_engine(window, renderer);
+    start_engine(&window, &renderer, 0);
     stop_engine(window, renderer);
 }

@@ -3,6 +3,6 @@
 
 #include "../sdl.h"
 
-SDL_Surface *create_sprite(char *filename);
+int create_sprite(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
 
 #endif

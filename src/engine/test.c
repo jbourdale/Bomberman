@@ -16,10 +16,12 @@ int main()
     log_info("### Starting engine test");
 
     log_info("starting engine");
-    start_engine(&window, &renderer);
+    window = NULL;
+    renderer = NULL;
+    start_engine(window, renderer, ENGINE_NO_RUN);
 
     log_info("Creating an entity");
-    entity_t *entity = create_entity("bonhomme", NULL);
+    entity_t *entity = create_entity(renderer, "bonhomme", NULL);
     log_info("entity name created : %s (must be 'bonhomme')", entity->name);
 
     log_info("Creating a position component");
@@ -67,7 +69,7 @@ int main()
         log_error("destroy entity failed");
 
     log_info("Creating entity with an image");
-    entity = create_entity("bonhomme", "./resources/mario.png");
+    entity = create_entity(renderer, "bonhomme", "./resources/mario.png");
     log_info("sprites successfuly created : %d (must be 1)", entity->sprites[0] != NULL);
 
     // DOESN'T WORK FOR NOW
