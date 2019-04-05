@@ -25,32 +25,34 @@ entity_t        *_init_entity()
     return entity;
 }
 
-entity_t            *create_animated_entity(
-    SDL_Renderer    *renderer,
-    char            *name,
-    char            **filenames
-) {
-    entity_t    *entity;
+// entity_t            *create_animated_entity(
+//     SDL_Renderer    *renderer,
+//     char            *name,
+//     char            **filenames
+// ) {
+//     entity_t    *entity;
 
-    log_warn("create_animated_entity doesn't work for now");
-    return NULL;
-    renderer = NULL;
+//     log_warn("create_animated_entity doesn't work for now. DO NOT USE");
+//     renderer = NULL;
+//     name = NULL;
+//     filenames = NULL;
+//     return NULL;
 
-    if(name == NULL)
-        return NULL;
+//     if(name == NULL)
+//         return NULL;
 
-    entity = _init_entity();
-    entity->name = name;
+//     entity = _init_entity();
+//     entity->name = name;
 
-    if (add_filenames_to_entity(entity, filenames) == 1)
-    {
-        destroy_entity(entity);
-        return NULL;
-    }
+//     if (add_filenames_to_entity(entity, filenames) == 1)
+//     {
+//         destroy_entity(entity);
+//         return NULL;
+//     }
 
-    entitys_manager(entity);
-    return entity;
-}
+//     entitys_manager(entity);
+//     return entity;
+// }
 
 entity_t            *create_entity(
     SDL_Renderer    *renderer,

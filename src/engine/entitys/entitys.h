@@ -45,7 +45,7 @@ entity_t *set_entity_dimensions(entity_t *entity, int w, int h);
  * init.c
  **/
 entity_t *_init_entity();
-entity_t *create_animated_entity(SDL_Renderer *renderer, char *name, char **filenames);
+// entity_t *create_animated_entity(SDL_Renderer *renderer, char *name, char **filenames);
 entity_t *create_entity(SDL_Renderer *renderer, char *name, char *filename);
 int destroy_entity(entity_t *entity);
 
