@@ -12,18 +12,21 @@ int             run(SDL_Renderer *renderer)
 {
     int         quit;
     SDL_Event   e;
+    position_component_t *pos_comp;
 
-    entity_t *entity = create_entity(renderer, "bonhomme", "./resources/mario.png");
+    entity_t *entity = create_entity(renderer, "mario", "./resources/mario.png");
+    pos_comp = create_position_component(0, 0, 200, 200);
+    add_component_to_entity(entity, (void *)pos_comp);
+
     log_debug("sprites[0] is NULL ? %d", entity->sprites[0] == NULL);
     log_debug("sprites[0] : %p", entity->sprites[0]);
-
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     quit = 0;
     while (quit == 0)
     {
         SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, entity->sprites[0], NULL, NULL);
+        render_entitys(renderer);
         if (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT) {

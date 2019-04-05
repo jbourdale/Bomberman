@@ -20,6 +20,8 @@ entity_t        *_init_entity()
     entity->on_click = NULL;
     entity->on_destroy = NULL;
     entity->render = _base_entity_render;
+    entity->displayed = 1;
+    entity->animate = 0;
     return entity;
 }
 
@@ -46,7 +48,7 @@ entity_t            *create_animated_entity(
         return NULL;
     }
 
-    add_entity_to_manager(entity);
+    entitys_manager(entity);
     return entity;
 }
 
@@ -82,7 +84,8 @@ entity_t            *create_entity(
     }
     log_debug("entity successfuly created");
 
-    add_entity_to_manager(entity);
+    entitys_manager(entity);
+    log_debug("created entity '%s' : %p", name, entity);
     return entity;
 }
 

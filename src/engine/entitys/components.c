@@ -28,7 +28,7 @@ int             add_component_to_entity(entity_t *entity, void *component)
     log_debug("nb of components on this entity : %d", nb_comp);
     free(tmp_comp);
 
-    new_size = (nb_comp + 1) * sizeof(void *);
+    new_size = (nb_comp + 2) * sizeof(void *);
     log_debug("adding 1 component (total: %d), new components array size : %d", (nb_comp + 1), new_size);
     entity->components = realloc(entity->components, new_size);
     entity->components[nb_comp] = component;

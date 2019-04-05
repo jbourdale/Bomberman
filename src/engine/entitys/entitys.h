@@ -14,7 +14,7 @@ typedef struct          entity_s {
     // void             (*on_hover)(); // may cause perf problems
 
     // GRAPHICAL
-    void                (*render)();
+    void                (*render)(SDL_Renderer* renderer, entity_t *self);
     int                 current_frame; // animation frame
     char                **file_names; // it's an array of file to be able to create animations
     SDL_Texture         **sprites; // Not sure exactly how we will work with that
@@ -52,7 +52,8 @@ int destroy_entity(entity_t *entity);
 /*
  * render.c
  **/
-void _base_entity_render();
+void _base_entity_render(SDL_Renderer *renderer, entity_t *entity);
+void render_entitys(SDL_Renderer *renderer);
 
 /*
  * sprites.c
@@ -64,6 +65,5 @@ int _create_entity_sprites(SDL_Renderer *renderer, entity_t *entity);
  * manager.c
  **/
 entity_t **entitys_manager();
-int add_entity_to_manager(entity_t *entity);
 
 #endif
