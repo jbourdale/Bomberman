@@ -8,18 +8,10 @@
 
 #include "engine.h"
 
-int             run(SDL_Renderer *renderer)
+int             run_engine(SDL_Renderer *renderer)
 {
     int         quit;
     SDL_Event   e;
-    position_component_t *pos_comp;
-
-    entity_t *entity = create_entity(renderer, "mario", "./resources/mario.png");
-    pos_comp = create_position_component(0, 0, 200, 200);
-    add_component_to_entity(entity, (void *)pos_comp);
-
-    log_debug("sprites[0] is NULL ? %d", entity->sprites[0] == NULL);
-    log_debug("sprites[0] : %p", entity->sprites[0]);
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     quit = 0;
@@ -40,7 +32,7 @@ int             run(SDL_Renderer *renderer)
     return 0;
 }
 
-int start_engine(SDL_Window **window, SDL_Renderer **renderer, int flag)
+int start_engine(SDL_Window **window, SDL_Renderer **renderer)
 {
     if(init_SDL(window, renderer))
     {
@@ -48,9 +40,7 @@ int start_engine(SDL_Window **window, SDL_Renderer **renderer, int flag)
         return 1;
     }
     printf("renderer addr in start_engine : %p \n", *renderer);
-    if (flag == ENGINE_NO_RUN)
-        return 0;
-    return run(*renderer);
+    return 0;
 }
 
 int stop_engine(SDL_Window *window, SDL_Renderer *renderer)

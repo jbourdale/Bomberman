@@ -1,8 +1,6 @@
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
-#define ENGINE_NO_RUN 1
-
 // Forward declaration
 typedef struct entity_s entity_t;
 typedef struct component_s component_t;
@@ -29,8 +27,8 @@ typedef struct position_component_s position_component_t;
 // SYSTEMS
 #include "./systems/systems.h"
 
-int start_engine(SDL_Window **window, SDL_Renderer **renderer, int flag);
-int run(SDL_Renderer *renderer);
+int start_engine(SDL_Window **window, SDL_Renderer **renderer);
+int run_engine(SDL_Renderer *renderer);
 int stop_engine(SDL_Window *window, SDL_Renderer *renderer);
 
 #endif
