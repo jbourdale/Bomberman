@@ -39,12 +39,17 @@ int             _create_entity_sprite(SDL_Renderer *renderer, entity_t *entity, 
 
 int         _create_entity_sprites(SDL_Renderer *renderer, entity_t *entity)
 {
+    char    **tmp_filename;
     int     nb_filename;
     int     i;
 
     log_debug("_create_entity_sprites");
 
-    nb_filename = sizeof(entity->file_names) / sizeof(entity->file_names[0]);
+    tmp_filename = entity->file_names;
+    nb_filename = 0;
+    while (tmp_filename != NULL && *tmp_filename++)
+        nb_filename++;
+
     i = 0;
     while(i < nb_filename)
     {

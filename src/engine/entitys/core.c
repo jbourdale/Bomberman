@@ -23,10 +23,11 @@ int         add_filename_to_entity(entity_t *entity, char *filename)
         nb_filename++;
 
     log_debug("nb_filename : %d", nb_filename);
-    new_size = (nb_filename + 1) * sizeof(char *);
+    new_size = (nb_filename + 2) * sizeof(char *);
     log_debug("new_size : %d", new_size);
     entity->file_names = realloc(entity->file_names, new_size);
     entity->file_names[nb_filename] = strdup(filename);
+    entity->file_names[nb_filename + 1] = NULL;
     return 0;
 }
 

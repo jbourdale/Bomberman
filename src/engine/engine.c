@@ -11,23 +11,17 @@
 int             run_engine(SDL_Renderer *renderer)
 {
     int         quit;
-    SDL_Event   e;
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     quit = 0;
     while (quit == 0)
     {
+        quit = handle_events();
+
         SDL_RenderClear(renderer);
         render_entitys(renderer);
-        if (SDL_PollEvent(&e))
-        {
-            if (e.type == SDL_QUIT) {
-                quit = 1;
-            }
-        }
-
         SDL_RenderPresent(renderer);
-        SDL_Delay(20);
+        // SDL_Delay(10);
     }
     return 0;
 }

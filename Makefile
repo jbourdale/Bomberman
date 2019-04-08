@@ -19,6 +19,7 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/components/position/position.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
+			./src/engine/events/events.c \
 			./src/engine/systems/position/position.c \
 			./src/log/log.c
 
@@ -36,12 +37,12 @@ TEST_OBJ =	$(TEST_SRC:.c=.o)
 
 CFLAGS	+=	-W -Wall -Werror -Iinclude/
 
-LDFLAGS	=	-I/usr/local/include/SDL2 -D_THREAD_SAFE -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf
+LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf
 
 all: 		$(NAME)
 
 $(NAME):	$(OBJ)
-			$(CC) $(LDFLAGS) -o $(NAME) $(OBJ)
+			$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 			rm -f $(OBJ)

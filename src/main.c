@@ -1,5 +1,10 @@
 #include "engine/engine.h"
 
+void tmp()
+{
+    log_debug("oui");
+}
+
 int main() {
     SDL_Window *window;
     SDL_Renderer *renderer;
@@ -12,7 +17,8 @@ int main() {
     renderer = NULL;
     start_engine(&window, &renderer);
 
-    entity_t *entity = create_entity(renderer, "mario", "./resources/mario.png");
+    entity_t *entity = create_entity(renderer, "mario", "./resources/Mario.png");
+    entity->on_click = tmp;
     pos_comp = create_position_component(0, 0, 200, 200);
     add_component_to_entity(entity, (void *)pos_comp);
 

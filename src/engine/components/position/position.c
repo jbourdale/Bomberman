@@ -32,3 +32,14 @@ int                         destroy_position_component(entity_t *entity)
     free(comp);
     return 0;
 }
+
+int position_component_to_rect(position_component_t *comp, SDL_Rect *rect)
+{
+    log_debug("position_component_to_rect");
+    rect->x = comp->x;
+    rect->y = comp->y;
+    rect->w = comp->width;
+    rect->h = comp->height;
+    log_debug("end");
+    return 0;
+}
