@@ -56,3 +56,21 @@ int                         handle_entitys_click(SDL_Event e)
     }
     return 0;
 }
+
+
+int             handle_entity_key_events(SDL_Event e)
+{
+    entity_t    **entitys;
+    int         i;
+
+    entitys = entitys_manager(NULL);
+    i = 0;
+    while(entitys[i] != NULL)
+    {
+        if(entitys[i]->on_key_event != NULL)
+        {
+            entitys[i]->on_key_event();
+        }
+        i++;
+    }
+}
