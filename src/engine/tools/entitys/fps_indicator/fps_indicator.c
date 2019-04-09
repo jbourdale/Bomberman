@@ -19,6 +19,7 @@ void                        create_fps_indicator(SDL_Renderer *renderer)
     entity_t *fps_indicator_entity = create_entity(renderer, "fps_indicator", NULL);
     fps_indicator_entity->on_key_stroke = fps_indicator_on_key_stroke;
     fps_indicator_entity->render = fps_indicator_render;
+    fps_indicator_entity->displayed = 1;
 
     pos_comp = create_position_component(1820, 1030, 100, 75);
     add_component_to_entity(fps_indicator_entity, (void *)pos_comp);
@@ -29,7 +30,7 @@ void                        create_fps_indicator(SDL_Renderer *renderer)
 
 void fps_indicator_on_key_stroke(entity_t *entity, SDL_Event e)
 {
-    if(e.key.keysym.sym == SDLK_F4)
+    if(e.key.keysym.sym == SDLK_F4 && e.type == SDL_KEYDOWN)
     {
         entity->displayed = !entity->displayed;
     }

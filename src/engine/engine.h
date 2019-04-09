@@ -1,6 +1,7 @@
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
+
 // Forward declaration
 typedef struct entity_s entity_t;
 typedef struct component_s component_t;
@@ -26,6 +27,7 @@ typedef struct position_component_s position_component_t;
 
 // SYSTEMS
 #include "./systems/systems.h"
+#include "./systems/position/position.h"
 
 // EVENTS
 #include "./events/events.h"
@@ -38,5 +40,10 @@ typedef struct position_component_s position_component_t;
 int start_engine(SDL_Window **window, SDL_Renderer **renderer);
 int run_engine(SDL_Renderer *renderer);
 int stop_engine(SDL_Window *window, SDL_Renderer *renderer);
+
+void move_position_component_right(position_component_t *comp, int offset);
+void move_position_component_left(position_component_t *comp, int offset);
+void move_position_component_up(position_component_t *comp, int offset);
+void move_position_component_down(position_component_t *comp, int offset);
 
 #endif

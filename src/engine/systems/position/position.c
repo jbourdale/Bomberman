@@ -29,3 +29,32 @@ entity_t                    *set_entity_dimensions(entity_t *entity, int w, int 
     comp->height = h;
     return entity;
 }
+
+void    move_position_component_right(position_component_t *comp, int offset)
+{
+    if (comp == NULL)
+        return;
+    comp->x += offset;
+}
+
+void    move_position_component_left(position_component_t *comp, int offset)
+{
+    if (comp == NULL)
+        return;
+    comp->x -= offset;
+}
+
+void    move_position_component_up(position_component_t *comp, int offset)
+{
+    if (comp == NULL)
+        return;
+    comp->y -= offset;
+
+}
+
+void    move_position_component_down(position_component_t *comp, int offset)
+{
+    if (comp == NULL)
+        return;
+    comp->y += offset;
+}

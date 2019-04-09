@@ -21,7 +21,7 @@ int 			handle_events()
         	log_debug("Click on %d, %d", e.button.x, e.button.y);
             handle_entitys_click(e);
         }
-        else if (e.type == SDL_KEYDOWN) {
+        else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
             log_debug("Key stroke");
             handle_entity_key_events(e);
         }

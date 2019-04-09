@@ -12,7 +12,6 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
     SDL_Rect                screen_position;
     position_component_t    *pos_comp;
 
-    log_debug("render entity %s", entity->name);
     if (!entity->displayed)
         return ;
     if (entity->sprites[0] == NULL)
@@ -23,21 +22,19 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
 
     position_component_to_rect(pos_comp, &screen_position);
 
-    log_debug("test");
+    if(strcmp(entity->name, "mario") == 0)
+        log_debug("animate : %d", entity->animate);
     if (entity->animate == 1 &&
         SDL_GetTicks() - entity->last_animation_tick > entity->animation_delai_frame
     )
     {
-        log_debug("test into");
         entity->last_animation_tick = SDL_GetTicks();
         entity->current_frame++;
         if (entity->sprites[entity->current_frame] == NULL)
             entity->current_frame = 0;
     }
-    log_debug("test end, current_frame : %d", entity->current_frame);
 
     SDL_RenderCopy(renderer, entity->sprites[entity->current_frame], NULL, &screen_position);
-    log_debug("render end");
 }
 
 
