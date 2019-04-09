@@ -30,6 +30,11 @@ typedef struct position_component_s position_component_t;
 // EVENTS
 #include "./events/events.h"
 
+
+// TOOLS
+#include "./tools/entitys/fps_indicator/fps_indicator.h"
+
+
 int start_engine(SDL_Window **window, SDL_Renderer **renderer);
 int run_engine(SDL_Renderer *renderer);
 int stop_engine(SDL_Window *window, SDL_Renderer *renderer);

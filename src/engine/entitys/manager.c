@@ -41,5 +41,18 @@ entity_t        **entitys_manager(entity_t *entity)
     return NULL;
 }
 
+entity_t            *find_first_entity_by_name(char *name)
+{
+    entity_t        **entitys;
+    int             i;
 
-
+    i = 0;
+    entitys = entitys_manager(NULL);
+    while(entitys[i] != NULL)
+    {
+        if (strcmp(entitys[i]->name, name) == 0)
+            return entitys[i];
+        i++;
+    }
+    return NULL;
+}

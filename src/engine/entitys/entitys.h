@@ -9,9 +9,9 @@ typedef struct          entity_s {
 
     // EVENTS
     void                (*on_init)();
-    void                (*on_click)(entity_t *self, SDL_Event e);
+    void                (*on_click)();
     void                (*on_destroy)();
-    void                (*on_key_stroke)(entity_t *self, SDL_Event e);
+    void                (*on_key_stroke)();
     // void             (*on_hover)(); // may cause perf problems
 
     // GRAPHICAL
@@ -66,5 +66,6 @@ int _create_entity_sprites(SDL_Renderer *renderer, entity_t *entity);
  * manager.c
  **/
 entity_t **entitys_manager();
+entity_t *find_first_entity_by_name(char *name);
 
 #endif

@@ -17,11 +17,15 @@ int 			handle_events()
         if (e.type == SDL_QUIT) {
             return -1;
         }
-
-        if (e.type == SDL_MOUSEBUTTONDOWN) {
+        else if (e.type == SDL_MOUSEBUTTONDOWN) {
         	log_debug("Click on %d, %d", e.button.x, e.button.y);
             handle_entitys_click(e);
         }
+        else if (e.type == SDL_KEYDOWN) {
+            log_debug("Key stroke");
+            handle_entity_key_events(e);
+        }
+
     }
 
     return 0;
@@ -58,20 +62,20 @@ int                         handle_entitys_click(SDL_Event e)
 }
 
 
-// int             handle_entity_key_events(SDL_Event e)
-// {
-//     entity_t    **entitys;
-//     int         i;
+int             handle_entity_key_events(SDL_Event e)
+{
+    entity_t    **entitys;
+    int         i;
 
-//     entitys = entitys_manager(NULL);
-//     i = 0;
-//     while(entitys[i] != NULL)
-//     {
-//         if(entitys[i]->on_key_stroke != NULL)
-//         {
-//             entitys[i]->on_key_stroke(entitys[i], e);
-//         }
-//         i++;
-//     }
-//     return 0;
-// }
+    entitys = entitys_manager(NULL);
+    i = 0;
+    while(entitys[i] != NULL)
+    {
+        if(entitys[i]->on_key_stroke != NULL)
+        {
+            entitys[i]->on_key_stroke(entitys[i], e);
+        }
+        i++;
+    }
+    return 0;
+}

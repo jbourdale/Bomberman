@@ -14,6 +14,7 @@ int             run_engine(SDL_Renderer *renderer)
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     quit = 0;
+    create_fps_indicator(renderer);
     while (quit == 0)
     {
         quit = handle_events();
@@ -21,6 +22,8 @@ int             run_engine(SDL_Renderer *renderer)
         SDL_RenderClear(renderer);
         render_entitys(renderer);
         SDL_RenderPresent(renderer);
+
+
         // SDL_Delay(10);
     }
     return 0;

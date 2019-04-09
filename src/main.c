@@ -26,6 +26,7 @@ int main() {
 
     entity_t *entity = create_entity(renderer, "mario", "./resources/Mario.png");
     entity->on_click = on_mario_click;
+    entity->on_key_stroke = on_mario_keystroke;
     pos_comp = create_position_component(0, 0, 200, 200);
     add_component_to_entity(entity, (void *)pos_comp);
 

@@ -17,6 +17,7 @@ entity_t        *_init_entity()
     entity->file_names = NULL;
     entity->components = NULL;
     entity->on_init = NULL;
+    entity->on_key_stroke = NULL;
     entity->on_click = NULL;
     entity->on_destroy = NULL;
     entity->render = _base_entity_render;
