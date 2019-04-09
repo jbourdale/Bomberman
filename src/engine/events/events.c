@@ -51,7 +51,7 @@ int                         handle_entitys_click(SDL_Event e)
         log_debug("rect: (%d,%d,%d,%d)", entity_rect.x, entity_rect.y, entity_rect.w, entity_rect.h);
 
         if (entitys[i]->on_click != NULL && SDL_PointInRect(&clic, &entity_rect) == SDL_TRUE)
-            entitys[i]->on_click();
+            entitys[i]->on_click(entitys[i], e);
         i++;
     }
     return 0;
@@ -67,10 +67,11 @@ int                         handle_entitys_click(SDL_Event e)
 //     i = 0;
 //     while(entitys[i] != NULL)
 //     {
-//         if(entitys[i]->on_key_event != NULL)
+//         if(entitys[i]->on_key_stroke != NULL)
 //         {
-//             entitys[i]->on_key_event();
+//             entitys[i]->on_key_stroke(entitys[i], e);
 //         }
 //         i++;
 //     }
+//     return 0;
 // }

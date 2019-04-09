@@ -1,8 +1,15 @@
 #include "engine/engine.h"
 
-void tmp()
+void on_mario_click(entity_t *entity, SDL_Event e)
 {
-    log_debug("oui");
+    log_debug("on click on : %s", entity->name);
+    log_debug("e : %p", &e);
+}
+
+void on_mario_keystroke(entity_t *entity, SDL_Event e)
+{
+    log_debug("on keystroke on : %s", entity->name);
+    log_debug("e : %p", &e);
 }
 
 int main() {
@@ -18,7 +25,7 @@ int main() {
     start_engine(&window, &renderer);
 
     entity_t *entity = create_entity(renderer, "mario", "./resources/Mario.png");
-    entity->on_click = tmp;
+    entity->on_click = on_mario_click;
     pos_comp = create_position_component(0, 0, 200, 200);
     add_component_to_entity(entity, (void *)pos_comp);
 

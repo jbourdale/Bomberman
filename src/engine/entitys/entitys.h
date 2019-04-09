@@ -9,8 +9,9 @@ typedef struct          entity_s {
 
     // EVENTS
     void                (*on_init)();
-    void                (*on_click)();
+    void                (*on_click)(entity_t *self, SDL_Event e);
     void                (*on_destroy)();
+    void                (*on_key_stroke)(entity_t *self, SDL_Event e);
     // void             (*on_hover)(); // may cause perf problems
 
     // GRAPHICAL
