@@ -28,21 +28,24 @@ int         add_filename_to_entity(entity_t *entity, char *filename)
     entity->file_names = realloc(entity->file_names, new_size);
     entity->file_names[nb_filename] = strdup(filename);
     entity->file_names[nb_filename + 1] = NULL;
+
+    log_debug("add_filename_to_entity end");
     return 0;
 }
 
-int         add_filenames_to_entity(entity_t *entity, char **filenames)
+int         add_filenames_to_entity(entity_t *entity, char **filenames, int size)
 {
-    char    **entity_filename;
+    int     i;
 
-    entity_filename = filenames;
-    while(*entity_filename++)
+    i = 0;
+    while(i < size)
     {
-        if (add_filename_to_entity(entity, *entity_filename))
+        if (add_filename_to_entity(entity, filenames[i]))
         {
             destroy_entity(entity);
             return 1;
         }
+        i++;
     }
     return 0;
 }

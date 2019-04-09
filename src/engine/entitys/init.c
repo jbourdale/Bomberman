@@ -21,39 +21,39 @@ entity_t        *_init_entity()
     entity->on_click = NULL;
     entity->on_destroy = NULL;
     entity->render = _base_entity_render;
+    entity->last_animation_tick = 0;
+    entity->current_frame = 0;
+    entity->animation_delai_frame = DEFAULT_ANIMATION_DELAI_FRAME;
     entity->displayed = 1;
     entity->animate = 0;
     return entity;
 }
 
-// entity_t            *create_animated_entity(
-//     SDL_Renderer    *renderer,
-//     char            *name,
-//     char            **filenames
-// ) {
-//     entity_t    *entity;
+entity_t            *create_animated_entity(
+    SDL_Renderer    *renderer,
+    char            *name,
+    char            **filenames,
+    int             nb_filenames
+) {
+    entity_t    *entity;
 
-//     log_warn("create_animated_entity doesn't work for now. DO NOT USE");
-//     renderer = NULL;
-//     name = NULL;
-//     filenames = NULL;
-//     return NULL;
+    if(name == NULL)
+        return NULL;
 
-//     if(name == NULL)
-//         return NULL;
+    entity = _init_entity();
+    entity->name = name;
 
-//     entity = _init_entity();
-//     entity->name = name;
+    if (add_filenames_to_entity(entity, filenames, nb_filenames) == 1
+        || _create_entity_sprites(renderer, entity) == 1
+    )
+    {
+        destroy_entity(entity);
+        return NULL;
+    }
 
-//     if (add_filenames_to_entity(entity, filenames) == 1)
-//     {
-//         destroy_entity(entity);
-//         return NULL;
-//     }
-
-//     entitys_manager(entity);
-//     return entity;
-// }
+    entitys_manager(entity);
+    return entity;
+}
 
 entity_t            *create_entity(
     SDL_Renderer    *renderer,

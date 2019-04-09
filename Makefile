@@ -8,6 +8,7 @@
 CC 		= 	gcc
 
 BASE_SRC =	./src/engine/engine.c \
+			./src/engine/entitys/animate.c \
 			./src/engine/entitys/components.c \
 			./src/engine/entitys/init.c \
 			./src/engine/entitys/sprites.c \

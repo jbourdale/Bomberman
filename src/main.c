@@ -24,7 +24,11 @@ int main() {
     renderer = NULL;
     start_engine(&window, &renderer);
 
-    entity_t *entity = create_entity(renderer, "mario", "./resources/Mario.png");
+    char **array = malloc(2 * sizeof(char *));
+    array[0] = "./resources/Mario.png";
+    array[1] = "./resources/Mario2.png";
+
+    entity_t *entity = create_animated_entity(renderer, "mario", array, 2);
     entity->on_click = on_mario_click;
     entity->on_key_stroke = on_mario_keystroke;
     pos_comp = create_position_component(0, 0, 200, 200);
@@ -32,6 +36,8 @@ int main() {
 
     log_debug("sprites[0] is NULL ? %d", entity->sprites[0] == NULL);
     log_debug("sprites[0] : %p", entity->sprites[0]);
+
+    enable_entity_animation(entity);
 
     run_engine(renderer);
 

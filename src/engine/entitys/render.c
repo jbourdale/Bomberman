@@ -12,30 +12,32 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
     SDL_Rect                screen_position;
     position_component_t    *pos_comp;
 
-    // log_debug("render entity %s", entity->name);
-    // log_debug("renderer : %p", renderer);
-
-    if (!entity->displayed) {
-        // log_debug("entity not displayed");
+    log_debug("render entity %s", entity->name);
+    if (!entity->displayed)
         return ;
-    }
-    if (entity->sprites[0] == NULL) {
-        // log_debug("entity have no sprite");
+    if (entity->sprites[0] == NULL)
         return ;
-    }
     pos_comp = (position_component_t*)find_component_by_name(entity, "position_component");
-    if (pos_comp == NULL) {
-        // log_debug("entity have no position component");
+    if (pos_comp == NULL)
         return ;
-    }
 
-    screen_position.x = pos_comp->x;
-    screen_position.y = pos_comp->y;
-    screen_position.w = pos_comp->width;
-    screen_position.h = pos_comp->height;
-    // log_debug("render sprite : %p", entity->sprites[0]);
-    // log_debug("at %d,%d,%d,%d", screen_position.x, screen_position.y, screen_position.w, screen_position.h);
-    SDL_RenderCopy(renderer, entity->sprites[0], NULL, &screen_position);
+    position_component_to_rect(pos_comp, &screen_position);
+
+    log_debug("test");
+    if (entity->animate == 1 &&
+        SDL_GetTicks() - entity->last_animation_tick > entity->animation_delai_frame
+    )
+    {
+        log_debug("test into");
+        entity->last_animation_tick = SDL_GetTicks();
+        entity->current_frame++;
+        if (entity->sprites[entity->current_frame] == NULL)
+            entity->current_frame = 0;
+    }
+    log_debug("test end, current_frame : %d", entity->current_frame);
+
+    SDL_RenderCopy(renderer, entity->sprites[entity->current_frame], NULL, &screen_position);
+    log_debug("render end");
 }
 
 

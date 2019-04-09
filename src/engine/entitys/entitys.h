@@ -3,6 +3,8 @@
 
 #include "../engine.h"
 
+#define DEFAULT_ANIMATION_DELAI_FRAME 100
+
 typedef struct          entity_s {
     char                *name;
     void                **components;
@@ -16,11 +18,15 @@ typedef struct          entity_s {
 
     // GRAPHICAL
     void                (*render)(SDL_Renderer* renderer, entity_t *self);
-    int                 current_frame; // animation frame
+    int                 displayed;
     char                **file_names; // it's an array of file to be able to create animations
     SDL_Texture         **sprites; // Not sure exactly how we will work with that
+
+    // ANIMATIONS
+    int                 current_frame; // animation frame
     int                 animate;
-    int                 displayed;
+    Uint32              last_animation_tick;
+    Uint32              animation_delai_frame;
 }                       entity_t;
 
 /*
@@ -33,7 +39,7 @@ int add_components_to_entity(entity_t *entity, void **components);
  * core.c
  **/
 int add_filename_to_entity(entity_t *entity, char *filename);
-int add_filenames_to_entity(entity_t *entity, char **filename);
+int add_filenames_to_entity(entity_t *entity, char **filenames, int size);
 entity_t *set_entity_position(entity_t *entity, int x, int y);
 entity_t *set_entity_dimensions(entity_t *entity, int w, int h);
 
@@ -48,6 +54,7 @@ entity_t *set_entity_dimensions(entity_t *entity, int w, int h);
 entity_t *_init_entity();
 // entity_t *create_animated_entity(SDL_Renderer *renderer, char *name, char **filenames);
 entity_t *create_entity(SDL_Renderer *renderer, char *name, char *filename);
+entity_t *create_animated_entity(SDL_Renderer *renderer, char *name, char **filenames, int nb_filenames);
 int destroy_entity(entity_t *entity);
 
 /*
@@ -67,5 +74,12 @@ int _create_entity_sprites(SDL_Renderer *renderer, entity_t *entity);
  **/
 entity_t **entitys_manager();
 entity_t *find_first_entity_by_name(char *name);
+
+/*
+ * animate.c
+ **/
+void enable_entity_animation(entity_t *entity);
+void disable_entity_animation(entity_t *entity);
+void toggle_entity_animation(entity_t *entity);
 
 #endif

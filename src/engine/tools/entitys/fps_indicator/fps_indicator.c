@@ -49,10 +49,7 @@ void                        fps_indicator_render(SDL_Renderer *renderer, entity_
     if (pos_comp == NULL) {
         return ;
     }
-    screen_position.x = pos_comp->x;
-    screen_position.y = pos_comp->y;
-    screen_position.w = pos_comp->width;
-    screen_position.h = pos_comp->height;
+    position_component_to_rect(pos_comp, &screen_position);
 
     fps = fps_indicator_compute();
     text = malloc(3 * sizeof(char));
