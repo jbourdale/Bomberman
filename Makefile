@@ -23,6 +23,8 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/events/events.c \
 			./src/engine/systems/systems.c \
 			./src/engine/systems/position/position.c \
+			./src/engine/network/network.c \
+			./src/engine/network/utils/utils.c \
 			./src/engine/tools/entitys/fps_indicator/fps_indicator.c \
 			./src/log/log.c
 
@@ -40,7 +42,7 @@ TEST_OBJ =	$(TEST_SRC:.c=.o)
 
 CFLAGS	+=	-W -Wall -Werror -Iinclude/
 
-LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf
+LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread
 
 all: 		$(NAME)
 

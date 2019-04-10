@@ -1,5 +1,5 @@
 /*
-** engine.c for  in /home/dev/C/My_FTL/bourda_j
+** engine.c for  in /Bomberman/bourda_j
 **
 ** Made by BOURDALE Jules
 ** Login   <bourda_j@etna-alternance.net>
@@ -11,6 +11,9 @@
 int             run_engine(SDL_Renderer *renderer)
 {
     int         quit;
+    pthread_t   thread;
+
+    launch_network_thread(&thread);
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     quit = 0;
@@ -26,6 +29,7 @@ int             run_engine(SDL_Renderer *renderer)
 
         // SDL_Delay(10);
     }
+    wait_network_thread(thread);
     return 0;
 }
 

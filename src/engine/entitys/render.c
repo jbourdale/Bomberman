@@ -1,5 +1,5 @@
 /*
-** entity.c for  in /home/dev/C/My_FTL/bourda_j
+** entity.c for  in /Bomberman/bourda_j
 **
 ** Made by BOURDALE Jules
 ** Login   <bourda_j@etna-alternance.net>
@@ -22,8 +22,6 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
 
     position_component_to_rect(pos_comp, &screen_position);
 
-    if(strcmp(entity->name, "mario") == 0)
-        log_debug("animate : %d", entity->animate);
     if (entity->animate == 1 &&
         SDL_GetTicks() - entity->last_animation_tick > entity->animation_delai_frame
     )

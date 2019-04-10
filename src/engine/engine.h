@@ -36,6 +36,9 @@ typedef struct position_component_s position_component_t;
 // TOOLS
 #include "./tools/entitys/fps_indicator/fps_indicator.h"
 
+// NETWORK
+#include "./network/network.h"
+#include "./network/utils/utils.h"
 
 int start_engine(SDL_Window **window, SDL_Renderer **renderer);
 int run_engine(SDL_Renderer *renderer);
