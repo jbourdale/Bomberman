@@ -12,7 +12,6 @@ int             _create_entity_sprite(SDL_Renderer *renderer, entity_t *entity, 
     SDL_Texture *sprite;
     SDL_Texture **entity_sprite;
     int         nb_sprite;
-    int         new_size;
 
     log_debug("_create_entity_sprite");
 
@@ -30,8 +29,7 @@ int             _create_entity_sprite(SDL_Renderer *renderer, entity_t *entity, 
         nb_sprite++;
     }
 
-    new_size = (nb_sprite + 2) * sizeof(SDL_Surface*);
-    entity->sprites = realloc(entity->sprites, new_size);
+    entity->sprites = realloc(entity->sprites, (nb_sprite + 2) * sizeof(SDL_Surface*));
     entity->sprites[nb_sprite] = sprite;
     entity->sprites[nb_sprite + 1] = NULL;
     log_debug("entity->sprites[nb_sprite] : %p", entity->sprites[nb_sprite + 1]);

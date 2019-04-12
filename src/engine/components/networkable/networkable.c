@@ -42,7 +42,6 @@ networkable_entity_list_t 				**register_networkable_entity(char* entity_name)
 {
 	static networkable_entity_list_t 	**registered_entity_list = NULL;
 	int 								i;
-	int 								new_size;
 	networkable_entity_list_t			*new_entry;
 
 	// init
@@ -68,8 +67,7 @@ networkable_entity_list_t 				**register_networkable_entity(char* entity_name)
 	new_entry->entity_name = strdup(entity_name);
 	new_entry->entity_id = i;
 
-	new_size = (i + 2) * sizeof(networkable_entity_list_t *);
-	registered_entity_list = realloc(registered_entity_list, new_size);
+	registered_entity_list = realloc(registered_entity_list, (i + 2) * sizeof(networkable_entity_list_t *));
 	registered_entity_list[i] = new_entry;
 	registered_entity_list[i+1] = NULL;
 

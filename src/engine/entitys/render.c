@@ -12,9 +12,7 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
     SDL_Rect                screen_position;
     position_component_t    *pos_comp;
 
-    if (!entity->displayed)
-        return ;
-    if (entity->sprites[0] == NULL)
+    if (!entity->displayed || entity->sprites[0] == NULL)
         return ;
     pos_comp = (position_component_t*)find_component_by_name(entity, "position_component");
     if (pos_comp == NULL)
