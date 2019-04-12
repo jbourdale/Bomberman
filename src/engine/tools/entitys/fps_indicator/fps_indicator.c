@@ -14,6 +14,7 @@ SDL_Color   black = {0,0,0, 255};
 void                        create_fps_indicator(SDL_Renderer *renderer)
 {
     position_component_t    *pos_comp;
+    fpsrate_component_t     *fps_comp;
 
     log_debug("create_fps_indicator");
     entity_t *fps_indicator_entity = create_entity(renderer, "fps_indicator", NULL);
@@ -23,6 +24,9 @@ void                        create_fps_indicator(SDL_Renderer *renderer)
 
     pos_comp = create_position_component(1820, 1030, 100, 75);
     add_component_to_entity(fps_indicator_entity, (void *)pos_comp);
+
+    fps_comp = create_fpsrate_component(DEFAULT_FRAME_RATE);
+    add_component_to_entity(fps_indicator_entity , (void *)fps_comp);
 
     font = TTF_OpenFont("./resources/spacefont.ttf", 15); //this opens a font style and sets a size
     log_debug("create_fps_indicator end");

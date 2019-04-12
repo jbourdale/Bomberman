@@ -17,6 +17,7 @@ typedef struct position_component_s position_component_t;
 
 // COMPONENTS
 #include "./components/position/position.h"
+#include "./components/fpsrate/fpsrate.h"
 #include "./components/components.h"
 
 // ENTITY
@@ -48,5 +49,8 @@ void move_position_component_right(position_component_t *comp, int offset);
 void move_position_component_left(position_component_t *comp, int offset);
 void move_position_component_up(position_component_t *comp, int offset);
 void move_position_component_down(position_component_t *comp, int offset);
+
+void start_framerate_regulation();
+void regulate_frame_rate();
 
 #endif

@@ -46,6 +46,7 @@ entity_t            *find_first_entity_by_name(char *name)
     entity_t        **entitys;
     int             i;
 
+
     i = 0;
     entitys = entitys_manager(NULL);
     while(entitys[i] != NULL)

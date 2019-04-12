@@ -1,7 +1,8 @@
 #ifndef __FPSTICKER_H__
 #define __FPSTICKER_H__
 
-#define FRAME_VALUES 50
+#define FRAME_VALUES 50 // Precision of framerate calculation
+#define DEFAULT_FRAME_RATE 60
 
 #include "../../../engine.h"
 
