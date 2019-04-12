@@ -3,6 +3,6 @@
 
 #include "../../engine.h"
 
-int game_over()
+int game_over();
 
 #endif
