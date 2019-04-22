@@ -12,14 +12,15 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/entitys/animate.c \
 			./src/engine/entitys/components.c \
 			./src/engine/entitys/init.c \
-			./src/engine/entitys/sprites.c \
 			./src/engine/entitys/render.c \
-			./src/engine/entitys/core.c \
 			./src/engine/entitys/events.c \
 			./src/engine/entitys/manager.c \
 			./src/engine/components/components.c \
 			./src/engine/components/position/position.c \
 			./src/engine/components/fpsrate/fpsrate.c \
+			./src/engine/components/animation/animation.c \
+			./src/engine/components/animation/keyframe.c \
+			./src/engine/components/texture/texture.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
 			./src/engine/events/events.c \

@@ -6,7 +6,7 @@
 
 #include "../../../engine.h"
 
-void        create_fps_indicator(SDL_Renderer *renderer);
+void        create_fps_indicator();
 void        fps_indicator_on_key_stroke(entity_t *entity, SDL_Event e);
 void        fps_indicator_init();
 void        fps_indicator_render();

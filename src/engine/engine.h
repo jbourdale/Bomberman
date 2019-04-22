@@ -6,6 +6,7 @@
 typedef struct entity_s entity_t;
 typedef struct component_s component_t;
 typedef struct position_component_s position_component_t;
+typedef struct animation_component_s animation_component_t;
 
 // SDL
 #include <SDL2/SDL.h>
@@ -16,7 +17,9 @@ typedef struct position_component_s position_component_t;
 #include "../log/log.h"
 
 // COMPONENTS
+#include "./components/animation/animation.h"
 #include "./components/position/position.h"
+#include "./components/texture/texture.h"
 #include "./components/fpsrate/fpsrate.h"
 #include "./components/components.h"
 
@@ -41,9 +44,9 @@ typedef struct position_component_s position_component_t;
 #include "./network/network.h"
 #include "./network/utils/utils.h"
 
-int start_engine(SDL_Window **window, SDL_Renderer **renderer);
-int run_engine(SDL_Renderer *renderer);
-int stop_engine(SDL_Window *window, SDL_Renderer *renderer);
+int start_engine();
+int run_engine();
+int stop_engine();
 
 void move_position_component_right(position_component_t *comp, int offset);
 void move_position_component_left(position_component_t *comp, int offset);
@@ -52,5 +55,7 @@ void move_position_component_down(position_component_t *comp, int offset);
 
 void start_framerate_regulation();
 void regulate_frame_rate();
+
+int create_sprite(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
 
 #endif

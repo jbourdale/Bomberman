@@ -9,9 +9,12 @@
 
 int             framerate_regulation_timer; // Used to regulate fps rate 
 
-int             run_engine(SDL_Renderer *renderer)
+int                 run_engine()
 {
-    int         quit;
+    int             quit;
+    SDL_Renderer    *renderer;
+
+    renderer = get_current_renderer();
 
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     quit = 0;
@@ -20,9 +23,9 @@ int             run_engine(SDL_Renderer *renderer)
         start_framerate_regulation();
         
         quit = handle_events();
-
+        log_debug("handle_events end");
         SDL_RenderClear(renderer);
-        render_entitys(renderer);
+        render_entitys();
         SDL_RenderPresent(renderer);
 
         regulate_frame_rate();
@@ -31,22 +34,22 @@ int             run_engine(SDL_Renderer *renderer)
     return 0;
 }
 
-int start_engine(SDL_Window **window, SDL_Renderer **renderer)
+int start_engine()
 {
-    if(init_SDL(window, renderer))
+    log_debug("start_engine");
+    if(init_SDL())
     {
         log_error("Couldn't initialize SDL.");
         return 1;
     }
-    create_fps_indicator(*renderer);
-    printf("renderer addr in start_engine : %p \n", *renderer);
+    create_fps_indicator();
     return 0;
 }
 
-int stop_engine(SDL_Window *window, SDL_Renderer *renderer)
+int stop_engine()
 {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(get_current_renderer());
+    SDL_DestroyWindow(SDL_GL_GetCurrentWindow());
     TTF_Quit();
     SDL_Quit();
 
@@ -71,13 +74,7 @@ void                        regulate_frame_rate()
     if (comp == NULL)
         return ;
 
-    log_debug("fps rate : %d", comp->fpsrate);
-
     if ( (SDL_GetTicks() - framerate_regulation_timer) < 1000 / comp->fpsrate ) {
-        log_debug("delay : %d", (1000 / comp->fpsrate) - (SDL_GetTicks() - framerate_regulation_timer));
         SDL_Delay((1000 / comp->fpsrate) - (SDL_GetTicks() - framerate_regulation_timer));
     }
-    else
-        log_debug("delay : 0");
-
 }

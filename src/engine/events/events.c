@@ -25,7 +25,6 @@ int 			handle_events()
             log_debug("Key stroke");
             handle_entity_key_events(e);
         }
-
     }
 
     return 0;
@@ -33,18 +32,23 @@ int 			handle_events()
 
 int                         handle_entitys_click(SDL_Event e)
 {
+    SDL_Renderer            *renderer;
     entity_t                **entitys;
     SDL_Rect                entity_rect;
     SDL_Point               clic;
     position_component_t    *comp;
-    int                     i;
+    int                     i, nb_entity;
 
+    renderer = get_current_renderer();
     clic.x = e.button.x;
     clic.y = e.button.y;
 
     entitys = entitys_manager(NULL);
+    nb_entity = 0;
+    while(entitys[nb_entity] != NULL)
+        nb_entity++;
     i = 0;
-    while(entitys[i] != NULL)
+    while(i < nb_entity && entitys[i] != NULL)
     {
         log_debug("handling entity %s", entitys[i]->name);
 
@@ -55,7 +59,7 @@ int                         handle_entitys_click(SDL_Event e)
         log_debug("rect: (%d,%d,%d,%d)", entity_rect.x, entity_rect.y, entity_rect.w, entity_rect.h);
 
         if (entitys[i]->on_click != NULL && SDL_PointInRect(&clic, &entity_rect) == SDL_TRUE)
-            entitys[i]->on_click(entitys[i], e);
+            entitys[i]->on_click(renderer, entitys[i], e);
         i++;
     }
     return 0;
@@ -65,17 +69,25 @@ int                         handle_entitys_click(SDL_Event e)
 int             handle_entity_key_events(SDL_Event e)
 {
     entity_t    **entitys;
-    int         i;
+    int         i, nb_entity;
 
     entitys = entitys_manager(NULL);
+    nb_entity = 0;
+    while(entitys[nb_entity] != NULL)
+        nb_entity++;
+
+    log_debug("NB ENTITY : %d", nb_entity);
     i = 0;
-    while(entitys[i] != NULL)
+    while(i < nb_entity && entitys[i] != NULL)
     {
-        if(entitys[i]->on_key_stroke != NULL)
+        log_debug("entitys[i] : %d", i);
+        if(entitys[i] && entitys[i]->on_key_stroke != NULL)
         {
             entitys[i]->on_key_stroke(entitys[i], e);
+            log_debug("on_key_stroke end");
         }
         i++;
     }
+    log_debug("handle_entity_key_events end");
     return 0;
 }

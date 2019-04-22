@@ -6,4 +6,4 @@
 **
 */
 
-//todo
+//todo setters

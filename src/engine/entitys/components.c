@@ -21,18 +21,14 @@ int             add_component_to_entity(entity_t *entity, void *component)
     }
 
     tmp_comp = entity->components;
-    log_debug("tmp_comp == NULL : %d", tmp_comp == NULL);
     nb_comp = 0;
     while(tmp_comp != NULL && *tmp_comp++)
         nb_comp++;
-    log_debug("nb of components on this entity : %d", nb_comp);
 
     new_size = (nb_comp + 2) * sizeof(void *);
-    log_debug("adding 1 component (total: %d), new components array size : %d", (nb_comp + 1), new_size);
     entity->components = realloc(entity->components, new_size);
     entity->components[nb_comp] = component;
     entity->components[nb_comp + 1] = NULL;
-    log_debug("component successfuly added");
     return 0;
 }
 

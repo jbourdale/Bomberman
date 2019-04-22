@@ -10,5 +10,6 @@ typedef struct          component_s
 }                       component_t;
 
 void *find_component_by_name(entity_t *entity, char *name);
+void **find_components_by_name(entity_t *entity, char *name);
 
 #endif

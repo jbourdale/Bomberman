@@ -25,8 +25,6 @@ int         set_framerate(Uint32 framerate)
     if (!framerate)
         framerate = DEFAULT_FRAME_RATE;
     
-    log_debug("set_framerate : %d", framerate);
-
     entity = find_first_entity_by_name("fps_indicator");
     if (entity == NULL)
         return 1;
@@ -34,9 +32,7 @@ int         set_framerate(Uint32 framerate)
     if (comp == NULL)
         return 1;
 
-    log_debug("setting fpsrate to %d", framerate);
     comp->fpsrate = framerate;
-    log_debug("set_framerate end");
     return 0;
 }
 

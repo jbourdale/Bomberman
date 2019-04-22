@@ -8,22 +8,33 @@
 
 #include "sdl.h"
 
-int init_SDL(SDL_Window **window, SDL_Renderer **renderer)
+int                 init_SDL()
 {
-    *renderer = NULL;
+    SDL_Window      *window;
+    SDL_Renderer    *renderer;
+
+    log_debug("init_SDL");
+
+    window = NULL;
+    renderer = NULL;
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         return 1;
     else
     {
         if (!TTF_Init())
         {
-            if (init_window(window) != 0 || *window == NULL)
+            if (init_window(&window) != 0 || window == NULL) {
+                printf("SDL_Init failed: %s\n", SDL_GetError());
                 return 1;
-            *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
-            SDL_RenderSetLogicalSize(*renderer, LOGICAL_WINDOW_WIDTH, LOGICAL_WINDOW_HEIGHT);
+            }
+            log_debug("window created");
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+            SDL_RenderSetLogicalSize(renderer, LOGICAL_WINDOW_WIDTH, LOGICAL_WINDOW_HEIGHT);
         }
-        else
+        else {
+            log_debug("Can't init TTF INIT");
             return 1;
+        }
     }
     return 0;
 }
@@ -34,6 +45,8 @@ int                     init_window(SDL_Window **window)
     if (SDL_GetCurrentDisplayMode(0, &mode))
         return 1;
 
+    log_debug("init_window");
+
     *window = NULL;
     *window = SDL_CreateWindow(
         GUI_WINDOW_TITLE,
@@ -41,7 +54,21 @@ int                     init_window(SDL_Window **window)
         0,
         mode.w,
         mode.h,
-        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS
+        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_OPENGL
     );
     return 0;
+}
+
+
+SDL_Renderer        *get_current_renderer()
+{
+    SDL_Window      *window;
+
+    window = NULL;
+    window = SDL_GL_GetCurrentWindow();
+    if (window == NULL) {
+        log_debug("WINDOW NULL!!!!!!!!!!!!");
+        return NULL;
+    }
+    return SDL_GetRenderer(window);
 }
