@@ -1,5 +1,8 @@
 #include "engine/engine.h"
 
+/**
+ * MARIO HANDLER CLICK
+ */
 void on_mario_click(entity_t *entity, SDL_Event e)
 {
     log_debug("on click on : %s", entity->name);
