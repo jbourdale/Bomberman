@@ -10,7 +10,6 @@
 int             add_component_to_entity(entity_t *entity, void *component)
 {
     void        **tmp_comp;
-    int         new_size;
     int         nb_comp;
     log_debug("add_component_to_entity");
 
@@ -25,8 +24,7 @@ int             add_component_to_entity(entity_t *entity, void *component)
     while(tmp_comp != NULL && *tmp_comp++)
         nb_comp++;
 
-    new_size = (nb_comp + 2) * sizeof(void *);
-    entity->components = realloc(entity->components, new_size);
+    entity->components = realloc(entity->components, (nb_comp + 2) * sizeof(void *));
     entity->components[nb_comp] = component;
     entity->components[nb_comp + 1] = NULL;
     return 0;

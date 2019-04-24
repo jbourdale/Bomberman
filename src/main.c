@@ -1,8 +1,16 @@
 #include "engine/engine.h"
 
-void on_mario_click() {}
-void on_mario_keystroke(entity_t *entity, SDL_Event e) {
+/**
+ * MARIO HANDLER CLICK
+ */
+void on_mario_click(entity_t *entity, SDL_Event e)
+{
+    log_debug("on click on : %s", entity->name);
+    log_debug("e : %p", &e);
+    set_framerate(30);
+}
 
+void on_mario_keystroke(entity_t *entity, SDL_Event e) {
     position_component_t    *pos_comp;
     const Uint8             *key_state = SDL_GetKeyboardState(NULL);
 
