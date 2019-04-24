@@ -9,11 +9,9 @@
 CC 		= 	gcc
 
 BASE_SRC =	./src/engine/engine.c \
-			./src/engine/entitys/animate.c \
 			./src/engine/entitys/components.c \
 			./src/engine/entitys/init.c \
 			./src/engine/entitys/render.c \
-			./src/engine/entitys/events.c \
 			./src/engine/entitys/manager.c \
 			./src/engine/components/components.c \
 			./src/engine/components/position/position.c \

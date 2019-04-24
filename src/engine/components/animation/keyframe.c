@@ -58,17 +58,19 @@ int 			add_animation_keyframe(animation_component_t *animation, int duration, in
 	keyframe->next = NULL;
 
 	keyframe_iterator = animation->first_keyframe;
-	log_debug("keyframe_iterator == NULL : %d", keyframe_iterator == NULL);
+	// log_debug("keyframe_iterator == NULL : %d", keyframe_iterator == NULL);
 	if (keyframe_iterator == NULL) {
 		keyframe->active = 1;
 		animation->first_keyframe = keyframe;
-		log_debug("adding keyframe as first > first_keyframe == NULL: %d", animation->first_keyframe == NULL);
+		log_debug("adding keyframe as first > first_keyframe == %p", animation->first_keyframe);
 	}
 	else {
+		int i = 0;
 	    while(keyframe_iterator != NULL && keyframe_iterator->next != NULL) {
-	    	log_debug("loop over keyframe");
 	        keyframe_iterator = keyframe_iterator->next;
+	        i++;
 	    }
+	    log_debug("ADDING THE %d EME KEYFRAME : %p", i + 1, keyframe);
 	    keyframe_iterator->next = keyframe;
 	    log_debug("keyframe->next == NULL : %d", keyframe_iterator->next == NULL);
 	}

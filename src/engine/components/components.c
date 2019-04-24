@@ -53,6 +53,5 @@ void                **find_components_by_name(entity_t *entity, char *name)
         }
         i++;
     }
-    log_debug("find_components_by_name : nb result : %d", nb_result);
     return result_comps;
 }
