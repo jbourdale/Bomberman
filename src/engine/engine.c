@@ -23,7 +23,6 @@ int                 run_engine()
         start_framerate_regulation();
         
         quit = handle_events();
-        log_debug("handle_events end");
         SDL_RenderClear(renderer);
         render_entitys();
         SDL_RenderPresent(renderer);

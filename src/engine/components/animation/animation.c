@@ -48,6 +48,7 @@ int 						start_entity_animation(entity_t *entity, int animation_id) {
 	i = 0;
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		if (animation_comps[i]->id == animation_id) {
+			animation_comps[i]->last_animation_tick = SDL_GetTicks();
 			animation_comps[i]->running = 1;
 			return 0;
 		}

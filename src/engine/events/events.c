@@ -76,7 +76,6 @@ int             handle_entity_key_events(SDL_Event e)
     while(entitys[nb_entity] != NULL)
         nb_entity++;
 
-    log_debug("NB ENTITY : %d", nb_entity);
     i = 0;
     while(i < nb_entity && entitys[i] != NULL)
     {
@@ -88,6 +87,5 @@ int             handle_entity_key_events(SDL_Event e)
         }
         i++;
     }
-    log_debug("handle_entity_key_events end");
     return 0;
 }
