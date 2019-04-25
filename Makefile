@@ -24,8 +24,6 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/events/events.c \
 			./src/engine/systems/systems.c \
 			./src/engine/systems/position/position.c \
-			./src/engine/network/network.c \
-			./src/engine/network/utils/utils.c \
 			./src/engine/tools/entitys/fps_indicator/fps_indicator.c \
 			./src/log/log.c
 

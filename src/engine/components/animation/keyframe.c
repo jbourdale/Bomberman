@@ -8,8 +8,11 @@
 
 #include "animation.h"
 
-void 						add_keyframe_on_start_event(animation_component_t *animation, int keyframe_id, void (*f)(entity_t *self))
-{
+void 						add_keyframe_on_start_event(
+	animation_component_t *animation,
+	int keyframe_id,
+	void (*f)(entity_t *)
+) {
 	keyframe_t 				*keyframe_iterator;
 	int 					i;
 
@@ -24,8 +27,11 @@ void 						add_keyframe_on_start_event(animation_component_t *animation, int key
 		log_warn("add_keyframe_on_start_event > animation provided is NULL");
 }
 
-void 						add_keyframe_on_finish_event(animation_component_t *animation, int keyframe_id, void (*f)(entity_t *self))
-{
+void 						add_keyframe_on_finish_event(
+	animation_component_t *animation,
+	int keyframe_id,
+	void (*f)(entity_t *)
+) {
 	keyframe_t 				*keyframe_iterator;
 	int 					i;
 

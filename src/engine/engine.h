@@ -40,10 +40,6 @@ typedef struct animation_component_s animation_component_t;
 // TOOLS
 #include "./tools/entitys/fps_indicator/fps_indicator.h"
 
-// NETWORK
-#include "./network/network.h"
-#include "./network/utils/utils.h"
-
 int start_engine();
 int run_engine();
 int stop_engine();

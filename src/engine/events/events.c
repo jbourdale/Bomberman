@@ -53,10 +53,7 @@ int                         handle_entitys_click(SDL_Event e)
         log_debug("handling entity %s", entitys[i]->name);
 
         comp = (position_component_t *)find_component_by_name(entitys[i], "position_component");
-        log_debug("comp founded : (%d,%d,%d,%d)", comp->x, comp->y, comp->width, comp->height);
-
         position_component_to_rect(comp, &entity_rect);
-        log_debug("rect: (%d,%d,%d,%d)", entity_rect.x, entity_rect.y, entity_rect.w, entity_rect.h);
 
         if (entitys[i]->on_click != NULL && SDL_PointInRect(&clic, &entity_rect) == SDL_TRUE)
             entitys[i]->on_click(renderer, entitys[i], e);
