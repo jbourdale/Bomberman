@@ -10,6 +10,13 @@ void on_mario_click(entity_t *entity, SDL_Event e)
     set_framerate(30);
 }
 
+void on_explosion(entity_t *entity) {
+    log_debug("BOMB EXPLOSED : %s", entity->name);
+}
+void on_start(entity_t *entity) {
+    log_debug("BOMB PLACED : %s", entity->name);
+}
+
 void on_mario_keystroke(entity_t *entity, SDL_Event e) {
     position_component_t    *pos_comp;
     const Uint8             *key_state = SDL_GetKeyboardState(NULL);
@@ -46,26 +53,18 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
         position_component_t *pos_comp2 = create_position_component(pos_comp->x, pos_comp->y, 50, 50);
         log_debug("create animation_comp");
         animation_component_t *animation_comp = create_animation_component("./resources/bomb.png", 0, 24, 24, 0);
-        log_debug("add keyframe 1");
-        add_animation_keyframe(animation_comp, 400, 0, 0);
-        log_debug("add keyframe 2");
+        int start_keyframe = add_animation_keyframe(animation_comp, 400, 0, 0);
+        add_keyframe_on_start_event(animation_comp, start_keyframe, on_start);
         add_animation_keyframe(animation_comp, 400, 1, 0);
-        log_debug("add keyframe 3");
         add_animation_keyframe(animation_comp, 400, 2, 0);
-        log_debug("add keyframe 4");
         add_animation_keyframe(animation_comp, 400, 1, 0);
-        log_debug("add keyframe 5");
         add_animation_keyframe(animation_comp, 400, 2, 0);
-        log_debug("add keyframe 6");
         add_animation_keyframe(animation_comp, 200, 3, 0);
-        log_debug("add keyframe 7");
         add_animation_keyframe(animation_comp, 200, 0, 4);
-        log_debug("add keyframe 8");
         add_animation_keyframe(animation_comp, 200, 0, 3);
-        log_debug("add keyframe 9");
         add_animation_keyframe(animation_comp, 200, 0, 2);
-        log_debug("add keyframe 9");
-        add_animation_keyframe(animation_comp, 200, 0, 1);
+        int keyframe_id = add_animation_keyframe(animation_comp, 200, 0, 1);
+        add_keyframe_on_finish_event(animation_comp, keyframe_id, on_explosion);
 
         animation_component_t *animation_comp2 = create_animation_component("./resources/bomb.png", 1, 24, 24, 0);
         add_animation_keyframe(animation_comp2, 1000, 5, 2);

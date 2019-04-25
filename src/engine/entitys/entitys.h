@@ -45,7 +45,7 @@ int destroy_entity(entity_t *entity);
 void _base_entity_render(SDL_Renderer *renderer, entity_t *entity);
 void render_entitys();
 void render_entity_texture(SDL_Renderer*, entity_t*, position_component_t*);
-void render_entity_animation(SDL_Renderer*, animation_component_t**, position_component_t*);
+void render_entity_animation(SDL_Renderer*, entity_t *, animation_component_t**, position_component_t*);
 
 /*
  * manager.c

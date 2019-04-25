@@ -26,7 +26,7 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
     if (animation_comps == NULL) {
         render_entity_texture(renderer, entity, pos_comp);
     } else {
-        render_entity_animation(renderer, animation_comps, pos_comp);
+        render_entity_animation(renderer, entity, animation_comps, pos_comp);
     }
 }
 
@@ -53,6 +53,7 @@ void                render_entitys()
 // TODO : Cut this function in smaller ones
 void                        render_entity_animation(
     SDL_Renderer            *renderer,
+    entity_t                *entity,
     animation_component_t   **comps,
     position_component_t    *pos_comp
 ) {
@@ -95,9 +96,14 @@ void                        render_entity_animation(
         comps_iterator[i]->last_animation_tick = SDL_GetTicks();
 
         keyfame_iterator->active = 0;
+        if (keyfame_iterator->on_finish != NULL)
+            keyfame_iterator->on_finish(entity);
+
         if (keyfame_iterator->next != NULL) {
             log_debug("GO TO NEXT KEYFRAME : %p", keyfame_iterator->next);
             keyfame_iterator->next->active = 1;
+            if (keyfame_iterator->next->on_start != NULL)
+                keyfame_iterator->next->on_start(entity);
         }
         else if (comps_iterator[i]->is_looping) {
             comps_iterator[i]->first_keyframe->active = 1;

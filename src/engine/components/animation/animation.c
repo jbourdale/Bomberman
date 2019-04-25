@@ -9,7 +9,7 @@
 #include "animation.h"
 
 animation_component_t 		*create_animation_component(
-	char 					*spritesheet, 
+	char 					*spritesheet,
 	int 					id,
 	int 					sprite_w,
 	int 					sprite_h,
@@ -50,10 +50,16 @@ int 						start_entity_animation(entity_t *entity, int animation_id) {
 		if (animation_comps[i]->id == animation_id) {
 			animation_comps[i]->last_animation_tick = SDL_GetTicks();
 			animation_comps[i]->running = 1;
+
+			if (animation_comps[i]->first_keyframe != NULL) {
+				animation_comps[i]->first_keyframe->active = 1;
+				if (animation_comps[i]->first_keyframe->on_start != NULL)
+					animation_comps[i]->first_keyframe->on_start(entity);
+			}
 			return 0;
 		}
 		i++;
-	}	
+	}
 
 	return 1;
 }
@@ -70,7 +76,7 @@ int						stop_entity_animation(entity_t *entity, int animation_id) {
 			return 0;
 		}
 		i++;
-	}	
+	}
 
 	return 1;
 }
