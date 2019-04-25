@@ -100,7 +100,6 @@ void                        render_entity_animation(
             keyfame_iterator->on_finish(entity);
 
         if (keyfame_iterator->next != NULL) {
-            log_debug("GO TO NEXT KEYFRAME : %p", keyfame_iterator->next);
             keyfame_iterator->next->active = 1;
             if (keyfame_iterator->next->on_start != NULL)
                 keyfame_iterator->next->on_start(entity);

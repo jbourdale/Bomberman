@@ -13,25 +13,27 @@ entity_t        **entitys_manager(entity_t *entity)
     entity_t    **tmp;
     int         nb_entity;
 
-    if (entity == NULL)
+    if (entity == NULL) {
+        log_debug("entitys manager : %p", entitys);
         return entitys;
+    }
 
     tmp = entitys;
     nb_entity = 0;
-    while (tmp != NULL && *tmp++)
-        nb_entity++;
-
-    if (nb_entity == 0)
-    {
-        entitys = malloc(2 * sizeof(entity_t *));
-        entitys[0] = entity;
-        entitys[1] = NULL;
-    } else
-    {
-        entitys = realloc(entitys, (nb_entity + 2) * sizeof(entity_t *));
-        entitys[nb_entity] = entity;
-        entitys[nb_entity + 1] = NULL;
+    while (tmp != NULL && *tmp != NULL) {
+        log_debug("entity[%d] : %p", nb_entity, *tmp);
+        ++nb_entity;
+        tmp++;
     }
+    log_debug("nb_entity : %d", nb_entity);
+
+    entitys = realloc(entitys, (nb_entity + 2) * sizeof(entity_t *));
+    entitys[nb_entity] = entity;
+
+    entitys[nb_entity + 1] = NULL;
+
+    log_debug("ADD ENTITY AT %d : %p", nb_entity,entitys[nb_entity]);
+    log_debug("ADD ENTITY AT %d : %p", nb_entity + 1,entitys[nb_entity + 1]);
     return NULL;
 }
 

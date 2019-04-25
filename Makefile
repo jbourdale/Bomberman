@@ -46,7 +46,7 @@ LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread
 all: 		$(NAME)
 
 $(NAME):	$(OBJ)
-			$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+			$(CC) -g -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 			rm -f $(OBJ)

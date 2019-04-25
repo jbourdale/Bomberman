@@ -66,23 +66,40 @@ int                         handle_entitys_click(SDL_Event e)
 int             handle_entity_key_events(SDL_Event e)
 {
     entity_t    **entitys;
-    int         i, nb_entity;
-
+    int         i, nb_entity, j;
     entitys = entitys_manager(NULL);
     nb_entity = 0;
     while(entitys[nb_entity] != NULL)
         nb_entity++;
 
     i = 0;
+    j = 0;
+
     while(i < nb_entity && entitys[i] != NULL)
     {
-        log_debug("entitys[i] : %d", i);
-        if(entitys[i] && entitys[i]->on_key_stroke != NULL)
+        entitys = entitys_manager(NULL);
+        log_debug("i : %d", i);
+        log_debug("entitys[%d] : %p", i, entitys[i]);
+        log_debug("entitys[%d]->name : %s", i, entitys[i]->name);
+        if(entitys[i]->on_key_stroke != NULL)
         {
+            // arr[j] = i;
+            // log_debug("j : %d, arr[%d] : %d", j, arr[j], i);
+            // j++;
             entitys[i]->on_key_stroke(entitys[i], e);
             log_debug("on_key_stroke end");
         }
+        log_debug("entitys[%d] : %p", i, entitys[i]);
+        log_debug("entitys addr : %p ", entitys);
         i++;
     }
+
+    // log_debug("youhou");
+    // for (int k = j - 1; k >= 0; k--) {
+    //     log_debug("arr[%d] : %d", k, arr[k]);
+    //     entitys[arr[k]]->on_key_stroke(entitys[arr[k]], e);
+    // }
+
+    log_debug("end handle_entity_key_events");
     return 0;
 }

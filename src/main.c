@@ -49,7 +49,8 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
     }
     if (key_state[SDL_SCANCODE_SPACE])
     {
-        entity_t *player = create_entity("player");
+        entity_t *player = create_entity("bomb");
+        log_debug("BOMB CREATED : %p", player);
         position_component_t *pos_comp2 = create_position_component(pos_comp->x, pos_comp->y, 50, 50);
         log_debug("create animation_comp");
         animation_component_t *animation_comp = create_animation_component("./resources/bomb.png", 0, 24, 24, 0);
@@ -72,9 +73,6 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
         add_animation_keyframe(animation_comp2, 1000, 7, 0);
         add_animation_keyframe(animation_comp2, 1000, 8, 1);
 
-        log_debug("animation 1 running : %d", animation_comp->running);
-        log_debug("animation 2 running : %d", animation_comp2->running);
-
         add_component_to_entity(player, (void *)pos_comp2);
         add_component_to_entity(player, (void *)animation_comp);
         add_component_to_entity(player, (void *)animation_comp2);
@@ -94,7 +92,7 @@ int main() {
     // INIT ENGINE
     start_engine();
 
-    entity_t *mario = create_entity("mario");
+    entity_t *mario = create_entity("player");
     mario->on_key_stroke = on_mario_keystroke;
     pos_comp = create_position_component(0, 0, 200, 200);
     texture_comp = create_texture_component("./resources/Mario.png");

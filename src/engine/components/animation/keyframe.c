@@ -37,7 +37,6 @@ void 						add_keyframe_on_finish_event(
 	keyframe_t 				*keyframe_iterator;
 	int 					i;
 
-	log_debug("add_keyframe_on_finish_event on %d", keyframe_id);
 
 	if (animation != NULL) {
 		i = 0;
@@ -46,7 +45,6 @@ void 						add_keyframe_on_finish_event(
 			i++;
 			keyframe_iterator = keyframe_iterator->next;
 		}
-		log_debug("ADDING ON FINISH EVENT ON %p KEYFRAME", keyframe_iterator);
 		if (keyframe_iterator != NULL)
 			keyframe_iterator->on_finish = f;
 	} else
@@ -77,7 +75,6 @@ int 			add_animation_keyframe(animation_component_t *animation, int duration, in
 	if (keyframe_iterator == NULL) {
 		keyframe->active = 1;
 		animation->first_keyframe = keyframe;
-		log_debug("adding keyframe as first > first_keyframe == %p", animation->first_keyframe);
 		return 0;
 	}
 
@@ -86,8 +83,6 @@ int 			add_animation_keyframe(animation_component_t *animation, int duration, in
         keyframe_iterator = keyframe_iterator->next;
         i++;
     }
-    log_debug("ADDING THE %d EME KEYFRAME : %p", i + 1, keyframe);
     keyframe_iterator->next = keyframe;
-    log_debug("keyframe->next == NULL : %d", keyframe_iterator->next == NULL);
 	return i;
 }
