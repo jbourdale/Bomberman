@@ -12,10 +12,7 @@ int               create_sprite(SDL_Renderer* renderer, char *filename, SDL_Text
     SDL_RWops     *rwop;
     SDL_Surface   *surface;
 
-    log_debug("create_sprite for filename : %s", filename);
     rwop = SDL_RWFromFile(filename, "rb");
-    log_debug("rwop == NULL : %d", rwop == NULL);
-
     surface = IMG_LoadPNG_RW(rwop);
     if (surface == NULL)
     {
@@ -25,7 +22,5 @@ int               create_sprite(SDL_Renderer* renderer, char *filename, SDL_Text
     free(rwop);
 
     *sprite = SDL_CreateTextureFromSurface(renderer, surface);
-    log_debug("sprite created : %p", sprite);
-    log_debug("returning new sprite");
     return 0;
 }

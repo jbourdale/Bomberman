@@ -14,16 +14,19 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
 
     if (!entity->displayed)
         return ;
-    
+
     pos_comp = (position_component_t*)find_component_by_name(entity, "position_component");
     if (pos_comp == NULL)
         return ;
 
-    animation_comps = (animation_component_t **)find_components_by_name(entity, "animation_component");
+    animation_comps = (animation_component_t **)find_components_by_name(
+        entity,
+        "animation_component"
+    );
     if (animation_comps == NULL) {
         render_entity_texture(renderer, entity, pos_comp);
     } else {
-        render_entity_animation(renderer, animation_comps, pos_comp);
+        render_entity_animation(renderer, entity, animation_comps, pos_comp);
     }
 }
 
@@ -50,6 +53,7 @@ void                render_entitys()
 // TODO : Cut this function in smaller ones
 void                        render_entity_animation(
     SDL_Renderer            *renderer,
+    entity_t                *entity,
     animation_component_t   **comps,
     position_component_t    *pos_comp
 ) {
@@ -71,19 +75,6 @@ void                        render_entity_animation(
     if (i == nb_animation) {
         return;
     }
-    // log_debug("COMP ITERATOR [0] -> RUNNING : %d", comps_iterator[0]->running);
-    // log_debug("COMP ITERATOR [1] -> RUNNING : %d", comps_iterator[1]->running);
-    // log_debug("COMP ITERATOR [2] == NULL : %d", comps_iterator[2] == NULL);
-    // log_debug("comps_iterator != NULL : %d", comps_iterator != NULL);
-    // log_debug("comps_iterator[0] != NULL : %d", comps_iterator[i] != NULL);
-    // while(comps_iterator != NULL && comps_iterator[i] != NULL && !comps_iterator[i]->running) {
-    //     log_debug("loop over animations comps : %d", i);
-    //     i++;
-    // }
-    // log_debug("RUNNING ANIMATION %d, RUNNING %d", comps_iterator[i]->id, comps_iterator[i]->id);
-    // // if no animation is running
-    // if (comps_iterator[i] == NULL || !comps_iterator[i]->running)
-    //     return;
 
     // finding the current active keyframe
     keyfame_iterator = comps_iterator[i]->first_keyframe;
@@ -103,11 +94,14 @@ void                        render_entity_animation(
     // if it doesn't but the animation is looping, go back to the first one
     if (SDL_GetTicks() - comps_iterator[i]->last_animation_tick > keyfame_iterator->duration) {
         comps_iterator[i]->last_animation_tick = SDL_GetTicks();
-        
         keyfame_iterator->active = 0;
+        if (keyfame_iterator->on_finish != NULL)
+            keyfame_iterator->on_finish(entity);
+
         if (keyfame_iterator->next != NULL) {
-            log_debug("GO TO NEXT KEYFRAME : %p", keyfame_iterator->next);
             keyfame_iterator->next->active = 1;
+            if (keyfame_iterator->next->on_start != NULL)
+                keyfame_iterator->next->on_start(entity);
         }
         else if (comps_iterator[i]->is_looping) {
             comps_iterator[i]->first_keyframe->active = 1;

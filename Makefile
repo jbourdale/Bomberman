@@ -9,11 +9,9 @@
 CC 		= 	gcc
 
 BASE_SRC =	./src/engine/engine.c \
-			./src/engine/entitys/animate.c \
 			./src/engine/entitys/components.c \
 			./src/engine/entitys/init.c \
 			./src/engine/entitys/render.c \
-			./src/engine/entitys/events.c \
 			./src/engine/entitys/manager.c \
 			./src/engine/components/components.c \
 			./src/engine/components/position/position.c \
@@ -26,8 +24,6 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/events/events.c \
 			./src/engine/systems/systems.c \
 			./src/engine/systems/position/position.c \
-			./src/engine/network/network.c \
-			./src/engine/network/utils/utils.c \
 			./src/engine/tools/entitys/fps_indicator/fps_indicator.c \
 			./src/log/log.c
 
@@ -50,7 +46,7 @@ LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread
 all: 		$(NAME)
 
 $(NAME):	$(OBJ)
-			$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
+			$(CC) -g -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 			rm -f $(OBJ)

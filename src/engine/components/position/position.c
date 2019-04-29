@@ -35,6 +35,8 @@ int                         destroy_position_component(entity_t *entity)
 
 int position_component_to_rect(position_component_t *comp, SDL_Rect *rect)
 {
+    if (rect == NULL || comp == NULL)
+        return 1;
     rect->x = comp->x;
     rect->y = comp->y;
     rect->w = comp->width;

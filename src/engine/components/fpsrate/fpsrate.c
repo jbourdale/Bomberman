@@ -17,14 +17,16 @@ fpsrate_component_t    *create_fpsrate_component(Uint32 fpsrate)
     return component;
 }
 
-int         set_framerate(Uint32 framerate)
+int         set_framerate(Uint32 uframerate)
 {
     entity_t                *entity;
+    Uint32                  framerate;
     fpsrate_component_t     *comp;
 
-    if (!framerate)
+    framerate = uframerate;
+    if (!uframerate)
         framerate = DEFAULT_FRAME_RATE;
-    
+
     entity = find_first_entity_by_name("fps_indicator");
     if (entity == NULL)
         return 1;

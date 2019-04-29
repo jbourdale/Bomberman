@@ -11,7 +11,6 @@ int             add_component_to_entity(entity_t *entity, void *component)
 {
     void        **tmp_comp;
     int         nb_comp;
-    log_debug("add_component_to_entity");
 
     if (component == NULL)
     {
