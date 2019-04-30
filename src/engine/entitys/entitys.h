@@ -21,6 +21,13 @@ typedef struct          entity_s {
     int                 displayed;
 }                       entity_t;
 
+typedef struct entity_linked_list_el_s entity_linked_list_el_t;
+struct                          entity_linked_list_el_s
+{
+    entity_t                    *entity;
+    entity_linked_list_el_t     *next;
+};
+
 /*
  * components.c
  **/
