@@ -41,7 +41,7 @@ int                         handle_entitys_click(SDL_Event e)
     clic.x = e.button.x;
     clic.y = e.button.y;
 
-    entitys = entitys_manager(NULL);
+    entitys = entitys_manager(EGB_Manager_Retrieve);
     nb_entity = 0;
     while(entitys[nb_entity] != NULL)
         nb_entity++;
@@ -63,7 +63,7 @@ int             handle_entity_key_events(SDL_Event e)
 {
     entity_t    **entitys;
     int         i, nb_entity;
-    entitys = entitys_manager(NULL);
+    entitys = entitys_manager(EGB_Manager_Retrieve);
     nb_entity = 0;
     while(entitys[nb_entity] != NULL)
         nb_entity++;
@@ -71,7 +71,7 @@ int             handle_entity_key_events(SDL_Event e)
     i = 0;
     while(i < nb_entity && entitys[i] != NULL)
     {
-        entitys = entitys_manager(NULL); // Refresh entities array because it could have been realloc
+        entitys = entitys_manager(EGB_Manager_Retrieve); // Refresh entities array because it could have been realloc
         if(entitys[i]->on_key_stroke != NULL)
         {
             entitys[i]->on_key_stroke(entitys[i], e);

@@ -8,6 +8,9 @@ typedef struct component_s component_t;
 typedef struct position_component_s position_component_t;
 typedef struct animation_component_s animation_component_t;
 
+// Va args
+#include <stdarg.h>
+
 // SDL
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>

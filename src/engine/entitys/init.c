@@ -26,7 +26,7 @@ entity_t        *create_entity(
     entity->render = _base_entity_render;
     entity->displayed = 1;
 
-    entitys_manager(entity);
+    entitys_manager(EGB_Manager_Add, entity);
     return entity;
 }
 
