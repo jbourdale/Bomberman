@@ -35,13 +35,10 @@ void                render_entitys()
 {
     SDL_Renderer    *renderer;
     entity_t        **current_entitys;
-    int             i, nb_entity;
+    int             i;
 
     renderer = get_current_renderer();
     current_entitys = entitys_manager(EGB_Manager_Retrieve);
-    nb_entity = 0;
-    while(current_entitys[nb_entity] != NULL)
-        nb_entity++;
     i = 0;
     while (current_entitys[i] != NULL)
     {

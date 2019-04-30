@@ -9,8 +9,8 @@
 
 entity_t        **entitys_manager(Uint32 flags, ...)
 {
-    va_list     argp;
     static      entity_t **entitys;
+    va_list     argp;
     entity_t    *entity;
     entity_t    **tmp;
     int         nb_entity;
@@ -33,6 +33,9 @@ entity_t        **entitys_manager(Uint32 flags, ...)
         entitys[nb_entity] = entity;
         entitys[nb_entity + 1] = NULL;
         va_end(argp);
+        return NULL;
+    }
+    if (flags & EGB_Manager_Delete) {
         return NULL;
     }
     return NULL;

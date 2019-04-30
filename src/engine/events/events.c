@@ -71,11 +71,11 @@ int             handle_entity_key_events(SDL_Event e)
     i = 0;
     while(i < nb_entity && entitys[i] != NULL)
     {
-        entitys = entitys_manager(EGB_Manager_Retrieve); // Refresh entities array because it could have been realloc
         if(entitys[i]->on_key_stroke != NULL)
         {
             entitys[i]->on_key_stroke(entitys[i], e);
         }
+        entitys = entitys_manager(EGB_Manager_Retrieve); // Refresh entities array because it could have been realloc
         i++;
     }
     return 0;

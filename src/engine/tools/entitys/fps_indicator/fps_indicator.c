@@ -22,7 +22,7 @@ void                        create_fps_indicator()
     fps_indicator_entity->render = fps_indicator_render;
     fps_indicator_entity->displayed = 1;
 
-    pos_comp = create_position_component(1820, 1030, 100, 75);
+    pos_comp = create_position_component(1820, 1030, EGB_Position_AlwaysOnTop, 100, 75);
     add_component_to_entity(fps_indicator_entity, (void *)pos_comp);
 
     fps_comp = create_fpsrate_component(DEFAULT_FRAME_RATE);

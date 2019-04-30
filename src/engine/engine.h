@@ -11,6 +11,9 @@ typedef struct animation_component_s animation_component_t;
 // Va args
 #include <stdarg.h>
 
+// limits
+#include <limits.h>
+
 // SDL
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
