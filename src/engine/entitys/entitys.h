@@ -21,11 +21,25 @@ typedef struct          entity_s {
     int                 displayed;
 }                       entity_t;
 
+typedef struct entity_linked_list_el_s entity_linked_list_el_t;
+struct                          entity_linked_list_el_s
+{
+    entity_t                    *entity;
+    entity_linked_list_el_t     *next;
+    entity_linked_list_el_t     *prev;
+};
+
+typedef struct                  entity_manager_s 
+{
+    entity_linked_list_el_t     *first;
+}                               entity_manager_t;
+
 /*
  * components.c
  **/
 int add_component_to_entity(entity_t *entity, void *component);
 int add_components_to_entity(entity_t *entity, void **components);
+int register_entity_to_managers(entity_t *entity, component_t *component);
 
 /*
  * event.c
@@ -50,7 +64,8 @@ void render_entity_animation(SDL_Renderer*, entity_t *, animation_component_t**,
 /*
  * manager.c
  **/
-entity_t **entitys_manager(Uint32 flags, ...);
+entity_manager_t *entitys_manager(Uint32 flags, ...);
+void add_entity_to_manager(entity_manager_t *manager, entity_t *entity);
 entity_t *find_first_entity_by_name(char *name);
 #define EGB_Manager_Retrieve 1
 #define EGB_Manager_Add 2

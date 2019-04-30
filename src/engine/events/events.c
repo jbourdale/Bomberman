@@ -31,52 +31,51 @@ int 			handle_events()
 int                         handle_entitys_click(SDL_Event e)
 {
     SDL_Renderer            *renderer;
-    entity_t                **entitys;
+    entity_manager_t        *entities_manager;
+    entity_linked_list_el_t *manager_iterator;
+    entity_t                *entity;
     SDL_Rect                entity_rect;
     SDL_Point               clic;
     position_component_t    *comp;
-    int                     i, nb_entity;
+
 
     renderer = get_current_renderer();
     clic.x = e.button.x;
     clic.y = e.button.y;
 
-    entitys = entitys_manager(EGB_Manager_Retrieve);
-    nb_entity = 0;
-    while(entitys[nb_entity] != NULL)
-        nb_entity++;
-    i = 0;
-    while(i < nb_entity && entitys[i] != NULL)
+    entities_manager = entitys_manager(EGB_Manager_Retrieve);
+    manager_iterator = entities_manager->first;
+    while(manager_iterator != NULL)
     {
-        comp = (position_component_t *)find_component_by_name(entitys[i], "position_component");
+        entity = manager_iterator->entity;
+        comp = (position_component_t *)find_component_by_name(entity, "position_component");
         position_component_to_rect(comp, &entity_rect);
 
-        if (entitys[i]->on_click != NULL && SDL_PointInRect(&clic, &entity_rect) == SDL_TRUE)
-            entitys[i]->on_click(renderer, entitys[i], e);
-        i++;
+        if (entity->on_click != NULL && SDL_PointInRect(&clic, &entity_rect) == SDL_TRUE) {
+            entity->on_click(renderer, entity, e);
+        }
+        manager_iterator = manager_iterator->next;
     }
     return 0;
 }
 
 
-int             handle_entity_key_events(SDL_Event e)
+int                             handle_entity_key_events(SDL_Event e)
 {
-    entity_t    **entitys;
-    int         i, nb_entity;
-    entitys = entitys_manager(EGB_Manager_Retrieve);
-    nb_entity = 0;
-    while(entitys[nb_entity] != NULL)
-        nb_entity++;
-
-    i = 0;
-    while(i < nb_entity && entitys[i] != NULL)
+    entity_manager_t            *entities_manager;
+    entity_linked_list_el_t     *manager_iterator;
+    entity_t                    *entity;
+    
+    entities_manager = entitys_manager(EGB_Manager_Retrieve);
+    manager_iterator = entities_manager->first;
+    while(manager_iterator != NULL)
     {
-        if(entitys[i]->on_key_stroke != NULL)
+        entity = manager_iterator->entity;
+        if(entity->on_key_stroke != NULL)
         {
-            entitys[i]->on_key_stroke(entitys[i], e);
+            entity->on_key_stroke(entity, e);
         }
-        entitys = entitys_manager(EGB_Manager_Retrieve); // Refresh entities array because it could have been realloc
-        i++;
+        manager_iterator = manager_iterator->next;
     }
     return 0;
 }

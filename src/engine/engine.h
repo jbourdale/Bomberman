@@ -7,6 +7,7 @@ typedef struct entity_s entity_t;
 typedef struct component_s component_t;
 typedef struct position_component_s position_component_t;
 typedef struct animation_component_s animation_component_t;
+typedef struct entity_manager_s entity_manager_t; 
 
 // Va args
 #include <stdarg.h>

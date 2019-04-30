@@ -47,7 +47,7 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
     if (key_state[SDL_SCANCODE_SPACE])
     {
         entity_t *player = create_entity("bomb");
-        position_component_t *pos_comp2 = create_position_component(pos_comp->x, pos_comp->y, EGB_Position_AlwaysOnTop, 50, 50);
+        position_component_t *pos_comp2 = create_position_component(pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
         animation_component_t *animation_comp = create_animation_component("./resources/bomb.png", 0, 24, 24, 0);
         int start_keyframe = add_animation_keyframe(animation_comp, 400, 0, 0);
         add_keyframe_on_start_event(animation_comp, start_keyframe, on_start);

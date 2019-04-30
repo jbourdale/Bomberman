@@ -26,8 +26,11 @@ int             add_component_to_entity(entity_t *entity, void *component)
     entity->components = realloc(entity->components, (nb_comp + 2) * sizeof(void *));
     entity->components[nb_comp] = component;
     entity->components[nb_comp + 1] = NULL;
+    register_entity_to_managers(entity, (component_t *)component);
     return 0;
 }
+
+
 
 int             add_components_to_entity(entity_t *entity, void **components)
 {
@@ -44,4 +47,14 @@ int             add_components_to_entity(entity_t *entity, void **components)
     }
     free(comp);
     return 0;
+}
+
+
+int register_entity_to_managers(entity_t *entity, component_t *component)
+{
+    if(strcmp(component->name, "position_component") == 0) {
+        entities_position_manager(EGB_Manager_Add, entity, (position_component_t *) component);
+        return 0;
+    }
+    return 1;
 }

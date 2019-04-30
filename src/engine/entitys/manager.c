@@ -7,32 +7,39 @@
 */
 #include "entitys.h"
 
-entity_t        **entitys_manager(Uint32 flags, ...)
+entity_manager_t                            *entitys_manager(Uint32 flags, ...)
 {
-    static      entity_t **entitys;
-    va_list     argp;
-    entity_t    *entity;
-    entity_t    **tmp;
-    int         nb_entity;
+    static entity_manager_t                 *manager;
+    entity_linked_list_el_t                 *entity_iterator, *entry;
+    entity_t                                *entity;
+    va_list                                 argp;
+
 
     if (flags & EGB_Manager_Retrieve)
-        return entitys;
+        return manager;
     if (flags & EGB_Manager_Add)
     {
         va_start(argp, flags);
         entity = va_arg(argp, entity_t*);
+        va_end(argp);
         if (entity == NULL)
             return NULL;
-        tmp = entitys;
-        nb_entity = 0;
-        while (tmp != NULL && *tmp != NULL) {
-            ++nb_entity;
-            tmp++;
+
+        entry = malloc(sizeof(entity_linked_list_el_t));
+        entry->entity = entity;
+        entry->next = NULL;
+
+        if (manager == NULL) {
+            manager = malloc(sizeof(entity_manager_t));
+            manager->first = entry;
+            return NULL;
         }
-        entitys = realloc(entitys, (nb_entity + 2) * sizeof(entity_t *));
-        entitys[nb_entity] = entity;
-        entitys[nb_entity + 1] = NULL;
-        va_end(argp);
+        // Add entry to manager
+        entity_iterator = manager->first;
+        while (entity_iterator->next != NULL) {
+            entity_iterator = entity_iterator->next;
+        }
+        entity_iterator->next = entry;
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
@@ -41,18 +48,17 @@ entity_t        **entitys_manager(Uint32 flags, ...)
     return NULL;
 }
 
-entity_t            *find_first_entity_by_name(char *name)
+entity_t                        *find_first_entity_by_name(char *name)
 {
-    entity_t        **entities;
-    int             i;
+    entity_manager_t            *manager;
+    entity_linked_list_el_t     *manager_entry;
 
-    i = 0;
-    entities = entitys_manager(EGB_Manager_Retrieve);
-    while(entities != NULL && entities[i] != NULL)
+    manager = entitys_manager(EGB_Manager_Retrieve);
+    manager_entry = manager->first;
+    while(manager_entry != NULL && manager_entry->next != NULL)
     {
-        if (strcmp(entities[i]->name, name) == 0)
-            return entities[i];
-        i++;
+        if (strcmp(manager_entry->entity->name, name) == 0)
+            return manager_entry->entity;
     }
     return NULL;
 }

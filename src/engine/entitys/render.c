@@ -31,19 +31,21 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
 }
 
 
-void                render_entitys()
+void                        render_entitys()
 {
-    SDL_Renderer    *renderer;
-    entity_t        **current_entitys;
-    int             i;
+    SDL_Renderer            *renderer;
+    entity_manager_t        *entities_manager;
+    entity_linked_list_el_t *manager_iterator;
+    entity_t                *entity;
 
     renderer = get_current_renderer();
-    current_entitys = entitys_manager(EGB_Manager_Retrieve);
-    i = 0;
-    while (current_entitys[i] != NULL)
+    entities_manager = entities_position_manager(EGB_Manager_Retrieve);
+    manager_iterator = entities_manager->first;
+    while (manager_iterator != NULL)
     {
-        current_entitys[i]->render(renderer, current_entitys[i]);
-        i++;
+        entity = manager_iterator->entity;
+        entity->render(renderer, entity);
+        manager_iterator = manager_iterator->next;
     }
 }
 

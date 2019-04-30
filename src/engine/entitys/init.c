@@ -26,6 +26,7 @@ entity_t        *create_entity(
     entity->render = _base_entity_render;
     entity->displayed = 1;
 
+    log_debug("entity created : %p", entity);
     entitys_manager(EGB_Manager_Add, entity);
     return entity;
 }
