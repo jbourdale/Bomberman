@@ -83,6 +83,7 @@ int main() {
     log_info("### Starting Bomberman");
 
     // INIT ENGINE
+    EGB_set_resources_dir("./resources");
     start_engine();
 
     entity_t *mario = create_entity("player");
@@ -93,7 +94,7 @@ int main() {
     add_component_to_entity(mario, (void *)pos_comp);
     add_component_to_entity(mario, (void *)texture_comp);
 
-    set_framerate(300);
+    set_framerate(120);
     run_engine();
 
     // STOPING ENGINE

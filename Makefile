@@ -29,7 +29,8 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/systems/systems.c \
 			./src/engine/systems/position/position.c \
 			./src/engine/tools/entitys/fps_indicator/fps_indicator.c \
-			./src/log/log.c
+			./src/engine/log/log.c \
+			./src/engine/resources/resources.c
 
 SRC 	= 	$(BASE_SRC)\
 			src/main.c
