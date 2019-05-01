@@ -14,14 +14,17 @@ SDL_Color   black = {0,0,0, 255};
 void                        create_fps_indicator()
 {
     position_component_t    *pos_comp;
+    event_component_t       *event_comp;
     fpsrate_component_t     *fps_comp;
 
     log_debug("create_fps_indicator");
     entity_t *fps_indicator_entity = create_entity("fps_indicator");
-    fps_indicator_entity->on_key_stroke = fps_indicator_on_key_stroke;
     fps_indicator_entity->render = fps_indicator_render;
     fps_indicator_entity->displayed = 1;
 
+    event_comp = create_event_keystroke_component(fps_indicator_on_key_stroke);
+    add_component_to_entity(fps_indicator_entity, (void *)event_comp);
+    
     pos_comp = create_position_component(1820, 1030, EGB_Position_AlwaysOnTop, 100, 75);
     add_component_to_entity(fps_indicator_entity, (void *)pos_comp);
 

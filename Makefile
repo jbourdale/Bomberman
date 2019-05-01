@@ -20,6 +20,9 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/components/animation/animation.c \
 			./src/engine/components/animation/keyframe.c \
 			./src/engine/components/texture/texture.c \
+			./src/engine/components/events/click/click.c \
+			./src/engine/components/events/keystroke/keystroke.c \
+			./src/engine/components/events/hover/hover.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
 			./src/engine/events/events.c \

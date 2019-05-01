@@ -7,6 +7,7 @@ typedef struct entity_s entity_t;
 typedef struct component_s component_t;
 typedef struct position_component_s position_component_t;
 typedef struct animation_component_s animation_component_t;
+typedef struct event_component_s event_component_t;
 typedef struct entity_manager_s entity_manager_t; 
 
 // Va args
@@ -29,6 +30,10 @@ typedef struct entity_manager_s entity_manager_t;
 #include "./components/texture/texture.h"
 #include "./components/fpsrate/fpsrate.h"
 #include "./components/components.h"
+#include "./components/events/events.h"
+#include "./components/events/click/click.h"
+#include "./components/events/hover/hover.h"
+#include "./components/events/keystroke/keystroke.h"
 
 // ENTITY
 #include "./entitys/entitys.h"

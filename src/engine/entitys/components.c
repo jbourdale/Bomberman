@@ -56,5 +56,17 @@ int register_entity_to_managers(entity_t *entity, component_t *component)
         entities_position_manager(EGB_Manager_Add, entity, (position_component_t *) component);
         return 0;
     }
+    else if(strcmp(component->name, "event_keystroke_component") == 0) {
+        event_keystroke_manager(EGB_Manager_Add, entity, (event_component_t *) component);
+        return 0;
+    }
+    else if(strcmp(component->name, "event_click_component") == 0) {
+        event_click_manager(EGB_Manager_Add, entity, (event_component_t *) component);
+        return 0;
+    }
+    else if(strcmp(component->name, "event_hover_component") == 0) {
+        event_click_manager(EGB_Manager_Add, entity, (event_component_t *) component);
+        return 0;
+    }
     return 1;
 }

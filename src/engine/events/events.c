@@ -30,29 +30,30 @@ int 			handle_events()
 
 int                         handle_entitys_click(SDL_Event e)
 {
-    SDL_Renderer            *renderer;
     entity_manager_t        *entities_manager;
     entity_linked_list_el_t *manager_iterator;
     entity_t                *entity;
     SDL_Rect                entity_rect;
-    SDL_Point               clic;
-    position_component_t    *comp;
+    SDL_Point               click;
+    position_component_t    *pos_comp;
+    event_component_t       *event_comp;
 
+    click.x = e.button.x;
+    click.y = e.button.y;
 
-    renderer = get_current_renderer();
-    clic.x = e.button.x;
-    clic.y = e.button.y;
-
-    entities_manager = entitys_manager(EGB_Manager_Retrieve);
+    entities_manager = event_click_manager(EGB_Manager_Retrieve);
+    if (entities_manager == NULL)
+        return 1;
     manager_iterator = entities_manager->first;
     while(manager_iterator != NULL)
     {
         entity = manager_iterator->entity;
-        comp = (position_component_t *)find_component_by_name(entity, "position_component");
-        position_component_to_rect(comp, &entity_rect);
+        pos_comp = (position_component_t *)find_component_by_name(entity, "position_component");
+        event_comp = (event_component_t *)find_component_by_name(entity, "event_click_component");
+        position_component_to_rect(pos_comp, &entity_rect);
 
-        if (entity->on_click != NULL && SDL_PointInRect(&clic, &entity_rect) == SDL_TRUE) {
-            entity->on_click(renderer, entity, e);
+        if (SDL_PointInRect(&click, &entity_rect) == SDL_TRUE) {
+            event_comp->f(entity, e);
         }
         manager_iterator = manager_iterator->next;
     }
@@ -65,16 +66,17 @@ int                             handle_entity_key_events(SDL_Event e)
     entity_manager_t            *entities_manager;
     entity_linked_list_el_t     *manager_iterator;
     entity_t                    *entity;
+    event_component_t           *event_comp;
     
-    entities_manager = entitys_manager(EGB_Manager_Retrieve);
+    entities_manager = event_keystroke_manager(EGB_Manager_Retrieve);
+    if (entities_manager == NULL)
+        return 1;
     manager_iterator = entities_manager->first;
     while(manager_iterator != NULL)
     {
         entity = manager_iterator->entity;
-        if(entity->on_key_stroke != NULL)
-        {
-            entity->on_key_stroke(entity, e);
-        }
+        event_comp = (event_component_t *)find_component_by_name(entity, "event_keystroke_component");
+        event_comp->f(entity, e);
         manager_iterator = manager_iterator->next;
     }
     return 0;

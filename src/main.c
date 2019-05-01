@@ -86,13 +86,14 @@ int main() {
     start_engine();
 
     entity_t *mario = create_entity("player");
-    mario->on_key_stroke = on_mario_keystroke;
+    event_component_t *keystroke_event = create_event_keystroke_component(on_mario_keystroke);
     pos_comp = create_position_component(0, 0, EGB_Position_Classic, 200, 200);
     texture_comp = create_texture_component("./resources/Mario.png");
+    add_component_to_entity(mario, (void *)keystroke_event);
     add_component_to_entity(mario, (void *)pos_comp);
     add_component_to_entity(mario, (void *)texture_comp);
 
-    set_framerate(50);
+    set_framerate(300);
     run_engine();
 
     // STOPING ENGINE

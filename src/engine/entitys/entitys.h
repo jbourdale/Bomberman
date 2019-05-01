@@ -10,11 +10,7 @@ typedef struct          entity_s {
     void                **components;
 
     // EVENTS
-    void                (*on_init)();
-    void                (*on_click)();
     void                (*on_destroy)();
-    void                (*on_key_stroke)();
-    // void             (*on_hover)(); // may cause perf problems
 
     // GRAPHICAL
     void                (*render)(SDL_Renderer* renderer, entity_t *self);
@@ -26,7 +22,6 @@ struct                          entity_linked_list_el_s
 {
     entity_t                    *entity;
     entity_linked_list_el_t     *next;
-    entity_linked_list_el_t     *prev;
 };
 
 typedef struct                  entity_manager_s 

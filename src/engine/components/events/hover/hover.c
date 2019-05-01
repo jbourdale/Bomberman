@@ -1,18 +1,41 @@
 /*
-** manager.c for  in /Bomberman/bourda_j
+** hover.c for  in /Bomberman/bourda_j
 **
 ** Made by BOURDALE Jules
 ** Login   <bourda_j@etna-alternance.net>
 **
 */
-#include "position.h"
 
-entity_manager_t                            *entities_position_manager(Uint32 flags, ...)
+#include "hover.h"
+
+event_component_t       *create_event_hover_component(void(*f))
+{
+    event_component_t   *component;
+
+    component = malloc(sizeof(event_component_t));
+    component->name = strdup("event_hover_component");
+    component->f = f;
+    return component;
+}
+
+int                         destroy_event_hover_component(entity_t *entity)
+{
+    event_component_t       *comp;
+
+    comp = (event_component_t *)find_component_by_name(entity, "event_hover_component");
+    if (comp == NULL)
+        return 1;
+
+    free(comp->name);
+    free(comp);
+    return 0;
+}
+
+entity_manager_t                            *event_hover_manager(Uint32 flags, ...)
 {
     static entity_manager_t                 *manager;
     entity_linked_list_el_t                 *entity_iterator, *entry;
     entity_t                                *entity;
-    position_component_t                    *entity_pos; 
     va_list                                 argp;
 
 
@@ -22,7 +45,6 @@ entity_manager_t                            *entities_position_manager(Uint32 fl
     {
         va_start(argp, flags);
         entity = va_arg(argp, entity_t*);
-        entity_pos = va_arg(argp, position_component_t*);
         va_end(argp);
         if (entity == NULL)
             return NULL;
@@ -38,22 +60,9 @@ entity_manager_t                            *entities_position_manager(Uint32 fl
         }
         // Add entry to manager
         entity_iterator = manager->first;
-        while (
-            entity_iterator->next != NULL && 
-            ((position_component_t*)find_component_by_name(entity_iterator->next->entity, "position_component"))->z <= entity_pos->z
-        ) {
+        while (entity_iterator->next != NULL)
             entity_iterator = entity_iterator->next;
-        }
-
-        if (((position_component_t*)find_component_by_name(entity_iterator->entity, "position_component"))->z > entity_pos->z) {
-            entry->next = entity_iterator;
-            entity_iterator = entry;
-            if (manager->first == entry->next)
-                manager->first = entry;
-        } else {
-            entry->next = entity_iterator->next;
-            entity_iterator->next = entry;
-        }
+        entity_iterator->next = entry;
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
