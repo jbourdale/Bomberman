@@ -8,7 +8,7 @@
 
 #include "animation.h"
 
-void 						add_keyframe_on_start_event(
+void 						EGB_Keyframe_Set_OnStart(
 	animation_component_t *animation,
 	int keyframe_id,
 	void (*f)(entity_t *)
@@ -29,7 +29,7 @@ void 						add_keyframe_on_start_event(
 		log_warn("add_keyframe_on_start_event > animation provided is NULL");
 }
 
-void 						add_keyframe_on_finish_event(
+void 						EGB_Keyframe_Set_OnFinish(
 	animation_component_t *animation,
 	int keyframe_id,
 	void (*f)(entity_t *)
@@ -51,7 +51,7 @@ void 						add_keyframe_on_finish_event(
 		log_warn("add_keyframe_on_finish_event > animation provided is NULL");
 }
 
-int 			add_animation_keyframe(animation_component_t *animation, int duration, int x, int y)
+int 			EGB_Animation_AddKeyframe(animation_component_t *animation, int duration, int x, int y)
 {
 	keyframe_t 	*keyframe_iterator;
 	keyframe_t  *keyframe;

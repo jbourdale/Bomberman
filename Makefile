@@ -8,33 +8,33 @@
 
 CC 		= 	gcc
 
-BASE_SRC =	./src/engine/engine.c \
-			./src/engine/entitys/components.c \
+BASE_SRC =	./src/engine/resources/manager.c \
+			./src/engine/resources/load/load.c \
+			./src/engine/resources/load/ttf.c \
+			./src/engine/resources/load/png.c \
+			./src/engine/resources/resources.c \
 			./src/engine/entitys/init.c \
+			./src/engine/entitys/observable.c \
+			./src/engine/entitys/components.c \
 			./src/engine/entitys/render.c \
-			./src/engine/entitys/manager.c \
-			./src/engine/components/components.c \
-			./src/engine/components/position/position.c \
-			./src/engine/components/position/manager.c \
+			./src/engine/sdl/sprite/sprite.c \
+			./src/engine/sdl/sdl.c \
 			./src/engine/components/fpsrate/fpsrate.c \
 			./src/engine/components/animation/animation.c \
 			./src/engine/components/animation/keyframe.c \
-			./src/engine/components/texture/texture.c \
-			./src/engine/components/events/click/click.c \
+			./src/engine/components/components.c \
+			./src/engine/components/position/observable.c \
+			./src/engine/components/position/position.c \
 			./src/engine/components/events/keystroke/keystroke.c \
 			./src/engine/components/events/hover/hover.c \
-			./src/engine/sdl/sprite/sprite.c \
-			./src/engine/sdl/sdl.c \
-			./src/engine/events/events.c \
-			./src/engine/systems/systems.c \
-			./src/engine/systems/position/position.c \
+			./src/engine/components/events/click/click.c \
+			./src/engine/components/texture/texture.c \
 			./src/engine/tools/entitys/fps_indicator/fps_indicator.c \
+			./src/engine/events/events.c \
+			./src/engine/framerate/framerate.c \
 			./src/engine/log/log.c \
-			./src/engine/resources/resources.c \
-			./src/engine/resources/manager.c \
-			./src/engine/resources/load/load.c \
-			./src/engine/resources/load/png.c \
-			./src/engine/resources/load/ttf.c
+			./src/engine/engine.c
+
 
 SRC 	= 	$(BASE_SRC)\
 			src/main.c

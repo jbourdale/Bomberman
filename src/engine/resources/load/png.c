@@ -8,14 +8,14 @@
 
 #include "load.h"
 
-SDL_Texture         *EGB_load_png_resource(char *filename)
+SDL_Texture         *EGB_Resource_LoadPNG(char *filename)
 {
     SDL_Renderer    *renderer;
     SDL_Texture     *texture;
 
-    renderer = get_current_renderer();
+    renderer = EGB_SDL_GetCurrentRenderer();
     texture = NULL;
-    if(create_sprite(renderer, filename, &texture)) {
+    if(EGB_SDL_LoadTexture(renderer, filename, &texture)) {
         log_debug("A NULL sprite have been created, aborting.");
         return NULL;
     }

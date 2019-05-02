@@ -11,8 +11,8 @@
 
 #include "../../../engine.h"
 
-entity_manager_t *event_hover_manager(Uint32 flags, ...);
-event_component_t *create_event_hover_component(void(*f));
-int destroy_event_hover_component(entity_t *entity);
+entity_manager_t *EGB_Observable_Event_Hover(Uint32 flags, ...);
+event_component_t *EGB_Component_CreateEventHover(void(*f));
+int EGB_Component_DestroyEventHover(entity_t *entity);
 
 #endif

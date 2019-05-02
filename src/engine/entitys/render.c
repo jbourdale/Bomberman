@@ -7,7 +7,7 @@
 */
 #include "entitys.h"
 
-void                        _base_entity_render(SDL_Renderer *renderer, entity_t *entity)
+void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, entity_t *entity)
 {
     animation_component_t   **animation_comps;
     position_component_t    *pos_comp;
@@ -15,31 +15,32 @@ void                        _base_entity_render(SDL_Renderer *renderer, entity_t
     if (!entity->displayed)
         return ;
 
-    pos_comp = (position_component_t*)find_component_by_name(entity, "position_component");
+    pos_comp = (position_component_t*)EGB_FindComponentByName(entity, "position_component");
     if (pos_comp == NULL)
         return ;
 
-    animation_comps = (animation_component_t **)find_components_by_name(
+    animation_comps = (animation_component_t **)EGB_FindComponentsByName(
         entity,
         "animation_component"
     );
     if (animation_comps == NULL) {
-        render_entity_texture(renderer, entity, pos_comp);
+        EGB_Render_EntityTexture(renderer, entity, pos_comp);
     } else {
-        render_entity_animation(renderer, entity, animation_comps, pos_comp);
+        EGB_Render_EntityAnimation(renderer, entity, animation_comps, pos_comp);
     }
 }
 
 
-void                        render_entitys()
+void                        EGB_Render_Entities()
 {
     SDL_Renderer            *renderer;
     entity_manager_t        *entities_manager;
     entity_linked_list_el_t *manager_iterator;
     entity_t                *entity;
 
-    renderer = get_current_renderer();
-    entities_manager = entities_position_manager(EGB_Manager_Retrieve);
+    renderer = EGB_SDL_GetCurrentRenderer();
+    SDL_RenderClear(renderer);
+    entities_manager = EGB_Observable_Position(EGB_Manager_Retrieve);
     manager_iterator = entities_manager->first;
     while (manager_iterator != NULL)
     {
@@ -47,10 +48,11 @@ void                        render_entitys()
         entity->render(renderer, entity);
         manager_iterator = manager_iterator->next;
     }
+    SDL_RenderPresent(renderer);
 }
 
 // TODO : Cut this function in smaller ones
-void                        render_entity_animation(
+void                        EGB_Render_EntityAnimation(
     SDL_Renderer            *renderer,
     entity_t                *entity,
     animation_component_t   **comps,
@@ -109,7 +111,7 @@ void                        render_entity_animation(
         }
     }
 
-    position_component_to_rect(pos_comp, &position_on_screen);
+    EGB_Component_PositionToRect(pos_comp, &position_on_screen);
     sprite_rect.x = keyfame_iterator->x * comps_iterator[i]->sprite_width;
     sprite_rect.y = keyfame_iterator->y * comps_iterator[i]->sprite_height;
     sprite_rect.w = comps_iterator[i]->sprite_width;
@@ -117,7 +119,7 @@ void                        render_entity_animation(
     SDL_RenderCopy(renderer, comps_iterator[i]->spritesheet, &sprite_rect, &position_on_screen);
 }
 
-void                        render_entity_texture(
+void                        EGB_Render_EntityTexture(
     SDL_Renderer            *renderer,
     entity_t                *entity,
     position_component_t    *pos_comp
@@ -126,10 +128,10 @@ void                        render_entity_texture(
     texture_component_t      *comp;
     SDL_Rect                position_on_screen;
 
-    comp = (texture_component_t*)find_component_by_name(entity, "texture_component");
+    comp = (texture_component_t*)EGB_FindComponentByName(entity, "texture_component");
     if (comp == NULL)
         return ;
 
-    position_component_to_rect(pos_comp, &position_on_screen);
+    EGB_Component_PositionToRect(pos_comp, &position_on_screen);
     SDL_RenderCopy(renderer, comp->texture, NULL, &position_on_screen);
 }

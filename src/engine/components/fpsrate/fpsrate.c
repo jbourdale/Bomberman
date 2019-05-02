@@ -7,7 +7,7 @@
 */
 #include "fpsrate.h"
 
-fpsrate_component_t    *create_fpsrate_component(Uint32 fpsrate)
+fpsrate_component_t    *EGB_Component_CreateFPSRate(Uint32 fpsrate)
 {
     fpsrate_component_t    *component;
 
@@ -17,7 +17,7 @@ fpsrate_component_t    *create_fpsrate_component(Uint32 fpsrate)
     return component;
 }
 
-int         set_framerate(Uint32 uframerate)
+int         EGB_SetFramerate(Uint32 uframerate)
 {
     entity_t                *entity;
     Uint32                  framerate;
@@ -27,10 +27,10 @@ int         set_framerate(Uint32 uframerate)
     if (!uframerate)
         framerate = DEFAULT_FRAME_RATE;
 
-    entity = find_first_entity_by_name("fps_indicator");
+    entity = EGB_Entity_FindFirstByName("fps_indicator");
     if (entity == NULL)
         return 1;
-    comp = (fpsrate_component_t *)find_component_by_name(entity, "fpsrate_component");
+    comp = (fpsrate_component_t *)EGB_FindComponentByName(entity, "fpsrate_component");
     if (comp == NULL)
         return 1;
 
@@ -38,11 +38,11 @@ int         set_framerate(Uint32 uframerate)
     return 0;
 }
 
-int                         destroy_fpsrate_component(entity_t *entity)
+int                         EGB_Component_DestroyFPSRate(entity_t *entity)
 {
     position_component_t    *comp;
 
-    comp = (position_component_t *)find_component_by_name(entity, "fpsrate_component");
+    comp = (position_component_t *)EGB_FindComponentByName(entity, "fpsrate_component");
     if (comp == NULL)
         return 1;
 

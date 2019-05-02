@@ -3,6 +3,6 @@
 
 #include "../../engine.h"
 
-int create_sprite(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
+int EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
 
 #endif

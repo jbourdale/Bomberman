@@ -11,8 +11,8 @@
 
 #include "../../../engine.h"
 
-entity_manager_t *event_keystroke_manager(Uint32 flags, ...);
-event_component_t *create_event_keystroke_component(void(*f));
-int destroy_event_keystroke_component(entity_t *entity);
+entity_manager_t *EGB_Observable_Event_KeyStroke(Uint32 flags, ...);
+event_component_t *EGB_Component_CreateEventKeyStroke(void(*f));
+int EGB_Component_DestroyEventKeyStroke(entity_t *entity);
 
 #endif

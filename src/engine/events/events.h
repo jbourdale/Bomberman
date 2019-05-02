@@ -3,8 +3,8 @@
 
 #include "../engine.h"
 
-int handle_events();
-int handle_entitys_click(SDL_Event e);
-int handle_entity_key_events(SDL_Event e);
+int EGB_Event_Handle();
+int EGB_Event_HandleClick(SDL_Event e);
+int EGB_Event_HandleKeyStroke(SDL_Event e);
 
 #endif

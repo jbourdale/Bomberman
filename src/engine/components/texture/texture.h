@@ -17,7 +17,7 @@ typedef struct 		texture_component_s
 	SDL_Texture 	*texture;
 }					texture_component_t;
 
-texture_component_t 	*create_texture_component(char *filename);
-int 					destroy_texture_component();
+texture_component_t 	*EGB_Component_CreateTexture(char *filename);
+int 					EGB_Component_DestroyTexture();
 
 #endif

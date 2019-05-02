@@ -8,7 +8,7 @@
 
 #include "animation.h"
 
-animation_component_t 		*create_animation_component(
+animation_component_t 		*EGB_Component_CreateAnimation(
 	char 					*spritesheet,
 	int 					id,
 	int 					sprite_w,
@@ -29,7 +29,7 @@ animation_component_t 		*create_animation_component(
 	comp->sprite_height = sprite_h;
 
 	texture = NULL;
-    if((texture = (SDL_Texture *)EGB_get_resource(spritesheet)) == NULL) {
+    if((texture = (SDL_Texture *)EGB_Get_Resource(spritesheet)) == NULL) {
         log_debug("Can't find %s resource, aborting.", spritesheet);
         return NULL;
     }
@@ -37,11 +37,11 @@ animation_component_t 		*create_animation_component(
     return comp;
 }
 
-int 						start_entity_animation(entity_t *entity, int animation_id) {
+int 						EGB_Component_StartAnimation(entity_t *entity, int animation_id) {
 	animation_component_t 	**animation_comps;
 	int 					i;
 
-	animation_comps = (animation_component_t **)find_components_by_name(entity, "animation_component");
+	animation_comps = (animation_component_t **)EGB_FindComponentsByName(entity, "animation_component");
 	i = 0;
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		if (animation_comps[i]->id == animation_id) {
@@ -61,11 +61,11 @@ int 						start_entity_animation(entity_t *entity, int animation_id) {
 	return 1;
 }
 
-int						stop_entity_animation(entity_t *entity, int animation_id) {
+int						EGB_Component_StopAnimation(entity_t *entity, int animation_id) {
 	animation_component_t 	**animation_comps;
 	int 					i;
 
-	animation_comps = (animation_component_t **)find_components_by_name(entity, "animation_component");
+	animation_comps = (animation_component_t **)EGB_FindComponentsByName(entity, "animation_component");
 	i = 0;
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		if (animation_comps[i]->id == animation_id) {

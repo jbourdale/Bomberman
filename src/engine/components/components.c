@@ -7,7 +7,7 @@
 */
 #include "components.h"
 
-void                *find_component_by_name(entity_t *entity, char *name)
+void                *EGB_FindComponentByName(entity_t *entity, char *name)
 {
     component_t     **comp;
     int             i;
@@ -29,7 +29,7 @@ void                *find_component_by_name(entity_t *entity, char *name)
     return NULL;
 }
 
-void                **find_components_by_name(entity_t *entity, char *name)
+void                **EGB_FindComponentsByName(entity_t *entity, char *name)
 {
     component_t     **comp_iterator;
     void            **result_comps = NULL;

@@ -7,7 +7,7 @@
 */
 #include "texture.h"
 
-texture_component_t 	*create_texture_component(char *filename)
+texture_component_t 	*EGB_Component_CreateTexture(char *filename)
 {
 	texture_component_t *comp;
 	SDL_Texture 		*texture;
@@ -16,7 +16,7 @@ texture_component_t 	*create_texture_component(char *filename)
 	comp->name = strdup("texture_component");
 
 	texture = NULL;
-    if((texture = (SDL_Texture *)EGB_get_resource(filename)) == NULL) {
+    if((texture = (SDL_Texture *)EGB_Get_Resource(filename)) == NULL) {
         log_debug("Can't find %s resource", filename);
         return NULL;
     }
@@ -24,6 +24,6 @@ texture_component_t 	*create_texture_component(char *filename)
 	return comp;
 }
 
-int 		destroy_texture_component() {
+int 		EGB_Component_DestroyTexture() {
 	return 1;
 }

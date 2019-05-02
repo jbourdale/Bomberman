@@ -3,8 +3,6 @@
 
 #include "../engine.h"
 
-#define DEFAULT_ANIMATION_DELAI_FRAME 100
-
 typedef struct          entity_s {
     char                *name;
     void                **components;
@@ -32,47 +30,33 @@ typedef struct                  entity_manager_s
 /*
  * components.c
  **/
-int add_component_to_entity(entity_t *entity, void *component);
-int add_components_to_entity(entity_t *entity, void **components);
-int register_entity_to_managers(entity_t *entity, component_t *component);
-
-/*
- * event.c
- **/
-//todo
+int EGB_Component_AddToEntity(entity_t *entity, void *component);
+int EGB_Component_AddManyToEntity(entity_t *entity, void **components);
+int EGB_Observables_RegisterEntity(entity_t *entity, component_t *component);
 
 /*
  * init.c
  **/
-entity_t *_init_entity();
-entity_t *create_entity(char *name);
-int destroy_entity(entity_t *entity);
+entity_t    *EGB_Entity_Create(char *name);
+int         EGB_Entity_Destroy(entity_t *entity);
 
 /*
  * render.c
  **/
-void _base_entity_render(SDL_Renderer *renderer, entity_t *entity);
-void render_entitys();
-void render_entity_texture(SDL_Renderer*, entity_t*, position_component_t*);
-void render_entity_animation(SDL_Renderer*, entity_t *, animation_component_t**, position_component_t*);
+void EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, entity_t *entity);
+void EGB_Render_Entities();
+void EGB_Render_EntityTexture(SDL_Renderer*, entity_t*, position_component_t*);
+void EGB_Render_EntityAnimation(SDL_Renderer*, entity_t *, animation_component_t**, position_component_t*);
 
 /*
- * manager.c
+ * observable.c
  **/
-entity_manager_t *entitys_manager(Uint32 flags, ...);
-void add_entity_to_manager(entity_manager_t *manager, entity_t *entity);
-entity_t *find_first_entity_by_name(char *name);
+entity_manager_t    *EGB_Observable_Entity(Uint32 flags, ...);
+entity_t            *EGB_Entity_FindFirstByName(char *name);
 
 #define EGB_Manager_Retrieve            0x0001
 #define EGB_Manager_Add                 0x0010
 #define EGB_Manager_Delete              0x0100
 #define EGB_Resources_Manager_Set_Dir   0x1000
-
-/*
- * animate.c
- **/
-void enable_entity_animation(entity_t *entity);
-void disable_entity_animation(entity_t *entity);
-void toggle_entity_animation(entity_t *entity);
 
 #endif

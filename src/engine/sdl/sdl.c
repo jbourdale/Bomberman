@@ -1,5 +1,5 @@
 /*
-** engine.c for  in /Bomberman/bourda_j
+** sdl.c for  in /Bomberman/bourda_j
 **
 ** Made by BOURDALE Jules
 ** Login   <bourda_j@etna-alternance.net>
@@ -8,7 +8,7 @@
 
 #include "sdl.h"
 
-int                 init_SDL()
+int                 EGB_SDL_Init()
 {
     SDL_Window      *window;
     SDL_Renderer    *renderer;
@@ -22,7 +22,7 @@ int                 init_SDL()
 
     if (!TTF_Init())
     {
-        if (init_window(&window) != 0 || window == NULL) {
+        if (EGB_SDL_InitWindow(&window) != 0 || window == NULL) {
             printf("SDL_Init failed: %s\n", SDL_GetError());
             return 1;
         }
@@ -37,7 +37,7 @@ int                 init_SDL()
     return 0;
 }
 
-int                     init_window(SDL_Window **window)
+int                     EGB_SDL_InitWindow(SDL_Window **window)
 {
     SDL_DisplayMode     mode;
     if (SDL_GetCurrentDisplayMode(0, &mode))
@@ -62,7 +62,7 @@ int                     init_window(SDL_Window **window)
 }
 
 
-SDL_Renderer        *get_current_renderer()
+SDL_Renderer        *EGB_SDL_GetCurrentRenderer()
 {
     SDL_Window      *window;
 

@@ -7,7 +7,7 @@
 */
 #include "sprite.h"
 
-int               create_sprite(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite)
+int               EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite)
 {
     SDL_RWops     *rwop;
     SDL_Surface   *surface;

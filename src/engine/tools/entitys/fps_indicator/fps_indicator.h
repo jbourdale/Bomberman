@@ -6,10 +6,9 @@
 
 #include "../../../engine.h"
 
-void        create_fps_indicator();
-void        fps_indicator_on_key_stroke(entity_t *entity, SDL_Event e);
-void        fps_indicator_init();
-void        fps_indicator_render();
-float       fps_indicator_compute();
+void        EGB_FPSIndicator_Create();
+void        EGB_FPSIndicator_KeyStrokeEventHandler(entity_t *entity, SDL_Event e);
+void        EGB_FPSIndicator_Renderer();
+float       EGB_FPSIndicator_Compute();
 
 #endif

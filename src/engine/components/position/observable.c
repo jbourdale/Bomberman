@@ -7,7 +7,7 @@
 */
 #include "position.h"
 
-entity_manager_t                            *entities_position_manager(Uint32 flags, ...)
+entity_manager_t                            *EGB_Observable_Position(Uint32 flags, ...)
 {
     static entity_manager_t                 *manager;
     entity_linked_list_el_t                 *entity_iterator, *entry;
@@ -40,12 +40,12 @@ entity_manager_t                            *entities_position_manager(Uint32 fl
         entity_iterator = manager->first;
         while (
             entity_iterator->next != NULL && 
-            ((position_component_t*)find_component_by_name(entity_iterator->next->entity, "position_component"))->z <= entity_pos->z
+            ((position_component_t*)EGB_FindComponentByName(entity_iterator->next->entity, "position_component"))->z <= entity_pos->z
         ) {
             entity_iterator = entity_iterator->next;
         }
 
-        if (((position_component_t*)find_component_by_name(entity_iterator->entity, "position_component"))->z > entity_pos->z) {
+        if (((position_component_t*)EGB_FindComponentByName(entity_iterator->entity, "position_component"))->z > entity_pos->z) {
             entry->next = entity_iterator;
             entity_iterator = entry;
             if (manager->first == entry->next)

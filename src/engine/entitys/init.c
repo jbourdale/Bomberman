@@ -7,9 +7,7 @@
 */
 #include "entitys.h"
 
-entity_t        *create_entity(
-    char        *name
-)
+entity_t        *EGB_Entity_Create(char *name)
 {
     log_debug("create_entity");
     entity_t    *entity;
@@ -20,15 +18,15 @@ entity_t        *create_entity(
 
     entity->on_destroy = NULL;
     
-    entity->render = _base_entity_render;
+    entity->render = EGB_Entity_DefaultRenderer;
     entity->displayed = 1;
 
     log_debug("entity created : %p", entity);
-    entitys_manager(EGB_Manager_Add, entity);
+    EGB_Observable_Entity(EGB_Manager_Add, entity);
     return entity;
 }
 
-int                 destroy_entity(entity_t *entity)
+int                 EGB_Entity_Destroy(entity_t *entity)
 {
     free(entity);
     return 0;

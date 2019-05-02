@@ -43,16 +43,15 @@ typedef struct 		animation_component_s
     Uint32          last_animation_tick;
 } 					animation_component_t;
 
-animation_component_t 		*create_animation_component(
-	char 					*spritesheet, 
-	int 					id,
-	int 					sprite_w,
-	int 					sprite_h,
-	int 					is_looping
-);
-int add_animation_keyframe(animation_component_t *animation, int duration, int x, int y);
-int start_entity_animation(entity_t *entity, int animation_id);
-int	stop_entity_animation(entity_t *entity, int animation_id);
-void add_keyframe_on_start_event(animation_component_t *animation, int keyframe_id, void (*f)(entity_t *self));
-void add_keyframe_on_finish_event(animation_component_t *animation, int keyframe_id, void (*f)(entity_t *self));
+
+// animation.c
+animation_component_t	*EGB_Component_CreateAnimation(char*, int, int, int, int);
+int 					EGB_Component_StartAnimation(entity_t *, int);
+int						EGB_Component_StopAnimation(entity_t *, int);
+
+// keyframe.c
+int 	EGB_Animation_AddKeyframe(animation_component_t *, int, int, int);
+void 	EGB_Keyframe_Set_OnStart(animation_component_t *, int, void (*f)(entity_t *self));
+void 	EGB_Keyframe_Set_OnFinish(animation_component_t *, int, void (*f)(entity_t *self));
+
 #endif

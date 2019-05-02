@@ -8,7 +8,7 @@
 
 #include "load.h"
 
-TTF_Font            *EGB_load_ttf_resource(char *filename, int size)
+TTF_Font            *EGB_Resource_LoadTTF(char *filename, int size)
 {
     return TTF_OpenFont(filename, size); //this opens a font style and sets a size
 }

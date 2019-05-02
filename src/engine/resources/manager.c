@@ -7,7 +7,7 @@
 */
 #include "./resources.h"
 
-resources_list_t            *EGB_resources_manager(Uint32 flags, ...)
+resources_list_t            *EGB_ResourcesManager(Uint32 flags, ...)
 {
     static resources_list_t *manager = NULL;
     resource_t              *resources_iterator, *entry;

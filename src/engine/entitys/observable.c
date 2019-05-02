@@ -7,7 +7,7 @@
 */
 #include "entitys.h"
 
-entity_manager_t                            *entitys_manager(Uint32 flags, ...)
+entity_manager_t                            *EGB_Observable_Entity(Uint32 flags, ...)
 {
     static entity_manager_t                 *manager;
     entity_linked_list_el_t                 *entity_iterator, *entry;
@@ -48,12 +48,12 @@ entity_manager_t                            *entitys_manager(Uint32 flags, ...)
     return NULL;
 }
 
-entity_t                        *find_first_entity_by_name(char *name)
+entity_t                        *EGB_Entity_FindFirstByName(char *name)
 {
     entity_manager_t            *manager;
     entity_linked_list_el_t     *manager_entry;
 
-    manager = entitys_manager(EGB_Manager_Retrieve);
+    manager = EGB_Observable_Entity(EGB_Manager_Retrieve);
     manager_entry = manager->first;
     while(manager_entry != NULL && manager_entry->next != NULL)
     {

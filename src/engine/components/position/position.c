@@ -7,7 +7,7 @@
 */
 #include "position.h"
 
-position_component_t    *create_position_component(int x, int y, int z, int width, int height)
+position_component_t    *EGB_Component_CreatePosition(int x, int y, int z, int width, int height)
 {
     position_component_t    *component;
 
@@ -21,11 +21,11 @@ position_component_t    *create_position_component(int x, int y, int z, int widt
     return component;
 }
 
-int                         destroy_position_component(entity_t *entity)
+int                         EGB_Component_DestroyPosition(entity_t *entity)
 {
     position_component_t    *comp;
 
-    comp = (position_component_t *)find_component_by_name(entity, "position_component");
+    comp = (position_component_t *)EGB_FindComponentByName(entity, "position_component");
     if (comp == NULL)
         return 1;
 
@@ -34,7 +34,7 @@ int                         destroy_position_component(entity_t *entity)
     return 0;
 }
 
-int position_component_to_rect(position_component_t *comp, SDL_Rect *rect)
+int EGB_Component_PositionToRect(position_component_t *comp, SDL_Rect *rect)
 {
     if (rect == NULL || comp == NULL)
         return 1;

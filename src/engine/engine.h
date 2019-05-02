@@ -8,7 +8,6 @@
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
-
 // Forward declaration
 typedef struct entity_s entity_t;
 typedef struct component_s component_t;
@@ -39,6 +38,9 @@ typedef struct resources_list_s resources_list_t;
 // LOGS
 #include "./log/log.h"
 
+// FRAMERATE
+#include "./framerate/framerate.h"
+
 // COMPONENTS
 #include "./components/animation/animation.h"
 #include "./components/position/position.h"
@@ -60,10 +62,6 @@ typedef struct resources_list_s resources_list_t;
 // SDL
 #include "./sdl/sdl.h"
 
-// SYSTEMS
-#include "./systems/systems.h"
-#include "./systems/position/position.h"
-
 // EVENTS
 #include "./events/events.h"
 
@@ -71,18 +69,10 @@ typedef struct resources_list_s resources_list_t;
 // TOOLS
 #include "./tools/entitys/fps_indicator/fps_indicator.h"
 
-int start_engine();
-int run_engine();
-int stop_engine();
+int EGB_Run();
+int EGB_Init();
+int EGB_Quit();
 
-void move_position_component_right(position_component_t *comp, int offset);
-void move_position_component_left(position_component_t *comp, int offset);
-void move_position_component_up(position_component_t *comp, int offset);
-void move_position_component_down(position_component_t *comp, int offset);
-
-void start_framerate_regulation();
-void regulate_frame_rate();
-
-int create_sprite(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
+int EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
 
 #endif

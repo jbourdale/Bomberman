@@ -8,34 +8,32 @@
 
 #include "fps_indicator.h"
 
-TTF_Font*   font;
 SDL_Color   black = {0,0,0, 255};
 
-void                        create_fps_indicator()
+void                        EGB_FPSIndicator_Create()
 {
     position_component_t    *pos_comp;
     event_component_t       *event_comp;
     fpsrate_component_t     *fps_comp;
 
     log_debug("create_fps_indicator");
-    entity_t *fps_indicator_entity = create_entity("fps_indicator");
-    fps_indicator_entity->render = fps_indicator_render;
+    entity_t *fps_indicator_entity = EGB_Entity_Create("fps_indicator");
+    fps_indicator_entity->render = EGB_FPSIndicator_Renderer;
     fps_indicator_entity->displayed = 1;
 
-    event_comp = create_event_keystroke_component(fps_indicator_on_key_stroke);
-    add_component_to_entity(fps_indicator_entity, (void *)event_comp);
+    event_comp = EGB_Component_CreateEventKeyStroke(EGB_FPSIndicator_KeyStrokeEventHandler);
+    EGB_Component_AddToEntity(fps_indicator_entity, (void *)event_comp);
     
-    pos_comp = create_position_component(1820, 1030, EGB_Position_AlwaysOnTop, 100, 75);
-    add_component_to_entity(fps_indicator_entity, (void *)pos_comp);
+    pos_comp = EGB_Component_CreatePosition(1820, 1030, EGB_Position_AlwaysOnTop, 100, 75);
+    EGB_Component_AddToEntity(fps_indicator_entity, (void *)pos_comp);
 
-    fps_comp = create_fpsrate_component(DEFAULT_FRAME_RATE);
-    add_component_to_entity(fps_indicator_entity , (void *)fps_comp);
+    fps_comp = EGB_Component_CreateFPSRate(DEFAULT_FRAME_RATE);
+    EGB_Component_AddToEntity(fps_indicator_entity , (void *)fps_comp);
 
-    font = (TTF_Font *)EGB_get_resource("spacefont.ttf"); //this opens a font style and sets a size
     log_debug("create_fps_indicator end");
 }
 
-void fps_indicator_on_key_stroke(entity_t *entity, SDL_Event e)
+void EGB_FPSIndicator_KeyStrokeEventHandler(entity_t *entity, SDL_Event e)
 {
     if(e.key.keysym.sym == SDLK_F4 && e.type == SDL_KEYDOWN)
     {
@@ -43,23 +41,26 @@ void fps_indicator_on_key_stroke(entity_t *entity, SDL_Event e)
     }
 }
 
-void                        fps_indicator_render(SDL_Renderer *renderer, entity_t *entity)
+void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, entity_t *entity)
 {
     SDL_Rect                screen_position;
     position_component_t    *pos_comp;
     char                    *text;
     float                   fps;
+    TTF_Font                *font;
 
     if (!entity->displayed)
         return;
 
-    pos_comp = (position_component_t*)find_component_by_name(entity, "position_component");
+    font = (TTF_Font *)EGB_Get_Resource("spacefont.ttf"); //this opens a font style and sets a size
+    
+    pos_comp = (position_component_t*)EGB_FindComponentByName(entity, "position_component");
     if (pos_comp == NULL) {
         return ;
     }
-    position_component_to_rect(pos_comp, &screen_position);
+    EGB_Component_PositionToRect(pos_comp, &screen_position);
 
-    fps = fps_indicator_compute();
+    fps = EGB_FPSIndicator_Compute();
     text = malloc(3 * sizeof(char));
     sprintf(text, "%2.f", fps);
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text, black);
@@ -70,7 +71,7 @@ void                        fps_indicator_render(SDL_Renderer *renderer, entity_
     SDL_FreeSurface(surfaceMessage);
 }
 
-float               fps_indicator_compute()
+float               EGB_FPSIndicator_Compute()
 {
     static int      *frametimes = NULL; // An array to store frame times:
     static int      framecount = 0;

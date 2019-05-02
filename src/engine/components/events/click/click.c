@@ -8,7 +8,7 @@
 
 #include "click.h"
 
-event_component_t       *create_event_click_component(void(*f))
+event_component_t       *EGB_Component_CreateEventClick(void(*f))
 {
     event_component_t   *component;
 
@@ -18,11 +18,11 @@ event_component_t       *create_event_click_component(void(*f))
     return component;
 }
 
-int                         destroy_event_click_component(entity_t *entity)
+int                         EGB_Component_DestroyEventClick(entity_t *entity)
 {
     event_component_t       *comp;
 
-    comp = (event_component_t *)find_component_by_name(entity, "event_click_component");
+    comp = (event_component_t *)EGB_FindComponentByName(entity, "event_click_component");
     if (comp == NULL)
         return 1;
 
@@ -31,7 +31,7 @@ int                         destroy_event_click_component(entity_t *entity)
     return 0;
 }
 
-entity_manager_t                            *event_click_manager(Uint32 flags, ...)
+entity_manager_t                            *EGB_Observable_Event_Click(Uint32 flags, ...)
 {
     static entity_manager_t                 *manager;
     entity_linked_list_el_t                 *entity_iterator, *entry;

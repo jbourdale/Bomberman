@@ -7,7 +7,7 @@
 */
 #include "entitys.h"
 
-int             add_component_to_entity(entity_t *entity, void *component)
+int             EGB_Component_AddToEntity(entity_t *entity, void *component)
 {
     void        **tmp_comp;
     int         nb_comp;
@@ -26,22 +26,22 @@ int             add_component_to_entity(entity_t *entity, void *component)
     entity->components = realloc(entity->components, (nb_comp + 2) * sizeof(void *));
     entity->components[nb_comp] = component;
     entity->components[nb_comp + 1] = NULL;
-    register_entity_to_managers(entity, (component_t *)component);
+    EGB_Observables_RegisterEntity(entity, (component_t *)component);
     return 0;
 }
 
 
 
-int             add_components_to_entity(entity_t *entity, void **components)
+int             EGB_Component_AddManyToEntity(entity_t *entity, void **components)
 {
     void        **comp;
 
     comp = components;
     while (*comp++)
     {
-        if(add_component_to_entity(entity, *comp))
+        if(EGB_Component_AddToEntity(entity, *comp))
         {
-            destroy_entity(entity);
+            EGB_Entity_Destroy(entity);
             return 1;
         }
     }
@@ -50,22 +50,22 @@ int             add_components_to_entity(entity_t *entity, void **components)
 }
 
 
-int register_entity_to_managers(entity_t *entity, component_t *component)
+int EGB_Observables_RegisterEntity(entity_t *entity, component_t *component)
 {
     if(strcmp(component->name, "position_component") == 0) {
-        entities_position_manager(EGB_Manager_Add, entity, (position_component_t *) component);
+        EGB_Observable_Position(EGB_Manager_Add, entity, (position_component_t *) component);
         return 0;
     }
     else if(strcmp(component->name, "event_keystroke_component") == 0) {
-        event_keystroke_manager(EGB_Manager_Add, entity, (event_component_t *) component);
+        EGB_Observable_Event_KeyStroke(EGB_Manager_Add, entity, (event_component_t *) component);
         return 0;
     }
     else if(strcmp(component->name, "event_click_component") == 0) {
-        event_click_manager(EGB_Manager_Add, entity, (event_component_t *) component);
+        EGB_Observable_Event_Click(EGB_Manager_Add, entity, (event_component_t *) component);
         return 0;
     }
     else if(strcmp(component->name, "event_hover_component") == 0) {
-        event_click_manager(EGB_Manager_Add, entity, (event_component_t *) component);
+        EGB_Observable_Event_Hover(EGB_Manager_Add, entity, (event_component_t *) component);
         return 0;
     }
     return 1;
