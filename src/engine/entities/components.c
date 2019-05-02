@@ -5,7 +5,7 @@
 ** Login   <bourda_j@etna-alternance.net>
 **
 */
-#include "entitys.h"
+#include "entities.h"
 
 int             EGB_Component_AddToEntity(entity_t *entity, void *component)
 {

@@ -13,7 +13,7 @@ int                 EGB_Run()
     SDL_Renderer    *renderer;
 
     renderer = EGB_SDL_GetCurrentRenderer();
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     quit = 0;
     while (quit == 0)
     {

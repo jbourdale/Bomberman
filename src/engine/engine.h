@@ -57,7 +57,7 @@ typedef struct resources_list_s resources_list_t;
 #include "./resources/load/load.h"
 
 // ENTITY
-#include "./entitys/entitys.h"
+#include "./entities/entities.h"
 
 // SDL
 #include "./sdl/sdl.h"
@@ -67,7 +67,7 @@ typedef struct resources_list_s resources_list_t;
 
 
 // TOOLS
-#include "./tools/entitys/fps_indicator/fps_indicator.h"
+#include "./tools/entities/fps_indicator/fps_indicator.h"
 
 int EGB_Run();
 int EGB_Init();

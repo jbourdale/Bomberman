@@ -5,7 +5,7 @@
 ** Login   <bourda_j@etna-alternance.net>
 **
 */
-#include "entitys.h"
+#include "entities.h"
 
 entity_t        *EGB_Entity_Create(char *name)
 {

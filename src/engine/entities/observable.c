@@ -5,7 +5,7 @@
 ** Login   <bourda_j@etna-alternance.net>
 **
 */
-#include "entitys.h"
+#include "entities.h"
 
 entity_manager_t                            *EGB_Observable_Entity(Uint32 flags, ...)
 {

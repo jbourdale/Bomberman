@@ -13,10 +13,10 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/resources/load/ttf.c \
 			./src/engine/resources/load/png.c \
 			./src/engine/resources/resources.c \
-			./src/engine/entitys/init.c \
-			./src/engine/entitys/observable.c \
-			./src/engine/entitys/components.c \
-			./src/engine/entitys/render.c \
+			./src/engine/entities/init.c \
+			./src/engine/entities/observable.c \
+			./src/engine/entities/components.c \
+			./src/engine/entities/render.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
 			./src/engine/components/fpsrate/fpsrate.c \
@@ -29,7 +29,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/events/hover/hover.c \
 			./src/engine/components/events/click/click.c \
 			./src/engine/components/texture/texture.c \
-			./src/engine/tools/entitys/fps_indicator/fps_indicator.c \
+			./src/engine/tools/entities/fps_indicator/fps_indicator.c \
 			./src/engine/events/events.c \
 			./src/engine/framerate/framerate.c \
 			./src/engine/log/log.c \

@@ -5,7 +5,7 @@
 ** Login   <bourda_j@etna-alternance.net>
 **
 */
-#include "entitys.h"
+#include "entities.h"
 
 void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, entity_t *entity)
 {
