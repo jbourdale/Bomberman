@@ -7,65 +7,41 @@
 */
 #include "./resources.h"
 
-char 				*resource_dir = NULL;
-resources_list_t 	*resources_list;
-
-int 				EGB_set_resources_dir(char *dirname) 
+int 				EGB_set_resources_dir(char *dirname)
 {
-	#ifndef __unix__
+	#ifdef _WIN32
 		log_error("[RESOURCES] Resources dir scan are not supported on Windows yet.");
 		return 1;
-	#endif 
+	#endif
 
 	struct stat 	sb;
     if (stat(dirname, &sb) == 0 && S_ISDIR(sb.st_mode)) {
     	log_debug("RESOURCES DIR OK");
-		resource_dir = dirname;
+        EGB_resources_manager(EGB_Resources_Manager_Set_Dir, dirname);
 		return 0;
     }
-	log_error("[RESOURCES] Enable to open resources dir (%s)", dirname);
+	log_error("[RESOURCES] Unable to open resources dir (%s)", dirname);
 	return 1;
 }
 
-void EGB_iterate_resources_dir(const char *dirname)
+int     EGB_set_resource_font_size(char *resource_path, int size)
 {
-    DIR *dir;
-    struct dirent *entry;
+    log_debug("resource path : %s, size : %d", resource_path, size);
+    return 1;
+}
 
-    if (!(dir = opendir(dirname)))
-        return;
+void 					*EGB_get_resource(const char* resource_path)
+{
+    resources_list_t    *manager;
+    resource_t          *resources_iterator;
 
-    while ((entry = readdir(dir)) != NULL) {
-        char path[1024];
-    	snprintf(path, sizeof(path), "%s/%s", dirname, entry->d_name);
-        if (entry->d_type == DT_DIR) {
-            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-                continue;
-            EGB_iterate_resources_dir(path);
-        } else {
-            EGB_load_resource(path);
-        }
+    manager = EGB_resources_manager(EGB_Manager_Retrieve);
+    resources_iterator = manager->first;
+    while (resources_iterator && strcmp(resources_iterator->resource_path, resource_path) != 0) {
+    	resources_iterator = resources_iterator->next;
     }
-    closedir(dir);
-}
-
-
-int 				EGB_load_resources()
-{
-	if (resource_dir == NULL)
-		return 1;
-	EGB_iterate_resources_dir(resource_dir);
-    return 0; 
-}
-
-int		EGB_load_resource(const char* resource_path)
-{
-	log_debug("EGB_load_resource %s", resource_path);
-	return 1;
-}
-
-void 	*EGB_get_resource(const char* resource_path)
-{
-	log_debug("oui %s", resource_path);
+    if (resources_iterator) {
+    	return resources_iterator->resource;
+    }
 	return NULL;
 }

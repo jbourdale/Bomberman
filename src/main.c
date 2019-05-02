@@ -48,7 +48,7 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
     {
         entity_t *player = create_entity("bomb");
         position_component_t *pos_comp2 = create_position_component(pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
-        animation_component_t *animation_comp = create_animation_component("./resources/bomb.png", 0, 24, 24, 0);
+        animation_component_t *animation_comp = create_animation_component("bomb.png", 0, 24, 24, 0);
         int start_keyframe = add_animation_keyframe(animation_comp, 400, 0, 0);
         add_keyframe_on_start_event(animation_comp, start_keyframe, on_start);
         add_animation_keyframe(animation_comp, 400, 1, 0);
@@ -62,7 +62,7 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
         int keyframe_id = add_animation_keyframe(animation_comp, 200, 0, 1);
         add_keyframe_on_finish_event(animation_comp, keyframe_id, on_explosion);
 
-        animation_component_t *animation_comp2 = create_animation_component("./resources/bomb.png", 1, 24, 24, 0);
+        animation_component_t *animation_comp2 = create_animation_component("bomb.png", 1, 24, 24, 0);
         add_animation_keyframe(animation_comp2, 1000, 5, 2);
         add_animation_keyframe(animation_comp2, 1000, 6, 1);
         add_animation_keyframe(animation_comp2, 1000, 7, 0);
@@ -89,7 +89,7 @@ int main() {
     entity_t *mario = create_entity("player");
     event_component_t *keystroke_event = create_event_keystroke_component(on_mario_keystroke);
     pos_comp = create_position_component(0, 0, EGB_Position_Classic, 200, 200);
-    texture_comp = create_texture_component("./resources/Mario.png");
+    texture_comp = create_texture_component("Mario.png");
     add_component_to_entity(mario, (void *)keystroke_event);
     add_component_to_entity(mario, (void *)pos_comp);
     add_component_to_entity(mario, (void *)texture_comp);

@@ -62,9 +62,11 @@ void render_entity_animation(SDL_Renderer*, entity_t *, animation_component_t**,
 entity_manager_t *entitys_manager(Uint32 flags, ...);
 void add_entity_to_manager(entity_manager_t *manager, entity_t *entity);
 entity_t *find_first_entity_by_name(char *name);
-#define EGB_Manager_Retrieve 1
-#define EGB_Manager_Add 2
-#define EGB_Manager_Delete 3
+
+#define EGB_Manager_Retrieve            0x0001
+#define EGB_Manager_Add                 0x0010
+#define EGB_Manager_Delete              0x0100
+#define EGB_Resources_Manager_Set_Dir   0x1000
 
 /*
  * animate.c

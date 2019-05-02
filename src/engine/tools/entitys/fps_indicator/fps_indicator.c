@@ -31,7 +31,7 @@ void                        create_fps_indicator()
     fps_comp = create_fpsrate_component(DEFAULT_FRAME_RATE);
     add_component_to_entity(fps_indicator_entity , (void *)fps_comp);
 
-    font = TTF_OpenFont("./resources/spacefont.ttf", 15); //this opens a font style and sets a size
+    font = (TTF_Font *)EGB_get_resource("spacefont.ttf"); //this opens a font style and sets a size
     log_debug("create_fps_indicator end");
 }
 

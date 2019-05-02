@@ -16,11 +16,8 @@ animation_component_t 		*create_animation_component(
 	int 					is_looping
 )
 {
-	SDL_Renderer			*renderer;
 	animation_component_t 	*comp;
 	SDL_Texture 			*texture;
-
-	renderer = get_current_renderer();
 
 	comp = malloc(sizeof(animation_component_t));
 	comp->name = strdup("animation_component");
@@ -32,8 +29,8 @@ animation_component_t 		*create_animation_component(
 	comp->sprite_height = sprite_h;
 
 	texture = NULL;
-    if(create_sprite(renderer, spritesheet, &texture)) {
-        log_debug("A NULL sprite have been created, aborting.");
+    if((texture = (SDL_Texture *)EGB_get_resource(spritesheet)) == NULL) {
+        log_debug("Can't find %s resource, aborting.", spritesheet);
         return NULL;
     }
     comp->spritesheet = texture;

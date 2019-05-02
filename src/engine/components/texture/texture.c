@@ -11,16 +11,13 @@ texture_component_t 	*create_texture_component(char *filename)
 {
 	texture_component_t *comp;
 	SDL_Texture 		*texture;
-	SDL_Renderer		*renderer;
-
-	renderer = get_current_renderer();
 
 	comp = malloc(sizeof(texture_component_t));
 	comp->name = strdup("texture_component");
 
 	texture = NULL;
-    if(create_sprite(renderer, filename, &texture)) {
-        log_debug("A NULL sprite have been created, aborting.");
+    if((texture = (SDL_Texture *)EGB_get_resource(filename)) == NULL) {
+        log_debug("Can't find %s resource", filename);
         return NULL;
     }
 	comp->texture = texture;

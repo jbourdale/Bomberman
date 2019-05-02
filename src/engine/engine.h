@@ -15,9 +15,9 @@ typedef struct component_s component_t;
 typedef struct position_component_s position_component_t;
 typedef struct animation_component_s animation_component_t;
 typedef struct event_component_s event_component_t;
-typedef struct entity_manager_s entity_manager_t; 
-typedef struct resource_s resource_t; 
-typedef struct resources_list_s resources_list_t; 
+typedef struct entity_manager_s entity_manager_t;
+typedef struct resource_s resource_t;
+typedef struct resources_list_s resources_list_t;
 
 // Va args
 #include <stdarg.h>
@@ -26,9 +26,9 @@ typedef struct resources_list_s resources_list_t;
 #include <limits.h>
 
 // directory handling
-#include <sys/types.h> 
-#include <sys/stat.h> 
-#include <dirent.h> 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #include <unistd.h>
 
 // SDL
@@ -52,6 +52,7 @@ typedef struct resources_list_s resources_list_t;
 
 // RESOURCES
 #include "./resources/resources.h"
+#include "./resources/load/load.h"
 
 // ENTITY
 #include "./entitys/entitys.h"
