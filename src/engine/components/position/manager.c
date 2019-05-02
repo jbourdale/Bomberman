@@ -5,13 +5,14 @@
 ** Login   <bourda_j@etna-alternance.net>
 **
 */
-#include "entitys.h"
+#include "position.h"
 
-entity_manager_t                            *entitys_manager(Uint32 flags, ...)
+entity_manager_t                            *entities_position_manager(Uint32 flags, ...)
 {
     static entity_manager_t                 *manager;
     entity_linked_list_el_t                 *entity_iterator, *entry;
     entity_t                                *entity;
+    position_component_t                    *entity_pos; 
     va_list                                 argp;
 
 
@@ -21,6 +22,7 @@ entity_manager_t                            *entitys_manager(Uint32 flags, ...)
     {
         va_start(argp, flags);
         entity = va_arg(argp, entity_t*);
+        entity_pos = va_arg(argp, position_component_t*);
         va_end(argp);
         if (entity == NULL)
             return NULL;
@@ -36,29 +38,26 @@ entity_manager_t                            *entitys_manager(Uint32 flags, ...)
         }
         // Add entry to manager
         entity_iterator = manager->first;
-        while (entity_iterator->next != NULL) {
+        while (
+            entity_iterator->next != NULL && 
+            ((position_component_t*)find_component_by_name(entity_iterator->next->entity, "position_component"))->z <= entity_pos->z
+        ) {
             entity_iterator = entity_iterator->next;
         }
-        entity_iterator->next = entry;
+
+        if (((position_component_t*)find_component_by_name(entity_iterator->entity, "position_component"))->z > entity_pos->z) {
+            entry->next = entity_iterator;
+            entity_iterator = entry;
+            if (manager->first == entry->next)
+                manager->first = entry;
+        } else {
+            entry->next = entity_iterator->next;
+            entity_iterator->next = entry;
+        }
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
         return NULL;
-    }
-    return NULL;
-}
-
-entity_t                        *find_first_entity_by_name(char *name)
-{
-    entity_manager_t            *manager;
-    entity_linked_list_el_t     *manager_entry;
-
-    manager = entitys_manager(EGB_Manager_Retrieve);
-    manager_entry = manager->first;
-    while(manager_entry != NULL && manager_entry->next != NULL)
-    {
-        if (strcmp(manager_entry->entity->name, name) == 0)
-            return manager_entry->entity;
     }
     return NULL;
 }

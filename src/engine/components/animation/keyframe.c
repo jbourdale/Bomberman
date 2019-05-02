@@ -24,7 +24,7 @@ void 						add_keyframe_on_start_event(
 			keyframe_iterator = keyframe_iterator->next;
 		}
 		if (keyframe_iterator != NULL)
-		keyframe_iterator->on_start = f;
+			keyframe_iterator->on_start = f;
 	} else
 		log_warn("add_keyframe_on_start_event > animation provided is NULL");
 }

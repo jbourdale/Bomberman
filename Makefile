@@ -15,17 +15,22 @@ BASE_SRC =	./src/engine/engine.c \
 			./src/engine/entitys/manager.c \
 			./src/engine/components/components.c \
 			./src/engine/components/position/position.c \
+			./src/engine/components/position/manager.c \
 			./src/engine/components/fpsrate/fpsrate.c \
 			./src/engine/components/animation/animation.c \
 			./src/engine/components/animation/keyframe.c \
 			./src/engine/components/texture/texture.c \
+			./src/engine/components/events/click/click.c \
+			./src/engine/components/events/keystroke/keystroke.c \
+			./src/engine/components/events/hover/hover.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
 			./src/engine/events/events.c \
 			./src/engine/systems/systems.c \
 			./src/engine/systems/position/position.c \
 			./src/engine/tools/entitys/fps_indicator/fps_indicator.c \
-			./src/log/log.c
+			./src/engine/log/log.c \
+			./src/engine/resources/resources.c
 
 SRC 	= 	$(BASE_SRC)\
 			src/main.c

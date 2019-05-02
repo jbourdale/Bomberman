@@ -41,6 +41,7 @@ int start_engine()
         log_error("Couldn't initialize SDL.");
         return 1;
     }
+    EGB_load_resources();
     create_fps_indicator();
     return 0;
 }

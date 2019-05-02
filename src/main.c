@@ -47,7 +47,7 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
     if (key_state[SDL_SCANCODE_SPACE])
     {
         entity_t *player = create_entity("bomb");
-        position_component_t *pos_comp2 = create_position_component(pos_comp->x, pos_comp->y, EGB_Position_AlwaysOnTop, 50, 50);
+        position_component_t *pos_comp2 = create_position_component(pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
         animation_component_t *animation_comp = create_animation_component("./resources/bomb.png", 0, 24, 24, 0);
         int start_keyframe = add_animation_keyframe(animation_comp, 400, 0, 0);
         add_keyframe_on_start_event(animation_comp, start_keyframe, on_start);
@@ -83,16 +83,18 @@ int main() {
     log_info("### Starting Bomberman");
 
     // INIT ENGINE
+    EGB_set_resources_dir("./resources");
     start_engine();
 
     entity_t *mario = create_entity("player");
-    mario->on_key_stroke = on_mario_keystroke;
+    event_component_t *keystroke_event = create_event_keystroke_component(on_mario_keystroke);
     pos_comp = create_position_component(0, 0, EGB_Position_Classic, 200, 200);
     texture_comp = create_texture_component("./resources/Mario.png");
+    add_component_to_entity(mario, (void *)keystroke_event);
     add_component_to_entity(mario, (void *)pos_comp);
     add_component_to_entity(mario, (void *)texture_comp);
 
-    set_framerate(50);
+    set_framerate(120);
     run_engine();
 
     // STOPING ENGINE
