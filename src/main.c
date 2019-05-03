@@ -16,40 +16,33 @@ void on_start(EGB_Entity *entity) {
     log_debug("BOMB PLACED : %s", entity->name);
 }
 
+/**
+ * On mario keystroke
+ */
 void on_mario_keystroke(EGB_Entity *entity) {
     EGB_Component_Position    *pos_comp;
     const Uint8             *key_state = SDL_GetKeyboardState(NULL);
 
     key_state = SDL_GetKeyboardState(NULL);
     pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
-
     if(key_state[SDL_SCANCODE_LEFT])
-    {
         pos_comp->x -= 10;
-    }
     if (key_state[SDL_SCANCODE_RIGHT])
-    {
         pos_comp->x += 10;
-    }
     if (key_state[SDL_SCANCODE_UP])
-    {
         pos_comp->y -= 10;
-    }
     if (key_state[SDL_SCANCODE_DOWN])
-    {
         pos_comp->y += 10;
-    }
     if (key_state[SDL_SCANCODE_SPACE])
     {
         EGB_Entity *player = EGB_Entity_Create("bomb");
-        EGB_Component_Position *pos_comp2 = EGB_Component_CreatePosition(pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
-        EGB_Component_Animation *animation_comp = EGB_Component_CreateAnimation("bomb.png", 0, 24, 24, 0);
-        
+        EGB_Component_Position *pos_comp2 = EGB_Component_CreatePosition(
+            pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
+        EGB_Component_Animation *animation_comp = EGB_Component_CreateAnimation(
+            "bomb.png", 0, 24, 24, 0
+        );
         int start_keyframe = EGB_Animation_AddKeyframe(animation_comp, 400, 0, 0);
         EGB_Keyframe_Set_OnStart(animation_comp, start_keyframe, on_start);
-        
-        EGB_Animation_AddKeyframe(animation_comp, 400, 1, 0);
-        EGB_Animation_AddKeyframe(animation_comp, 400, 2, 0);
         EGB_Animation_AddKeyframe(animation_comp, 400, 1, 0);
         EGB_Animation_AddKeyframe(animation_comp, 400, 2, 0);
         EGB_Animation_AddKeyframe(animation_comp, 200, 3, 0);
@@ -58,17 +51,8 @@ void on_mario_keystroke(EGB_Entity *entity) {
         EGB_Animation_AddKeyframe(animation_comp, 200, 0, 2);
         int keyframe_id = EGB_Animation_AddKeyframe(animation_comp, 200, 0, 1);
         EGB_Keyframe_Set_OnFinish(animation_comp, keyframe_id, on_explosion);
-
-        EGB_Component_Animation *animation_comp2 = EGB_Component_CreateAnimation("bomb.png", 1, 24, 24, 0);
-        EGB_Animation_AddKeyframe(animation_comp2, 1000, 5, 2);
-        EGB_Animation_AddKeyframe(animation_comp2, 1000, 6, 1);
-        EGB_Animation_AddKeyframe(animation_comp2, 1000, 7, 0);
-        EGB_Animation_AddKeyframe(animation_comp2, 1000, 8, 1);
-
         EGB_Component_AddToEntity(player, (void *)pos_comp2);
         EGB_Component_AddToEntity(player, (void *)animation_comp);
-        EGB_Component_AddToEntity(player, (void *)animation_comp2);
-
         EGB_Component_StartAnimation(player, 0);
     }
 }

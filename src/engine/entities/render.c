@@ -68,7 +68,8 @@ void                        EGB_Render_Entities()
 /**
  * @brief      Default renderer for entity animation
  * 
- * @note       If you override the default entity renderer, you still can use this one to render your animation
+ * @note       If you override the default entity renderer, 
+ * you still can use this one to render your animation
  *
  * @param      renderer  The SDL renderer
  * @param      entity    The entity to renderer
@@ -147,7 +148,8 @@ void                        EGB_Render_EntityAnimation(
 /**
  * @brief      Render an entity texture component
  *
- * @note       If you override the default entity renderer, you still can use this one to render your animation
+ * @note       If you override the default entity renderer, 
+ * you still can use this one to render your animation
  *
  * @param      renderer  The renderer
  * @param      entity    The entity

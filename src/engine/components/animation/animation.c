@@ -68,7 +68,9 @@ int 						EGB_Component_StartAnimation(EGB_Entity *entity, int animation_id) {
 	EGB_Component_Animation 	**animation_comps;
 	int 					i;
 
-	animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(entity, "animation_component");
+	animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(
+		entity, "animation_component"
+	);
 	i = 0;
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		if (animation_comps[i]->id == animation_id) {
@@ -103,7 +105,9 @@ int						EGB_Component_StopAnimation(EGB_Entity *entity, int animation_id) {
 	EGB_Component_Animation 	**animation_comps;
 	int 					i;
 
-	animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(entity, "animation_component");
+	animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(
+		entity, "animation_component"
+	);
 	i = 0;
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		if (animation_comps[i]->id == animation_id) {

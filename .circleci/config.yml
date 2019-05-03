@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: Linting
-          command: /tmp/oclint-0.13.1/bin/oclint -disable-rule=ShortVariableName `find -name *.c` -- -c
+          command: /tmp/oclint-0.13.1/bin/oclint -no-analytics `find -name "*.c"` -- -c
 
   doc:
     docker:

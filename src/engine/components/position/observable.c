@@ -40,12 +40,17 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
         entity_iterator = manager->first;
         while (
             entity_iterator->next != NULL && 
-            ((EGB_Component_Position*)EGB_FindComponentByName(entity_iterator->next->entity, "position_component"))->z <= entity_pos->z
+            ((EGB_Component_Position*)EGB_FindComponentByName(
+                entity_iterator->next->entity, "position_component")
+            )->z <= entity_pos->z
         ) {
             entity_iterator = entity_iterator->next;
         }
 
-        if (((EGB_Component_Position*)EGB_FindComponentByName(entity_iterator->entity, "position_component"))->z > entity_pos->z) {
+        if (((EGB_Component_Position*)EGB_FindComponentByName(
+                entity_iterator->entity, "position_component"
+            ))->z > entity_pos->z
+        ) {
             entry->next = entity_iterator;
             entity_iterator = entry;
             if (manager->first == entry->next)
