@@ -7,6 +7,19 @@
 */
 #include "sprite.h"
 
+/**
+ * @brief      Create SDL_Texture from a filename
+ *
+ * @param      renderer  The SDL renderer
+ * @param      filename  The filename
+ * @param      sprite    The sprite
+ *
+ * @return     status   Load texture end status
+ *              <ul>
+ *                  <li>0 = Correctly created</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int               EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite)
 {
     SDL_RWops     *rwop;

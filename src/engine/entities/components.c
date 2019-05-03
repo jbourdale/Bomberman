@@ -7,6 +7,15 @@
 */
 #include "entities.h"
 
+
+/**
+ * @brief      Add component to an entity
+ *
+ * @param      entity     The entity
+ * @param      component  The component
+ *
+ * @return     status   Return 0 if the entity successfuly destroy, overwise return 1
+ */
 int             EGB_Component_AddToEntity(EGB_Entity *entity, void *component)
 {
     void        **tmp_comp;
@@ -32,6 +41,15 @@ int             EGB_Component_AddToEntity(EGB_Entity *entity, void *component)
 
 
 
+/**
+ * @brief      Add multiple components to an entity
+ *
+ * @param      entity      The entity
+ * @param      components  The components. Must be array finishing by NULL
+ *
+ * @return     status   Return 0 if the entity successfuly destroy, overwise
+ *             return 1
+ */
 int             EGB_Component_AddManyToEntity(EGB_Entity *entity, void **components)
 {
     void        **comp;
@@ -50,8 +68,20 @@ int             EGB_Component_AddManyToEntity(EGB_Entity *entity, void **compone
 }
 
 
+/**
+ * @brief      Observables are built to notify entity depending on their component. 
+ *             This register an entity to a specific observable on the component param.
+ *
+ * @param      entity     The entity
+ * @param      component  The component
+ *
+ * @return     status   Return 0 if the entity successfuly destroy, overwise return 1
+ */
 int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
 {
+    if (entity == NULL || component == NULL)
+        return 1;
+    
     if(strcmp(component->name, "position_component") == 0) {
         EGB_Observable_Position(EGB_Manager_Add, entity, (EGB_Component_Position *) component);
         return 0;

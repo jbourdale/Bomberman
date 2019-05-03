@@ -10,11 +10,19 @@
 
 int EGB_fps_timer;
 
+/**
+ * @brief      Start the timer use to compute how much time the frame took to render
+ */
 void                        EGB_InitFPSRegulation()
 {
     EGB_fps_timer = SDL_GetTicks();
 }
 
+/**
+ * @brief      Wait (or not) amount of ms needed to match the setted framerate
+ * 
+ * @note       You can set the framerate with EGB_SetFramerate() 
+ */
 void                        EGB_RegulateFPS()
 {
     EGB_Entity                *entity;

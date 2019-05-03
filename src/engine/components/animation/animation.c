@@ -8,6 +8,21 @@
 
 #include "animation.h"
 
+/**
+ * @brief      Create a component animation
+ * 
+ * @note       A entity can have multiple animation. To identify them, you can use
+ * the `int id` parameter. When you will start the animation, you will need to pass
+ * this `id` to start a specific animation. 
+ *
+ * @param      spritesheet  The spritesheet resource path
+ * @param[in]  id           The animation identifier
+ * @param[in]  sprite_w     Width of a single sprite. All your sprites need to have the same width
+ * @param[in]  sprite_h     Height of a single sprite. All your sprites need to have the same height
+ * @param[in]  is_looping   Indicates if animation must loop after finishing their keyframe
+ *
+ * @return     the animation component or NULL if something did goes wrong
+ */
 EGB_Component_Animation 		*EGB_Component_CreateAnimation(
 	char 					*spritesheet,
 	int 					id,
@@ -37,6 +52,18 @@ EGB_Component_Animation 		*EGB_Component_CreateAnimation(
     return comp;
 }
 
+/**
+ * @brief      Start the entity animation specified by `animation_id` 
+ *
+ * @param      entity        The entity
+ * @param[in]  animation_id  The animation identifier
+ *
+ * @return     status   Starting animation status 
+ *              <ul>
+ *                  <li>0 = Animation successfuly started</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int 						EGB_Component_StartAnimation(EGB_Entity *entity, int animation_id) {
 	EGB_Component_Animation 	**animation_comps;
 	int 					i;
@@ -60,7 +87,18 @@ int 						EGB_Component_StartAnimation(EGB_Entity *entity, int animation_id) {
 
 	return 1;
 }
-
+/**
+ * @brief      Stop the entity animation specified by `animation_id` 
+ *
+ * @param      entity        The entity
+ * @param[in]  animation_id  The animation identifier
+ *
+ * @return     status   Stoping animation status 
+ *              <ul>
+ *                  <li>0 = Animation successfuly stoped</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int						EGB_Component_StopAnimation(EGB_Entity *entity, int animation_id) {
 	EGB_Component_Animation 	**animation_comps;
 	int 					i;

@@ -10,6 +10,9 @@
 
 SDL_Color   black = {0,0,0, 255};
 
+/**
+ * @brief      Create a FPS counter on corner bottom right 
+ */
 void                        EGB_FPSIndicator_Create()
 {
     EGB_Component_Position    *pos_comp;
@@ -33,6 +36,12 @@ void                        EGB_FPSIndicator_Create()
     log_debug("create_fps_indicator end");
 }
 
+/**
+ * @brief      FPS indicator keyboard event handler
+ *
+ * @param      entity  The entity
+ * @param      e       The SDL_Event 
+ */
 void EGB_FPSIndicator_KeyStrokeEventHandler(EGB_Entity *entity, SDL_Event e)
 {
     if(e.key.keysym.sym == SDLK_F4 && e.type == SDL_KEYDOWN)
@@ -41,6 +50,12 @@ void EGB_FPSIndicator_KeyStrokeEventHandler(EGB_Entity *entity, SDL_Event e)
     }
 }
 
+/**
+ * @brief      Custom renderer for fps indicator entity
+ *
+ * @param      renderer  The renderer
+ * @param      entity    The entity
+ */
 void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, EGB_Entity *entity)
 {
     SDL_Rect                screen_position;
@@ -71,6 +86,11 @@ void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, EG
     SDL_FreeSurface(surfaceMessage);
 }
 
+/**
+ * @brief      Compute current FPS rate
+ *
+ * @return     current FPS rate
+ */
 float               EGB_FPSIndicator_Compute()
 {
     static int      *frametimes = NULL; // An array to store frame times:

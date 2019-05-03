@@ -7,6 +7,21 @@
 */
 #include "./resources.h"
 
+/**
+ * @brief      Store the list of resources loaded
+ *
+ * @param  flags      The flags
+ * @param  resource[optional]  The resource to add. Require flag EGB_Manager_Add
+ *
+ * @note Availible flag : 
+ *  <ul>
+ *      <li>EGB_Resources_Manager_Set_Dir</li>
+ *      <li>EGB_Manager_Retrieve</li>
+ *      <li>EGB_Manager_Add</li>
+ *      <li>EGB_Manager_Delete</li>
+ *  </ul>
+ * @return     if flag EGB_Manager_Retrieve is sent, return the manager. Overwise, return NULL
+ */
 EGB_Resource_List            *EGB_ResourcesManager(Uint32 flags, ...)
 {
     static EGB_Resource_List *manager = NULL;

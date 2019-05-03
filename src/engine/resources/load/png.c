@@ -8,6 +8,13 @@
 
 #include "load.h"
 
+/**
+ * @brief      Load a PNG file and create a SDL_Texture from it
+ *
+ * @param      filename  The filename
+ *
+ * @return     SDL_Texture fully initialized or NULL
+ */
 SDL_Texture         *EGB_Resource_LoadPNG(char *filename)
 {
     SDL_Renderer    *renderer;

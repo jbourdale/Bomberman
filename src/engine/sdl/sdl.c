@@ -8,6 +8,15 @@
 
 #include "sdl.h"
 
+/**
+ * @brief      Init all SDL Modules needed
+ *
+ * @return     status   Initialisation process end status
+ *              <ul>
+ *                  <li>0 = Correctly init</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int                 EGB_SDL_Init()
 {
     SDL_Window      *window;
@@ -37,6 +46,17 @@ int                 EGB_SDL_Init()
     return 0;
 }
 
+/**
+ * @brief      Init SDL Window
+ *
+ * @param      window  The window to init
+ *
+ * @return     status   Initialisation process end status
+ *              <ul>
+ *                  <li>0 = Correctly init</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int                     EGB_SDL_InitWindow(SDL_Window **window)
 {
     SDL_DisplayMode     mode;
@@ -62,6 +82,11 @@ int                     EGB_SDL_InitWindow(SDL_Window **window)
 }
 
 
+/**
+ * @brief      Return the current used SDL_Renderer
+ *
+ * @return     return the current renderer or NULL if none exist
+ */
 SDL_Renderer        *EGB_SDL_GetCurrentRenderer()
 {
     SDL_Window      *window;
@@ -69,7 +94,6 @@ SDL_Renderer        *EGB_SDL_GetCurrentRenderer()
     window = NULL;
     window = SDL_GL_GetCurrentWindow();
     if (window == NULL) {
-        log_debug("WINDOW NULL!!!!!!!!!!!!");
         return NULL;
     }
     return SDL_GetRenderer(window);

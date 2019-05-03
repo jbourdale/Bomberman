@@ -14,7 +14,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/resources/load/png.c \
 			./src/engine/resources/resources.c \
 			./src/engine/entities/init.c \
-			./src/engine/entities/observable.c \
+			./src/engine/entities/manager.c \
 			./src/engine/entities/components.c \
 			./src/engine/entities/render.c \
 			./src/engine/sdl/sprite/sprite.c \

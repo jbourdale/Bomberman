@@ -8,6 +8,11 @@
 
 #include "events.h"
 
+/**
+ * @brief      Handle SDL Events
+ *
+ * @return     return -1 if a QUIT Event has been triggered. This will stop the main engine loop. Return 0 overwise.
+ */
 int 			EGB_Event_Handle()
 {
 	SDL_Event 	e;
@@ -28,6 +33,17 @@ int 			EGB_Event_Handle()
     return 0;
 }
 
+/**
+ * @brief      Handle click event. Iterate over all the entities that have a click EGB_Component_Event and notify them if the click is on them
+ *
+ * @param  e     The SDL_Event to compute
+ *
+ * @return     status   The main loop execution status 
+ *              <ul>
+ *                  <li>0 = OK</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int                         EGB_Event_HandleClick(SDL_Event e)
 {
     EGB_Entity_Manager        *entities_manager;
@@ -61,6 +77,17 @@ int                         EGB_Event_HandleClick(SDL_Event e)
 }
 
 
+/**
+ * @brief      Handle keyboard events. Iterate over all the entities that have a keystroke EGB_Component_Event and notify them
+ *
+ * @param  e   SDL_Event to handle
+ *
+ * @return     status   The main loop execution status 
+ *              <ul>
+ *                  <li>0 = OK</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int                             EGB_Event_HandleKeyStroke(SDL_Event e)
 {
     EGB_Entity_Manager            *entities_manager;

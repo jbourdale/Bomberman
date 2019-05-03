@@ -8,6 +8,13 @@
 
 #include "animation.h"
 
+/**
+ * @brief      Set a callback that will be triggers on keyframe start
+ *
+ * @param      animation    The animation
+ * @param[in]  keyframe_id  The keyframe identifier
+ * @param[in]  f            callback
+ */
 void 						EGB_Keyframe_Set_OnStart(
 	EGB_Component_Animation *animation,
 	int keyframe_id,
@@ -29,6 +36,13 @@ void 						EGB_Keyframe_Set_OnStart(
 		log_warn("add_keyframe_on_start_event > animation provided is NULL");
 }
 
+/**
+ * @brief      Set a callback that will be triggers on keyframe finish
+ *
+ * @param      animation    The animation
+ * @param[in]  keyframe_id  The keyframe identifier
+ * @param[in]  f            callback
+ */
 void 						EGB_Keyframe_Set_OnFinish(
 	EGB_Component_Animation *animation,
 	int keyframe_id,
@@ -51,6 +65,20 @@ void 						EGB_Keyframe_Set_OnFinish(
 		log_warn("add_keyframe_on_finish_event > animation provided is NULL");
 }
 
+/**
+ * @brief      Add a keyframe to a animation
+ *
+ * @param      animation  The animation component
+ * @param[in]  duration   The keyframe duration
+ * @param[in]  x          X Position in spritesheet, starting from top corner left
+ * @param[in]  y          Y Position in spritesheet, starting from top corner left
+ *
+ * @return     status 
+ *              <ul>
+ *                  <li>0 = Keyframe successfuly added</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int 			EGB_Animation_AddKeyframe(EGB_Component_Animation *animation, int duration, int x, int y)
 {
 	EGB_Animation_Keyframe 	*keyframe_iterator;

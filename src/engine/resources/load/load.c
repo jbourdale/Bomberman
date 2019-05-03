@@ -7,6 +7,11 @@
 */
 #include "load.h"
 
+/**
+ * @brief      Iterate recursively on the resource root dir to load all files
+ *
+ * @param[in]  dirname  The resources root dirname
+ */
 void EGB_Iterate_RootResourcesDir(const char *dirname)
 {
     DIR *dir;
@@ -30,6 +35,19 @@ void EGB_Iterate_RootResourcesDir(const char *dirname)
 }
 
 
+/**
+ * @brief      Load all the resources found in resources root dir
+ * 
+ * @note       See EGB_Set_Resources_RootDir()
+ * 
+ * @warning    Only PNG and TTF files are yet handled.
+ *
+ * @return     status   If the resources have been successfuly loaded
+ *              <ul>
+ *                  <li>0 = Successfuly loaded</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int                     EGB_LoadResources()
 {
     EGB_Resource_List    *manager;
@@ -41,6 +59,17 @@ int                     EGB_LoadResources()
     return 0;
 }
 
+/**
+ * @brief      Load a specific resource and add it to the manager
+ *
+ * @param      resource_path  The full resource path (with resource root dir)
+ *
+ * @return     status   If the resources have been successfuly loaded
+ *              <ul>
+ *                  <li>0 = Successfuly loaded</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int             EGB_LoadResource(char* resource_path)
 {
     char        *filename, *extension;
@@ -77,6 +106,13 @@ int             EGB_LoadResource(char* resource_path)
 }
 
 
+/**
+ * @brief      Return the extension of a filename
+ *
+ * @param      filename  The filename
+ *
+ * @return     The extension name string or NULL if not found
+ */
 char            *EGB_Get_FilenameExt(char *filename)
 {
     char        *dot;
@@ -86,6 +122,14 @@ char            *EGB_Get_FilenameExt(char *filename)
     return dot + 1;
 }
 
+/**
+ * @brief      Remove a substring from a string
+ *
+ * @param      str   The string
+ * @param[in]  sub   The substring to remove
+ *
+ * @return     str   The updated string
+ */
 char        *EGB_Str_Remove_Substr(char *str, const char *sub) {
     size_t  len;
     char    *p;

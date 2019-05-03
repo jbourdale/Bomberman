@@ -8,6 +8,15 @@
 
 #include "hover.h"
 
+/**
+ * @brief      Create a Event mouse hover component
+ * 
+ * @note       Allow callback to be bind on the entity
+ *
+ * @param      f     callback
+ *
+ * @return     Event mouse hover component created
+ */
 EGB_Component_Event       *EGB_Component_CreateEventHover(void(*f))
 {
     EGB_Component_Event   *component;
@@ -18,6 +27,17 @@ EGB_Component_Event       *EGB_Component_CreateEventHover(void(*f))
     return component;
 }
 
+/**
+ * @brief      Destroy the Event Mouse hover component from entity
+ *
+ * @param      entity  The entity
+ *
+ * @return     status
+ *              <ul>
+ *                  <li>0 = Component successfuly destroy</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int                         EGB_Component_DestroyEventHover(EGB_Entity *entity)
 {
     EGB_Component_Event       *comp;
@@ -31,6 +51,21 @@ int                         EGB_Component_DestroyEventHover(EGB_Entity *entity)
     return 0;
 }
 
+/**
+ * @brief      Event hover manager. Store entity that subscribe to an event hover
+ *
+ * @param      flags      The flags
+ * @param      entity[optional]  The entity to add. Require flag EGB_Manager_Add
+ *
+ * @note Availible flag : 
+ *  <ul>
+ *      <li>EGB_Manager_Retrieve</li>
+ *      <li>EGB_Manager_Add</li>
+ *      <li>EGB_Manager_Delete</li>
+ *  </ul>
+ *
+ * @return     if flag EGB_Manager_Retrieve is sent, return the manager. Overwise, return NULL
+ */
 EGB_Entity_Manager                            *EGB_Observable_Event_Hover(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;

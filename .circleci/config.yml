@@ -72,6 +72,8 @@ workflows:
           requires:
             - build
       - doc:
+          requires:
+            - lint
           filters:
             branches:
-              only: features/#16-ecs-engine
+              only: master

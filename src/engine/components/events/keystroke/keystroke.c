@@ -7,6 +7,15 @@
 */
 #include "keystroke.h"
 
+/**
+ * @brief      Create a Event keyboard component
+ * 
+ * @note       Allow callback to be bind on the entity
+ *
+ * @param      f     callback
+ *
+ * @return     Event keyboard component created
+ */
 EGB_Component_Event       *EGB_Component_CreateEventKeyStroke(void(*f))
 {
     EGB_Component_Event   *component;
@@ -17,6 +26,17 @@ EGB_Component_Event       *EGB_Component_CreateEventKeyStroke(void(*f))
     return component;
 }
 
+/**
+ * @brief      Destroy the Event keyboard component from entity
+ *
+ * @param      entity  The entity
+ *
+ * @return     status
+ *              <ul>
+ *                  <li>0 = Component successfuly destroy</li>
+ *                  <li>1 = An error occured</li>
+ *              </ul>
+ */
 int                         EGB_Component_DestroyEventKeyStroke(EGB_Entity *entity)
 {
     EGB_Component_Event    *comp;
@@ -30,6 +50,21 @@ int                         EGB_Component_DestroyEventKeyStroke(EGB_Entity *enti
     return 0;
 }
 
+/**
+ * @brief      Event keyboard manager. Store entity that subscribe to a keyboard event
+ *
+ * @param      flags      The flags
+ * @param      entity[optional]  The entity to add. Require flag EGB_Manager_Add
+ *
+ * @note Availible flag : 
+ *  <ul>
+ *      <li>EGB_Manager_Retrieve</li>
+ *      <li>EGB_Manager_Add</li>
+ *      <li>EGB_Manager_Delete</li>
+ *  </ul>
+ *
+ * @return     if flag EGB_Manager_Retrieve is sent, return the manager. Overwise, return NULL
+ */
 EGB_Entity_Manager                            *EGB_Observable_Event_KeyStroke(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;

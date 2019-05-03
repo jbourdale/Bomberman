@@ -51,7 +51,7 @@ void EGB_Render_EntityAnimation(SDL_Renderer*, EGB_Entity *, EGB_Component_Anima
 /*
  * observable.c
  **/
-EGB_Entity_Manager    *EGB_Observable_Entity(Uint32 flags, ...);
+EGB_Entity_Manager    *EGB_Manager_Entity(Uint32 flags, ...);
 EGB_Entity            *EGB_Entity_FindFirstByName(char *name);
 
 #define EGB_Manager_Retrieve            0x0001

@@ -7,6 +7,17 @@
 */
 #include "entities.h"
 
+/**
+ * @brief      Default renderer for entities
+ *
+ * @note       You can override this renderer with your custom one as follow
+ * @code
+ *      EGB_Entity *entity = EGB_Entity_Create("whatever");
+ *      entity->render = my_custom_render_function
+ * @endcode
+ * @param      renderer  SDL_Renderer the current renderer
+ * @param      entity    The entity to render
+ */
 void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, EGB_Entity *entity)
 {
     EGB_Component_Animation   **animation_comps;
@@ -31,6 +42,9 @@ void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, E
 }
 
 
+/**
+ * @brief      Render all entities. Called on each frame rendering
+ */
 void                        EGB_Render_Entities()
 {
     SDL_Renderer            *renderer;
@@ -51,7 +65,18 @@ void                        EGB_Render_Entities()
     SDL_RenderPresent(renderer);
 }
 
-// TODO : Cut this function in smaller ones
+/**
+ * @brief      Default renderer for entity animation
+ * 
+ * @note       If you override the default entity renderer, you still can use this one to render your animation
+ *
+ * @param      renderer  The SDL renderer
+ * @param      entity    The entity to renderer
+ * @param      comps     All the animation components from the entity 
+ * @param      pos_comp  The position component of the entity
+ * 
+ * @todo       Split this function, refactor params
+ */
 void                        EGB_Render_EntityAnimation(
     SDL_Renderer            *renderer,
     EGB_Entity                *entity,
@@ -119,6 +144,15 @@ void                        EGB_Render_EntityAnimation(
     SDL_RenderCopy(renderer, comps_iterator[i]->spritesheet, &sprite_rect, &position_on_screen);
 }
 
+/**
+ * @brief      Render an entity texture component
+ *
+ * @note       If you override the default entity renderer, you still can use this one to render your animation
+ *
+ * @param      renderer  The renderer
+ * @param      entity    The entity
+ * @param      pos_comp  The position component
+ */
 void                        EGB_Render_EntityTexture(
     SDL_Renderer            *renderer,
     EGB_Entity                *entity,

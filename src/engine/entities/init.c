@@ -7,6 +7,14 @@
 */
 #include "entities.h"
 
+
+/**
+ * @brief      Init an entity
+ *
+ * @param      name  The entity name
+ *
+ * @return     entity A pointer on the new created entity
+ */
 EGB_Entity        *EGB_Entity_Create(char *name)
 {
     log_debug("create_entity");
@@ -22,10 +30,18 @@ EGB_Entity        *EGB_Entity_Create(char *name)
     entity->displayed = 1;
 
     log_debug("entity created : %p", entity);
-    EGB_Observable_Entity(EGB_Manager_Add, entity);
+    EGB_Manager_Entity(EGB_Manager_Add, entity);
     return entity;
 }
 
+
+/**
+ * @brief      Entity destructor
+ *
+ * @param      entity  The entity
+ *
+ * @return     status   Return 0 if the entity successfuly destroy, overwise return 1
+ */
 int                 EGB_Entity_Destroy(EGB_Entity *entity)
 {
     free(entity);

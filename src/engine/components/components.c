@@ -7,6 +7,14 @@
 */
 #include "components.h"
 
+/**
+ * @brief      Return the first added component to an entity by name
+ *
+ * @param      entity  The entity
+ * @param      name    The component name
+ *
+ * @return     Generic pointer on the component. NULL if not found
+ */
 void                *EGB_FindComponentByName(EGB_Entity *entity, char *name)
 {
     EGB_Component     **comp;
@@ -29,6 +37,14 @@ void                *EGB_FindComponentByName(EGB_Entity *entity, char *name)
     return NULL;
 }
 
+/**
+ * @brief      Return the added components to an entity by name
+ *
+ * @param      entity  The entity
+ * @param      name    The component name
+ *
+ * @return     Generic pointer on a array of components, ending by NULL.
+ */
 void                **EGB_FindComponentsByName(EGB_Entity *entity, char *name)
 {
     EGB_Component     **comp_iterator;

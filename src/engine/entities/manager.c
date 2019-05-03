@@ -7,7 +7,21 @@
 */
 #include "entities.h"
 
-EGB_Entity_Manager                            *EGB_Observable_Entity(Uint32 flags, ...)
+/**
+ * @brief      Store the list of entity to notify them
+ *
+ * @param  flags      The flags
+ * @param  entity[optional]  The entity to add. Require flag EGB_Manager_Add
+ *
+ * @note Availible flag : 
+ *  <ul>
+ *      <li>EGB_Manager_Retrieve</li>
+ *      <li>EGB_Manager_Add</li>
+ *      <li>EGB_Manager_Delete</li>
+ *  </ul>
+ * @return     if flag EGB_Manager_Retrieve is sent, return the manager. Overwise, return NULL
+ */
+EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
     EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
@@ -48,12 +62,19 @@ EGB_Entity_Manager                            *EGB_Observable_Entity(Uint32 flag
     return NULL;
 }
 
+/**
+ * @brief      Return the first added entity with the name
+ *
+ * @param      name  The entity name to search for
+ *
+ * @return     entity pointer on the entity founded. NULL if not found.
+ */
 EGB_Entity                        *EGB_Entity_FindFirstByName(char *name)
 {
     EGB_Entity_Manager            *manager;
     EGB_Entity_LinkedList_Element     *manager_entry;
 
-    manager = EGB_Observable_Entity(EGB_Manager_Retrieve);
+    manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
     manager_entry = manager->first;
     while(manager_entry != NULL && manager_entry->next != NULL)
     {
