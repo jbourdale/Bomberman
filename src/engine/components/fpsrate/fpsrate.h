@@ -10,14 +10,14 @@
 
 #include "../../engine.h"
 
-typedef struct          fpsrate_component_s
+typedef struct          EGB_Component_FPSRate_s
 {
     char        		*name;
     Uint32         		fpsrate;
-}                       fpsrate_component_t;
+}                       EGB_Component_FPSRate;
 
-fpsrate_component_t *EGB_Component_CreateFPSRate(Uint32 framerate);
-int EGB_Component_DestroyFPSRate(entity_t *entity);
+EGB_Component_FPSRate *EGB_Component_CreateFPSRate(Uint32 framerate);
+int EGB_Component_DestroyFPSRate(EGB_Entity *entity);
 int EGB_SetFramerate(Uint32 framerate);
 
 #endif

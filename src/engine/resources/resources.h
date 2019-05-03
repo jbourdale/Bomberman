@@ -11,24 +11,24 @@
 
 #include "../engine.h"
 
-typedef struct 		resource_s
+typedef struct 		EGB_Resource_s
 {
 	char 			*resource_path;
 	void 			*resource;
     int             font_size; // used only for textual resources
 
     // Linked list
-    resource_t      *next;
-}					resource_t;
+    EGB_Resource      *next;
+}					EGB_Resource;
 
-typedef struct 		resources_list_s
+typedef struct 		EGB_Resource_List_s
 {
-	resource_t 		*first;
+	EGB_Resource 		*first;
     char            *resources_dir;
-}					resources_list_t;
+}					EGB_Resource_List;
 
 int                 EGB_Set_Resources_RootDir(char *dirname);
 void                *EGB_Get_Resource(const char* resource_path);
-resources_list_t    *EGB_ResourcesManager(Uint32 flags, ...);
+EGB_Resource_List    *EGB_ResourcesManager(Uint32 flags, ...);
 
 #endif

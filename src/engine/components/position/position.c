@@ -7,11 +7,11 @@
 */
 #include "position.h"
 
-position_component_t    *EGB_Component_CreatePosition(int x, int y, int z, int width, int height)
+EGB_Component_Position    *EGB_Component_CreatePosition(int x, int y, int z, int width, int height)
 {
-    position_component_t    *component;
+    EGB_Component_Position    *component;
 
-    component = malloc(sizeof(position_component_t));
+    component = malloc(sizeof(EGB_Component_Position));
     component->name = strdup("position_component");
     component->x = x;
     component->y = y;
@@ -21,11 +21,11 @@ position_component_t    *EGB_Component_CreatePosition(int x, int y, int z, int w
     return component;
 }
 
-int                         EGB_Component_DestroyPosition(entity_t *entity)
+int                         EGB_Component_DestroyPosition(EGB_Entity *entity)
 {
-    position_component_t    *comp;
+    EGB_Component_Position    *comp;
 
-    comp = (position_component_t *)EGB_FindComponentByName(entity, "position_component");
+    comp = (EGB_Component_Position *)EGB_FindComponentByName(entity, "position_component");
     if (comp == NULL)
         return 1;
 
@@ -34,7 +34,7 @@ int                         EGB_Component_DestroyPosition(entity_t *entity)
     return 0;
 }
 
-int EGB_Component_PositionToRect(position_component_t *comp, SDL_Rect *rect)
+int EGB_Component_PositionToRect(EGB_Component_Position *comp, SDL_Rect *rect)
 {
     if (rect == NULL || comp == NULL)
         return 1;

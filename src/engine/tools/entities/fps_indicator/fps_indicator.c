@@ -12,12 +12,12 @@ SDL_Color   black = {0,0,0, 255};
 
 void                        EGB_FPSIndicator_Create()
 {
-    position_component_t    *pos_comp;
-    event_component_t       *event_comp;
-    fpsrate_component_t     *fps_comp;
+    EGB_Component_Position    *pos_comp;
+    EGB_Component_Event       *event_comp;
+    EGB_Component_FPSRate     *fps_comp;
 
     log_debug("create_fps_indicator");
-    entity_t *fps_indicator_entity = EGB_Entity_Create("fps_indicator");
+    EGB_Entity *fps_indicator_entity = EGB_Entity_Create("fps_indicator");
     fps_indicator_entity->render = EGB_FPSIndicator_Renderer;
     fps_indicator_entity->displayed = 1;
 
@@ -33,7 +33,7 @@ void                        EGB_FPSIndicator_Create()
     log_debug("create_fps_indicator end");
 }
 
-void EGB_FPSIndicator_KeyStrokeEventHandler(entity_t *entity, SDL_Event e)
+void EGB_FPSIndicator_KeyStrokeEventHandler(EGB_Entity *entity, SDL_Event e)
 {
     if(e.key.keysym.sym == SDLK_F4 && e.type == SDL_KEYDOWN)
     {
@@ -41,10 +41,10 @@ void EGB_FPSIndicator_KeyStrokeEventHandler(entity_t *entity, SDL_Event e)
     }
 }
 
-void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, entity_t *entity)
+void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, EGB_Entity *entity)
 {
     SDL_Rect                screen_position;
-    position_component_t    *pos_comp;
+    EGB_Component_Position    *pos_comp;
     char                    *text;
     float                   fps;
     TTF_Font                *font;
@@ -54,7 +54,7 @@ void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, en
 
     font = (TTF_Font *)EGB_Get_Resource("spacefont.ttf"); //this opens a font style and sets a size
     
-    pos_comp = (position_component_t*)EGB_FindComponentByName(entity, "position_component");
+    pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
     if (pos_comp == NULL) {
         return ;
     }

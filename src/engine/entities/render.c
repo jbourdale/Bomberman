@@ -7,19 +7,19 @@
 */
 #include "entities.h"
 
-void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, entity_t *entity)
+void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, EGB_Entity *entity)
 {
-    animation_component_t   **animation_comps;
-    position_component_t    *pos_comp;
+    EGB_Component_Animation   **animation_comps;
+    EGB_Component_Position    *pos_comp;
 
     if (!entity->displayed)
         return ;
 
-    pos_comp = (position_component_t*)EGB_FindComponentByName(entity, "position_component");
+    pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
     if (pos_comp == NULL)
         return ;
 
-    animation_comps = (animation_component_t **)EGB_FindComponentsByName(
+    animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(
         entity,
         "animation_component"
     );
@@ -34,9 +34,9 @@ void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, e
 void                        EGB_Render_Entities()
 {
     SDL_Renderer            *renderer;
-    entity_manager_t        *entities_manager;
-    entity_linked_list_el_t *manager_iterator;
-    entity_t                *entity;
+    EGB_Entity_Manager        *entities_manager;
+    EGB_Entity_LinkedList_Element *manager_iterator;
+    EGB_Entity                *entity;
 
     renderer = EGB_SDL_GetCurrentRenderer();
     SDL_RenderClear(renderer);
@@ -54,13 +54,13 @@ void                        EGB_Render_Entities()
 // TODO : Cut this function in smaller ones
 void                        EGB_Render_EntityAnimation(
     SDL_Renderer            *renderer,
-    entity_t                *entity,
-    animation_component_t   **comps,
-    position_component_t    *pos_comp
+    EGB_Entity                *entity,
+    EGB_Component_Animation   **comps,
+    EGB_Component_Position    *pos_comp
 ) {
     SDL_Rect                sprite_rect, position_on_screen;
-    animation_component_t   **comps_iterator;
-    keyframe_t              *keyfame_iterator;
+    EGB_Component_Animation   **comps_iterator;
+    EGB_Animation_Keyframe              *keyfame_iterator;
     int                     i, nb_animation;
 
 
@@ -121,14 +121,14 @@ void                        EGB_Render_EntityAnimation(
 
 void                        EGB_Render_EntityTexture(
     SDL_Renderer            *renderer,
-    entity_t                *entity,
-    position_component_t    *pos_comp
+    EGB_Entity                *entity,
+    EGB_Component_Position    *pos_comp
 )
 {
-    texture_component_t      *comp;
+    EGB_Component_Texture      *comp;
     SDL_Rect                position_on_screen;
 
-    comp = (texture_component_t*)EGB_FindComponentByName(entity, "texture_component");
+    comp = (EGB_Component_Texture*)EGB_FindComponentByName(entity, "texture_component");
     if (comp == NULL)
         return ;
 

@@ -7,12 +7,12 @@
 */
 #include "texture.h"
 
-texture_component_t 	*EGB_Component_CreateTexture(char *filename)
+EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename)
 {
-	texture_component_t *comp;
+	EGB_Component_Texture *comp;
 	SDL_Texture 		*texture;
 
-	comp = malloc(sizeof(texture_component_t));
+	comp = malloc(sizeof(EGB_Component_Texture));
 	comp->name = strdup("texture_component");
 
 	texture = NULL;

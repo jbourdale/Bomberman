@@ -8,7 +8,7 @@
 
 #include "animation.h"
 
-animation_component_t 		*EGB_Component_CreateAnimation(
+EGB_Component_Animation 		*EGB_Component_CreateAnimation(
 	char 					*spritesheet,
 	int 					id,
 	int 					sprite_w,
@@ -16,10 +16,10 @@ animation_component_t 		*EGB_Component_CreateAnimation(
 	int 					is_looping
 )
 {
-	animation_component_t 	*comp;
+	EGB_Component_Animation 	*comp;
 	SDL_Texture 			*texture;
 
-	comp = malloc(sizeof(animation_component_t));
+	comp = malloc(sizeof(EGB_Component_Animation));
 	comp->name = strdup("animation_component");
 	comp->id = id;
 	comp->is_looping = is_looping;
@@ -37,11 +37,11 @@ animation_component_t 		*EGB_Component_CreateAnimation(
     return comp;
 }
 
-int 						EGB_Component_StartAnimation(entity_t *entity, int animation_id) {
-	animation_component_t 	**animation_comps;
+int 						EGB_Component_StartAnimation(EGB_Entity *entity, int animation_id) {
+	EGB_Component_Animation 	**animation_comps;
 	int 					i;
 
-	animation_comps = (animation_component_t **)EGB_FindComponentsByName(entity, "animation_component");
+	animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(entity, "animation_component");
 	i = 0;
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		if (animation_comps[i]->id == animation_id) {
@@ -61,11 +61,11 @@ int 						EGB_Component_StartAnimation(entity_t *entity, int animation_id) {
 	return 1;
 }
 
-int						EGB_Component_StopAnimation(entity_t *entity, int animation_id) {
-	animation_component_t 	**animation_comps;
+int						EGB_Component_StopAnimation(EGB_Entity *entity, int animation_id) {
+	EGB_Component_Animation 	**animation_comps;
 	int 					i;
 
-	animation_comps = (animation_component_t **)EGB_FindComponentsByName(entity, "animation_component");
+	animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(entity, "animation_component");
 	i = 0;
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		if (animation_comps[i]->id == animation_id) {

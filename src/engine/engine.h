@@ -9,14 +9,14 @@
 #define __ENGINE_H__
 
 // Forward declaration
-typedef struct entity_s entity_t;
-typedef struct component_s component_t;
-typedef struct position_component_s position_component_t;
-typedef struct animation_component_s animation_component_t;
-typedef struct event_component_s event_component_t;
-typedef struct entity_manager_s entity_manager_t;
-typedef struct resource_s resource_t;
-typedef struct resources_list_s resources_list_t;
+typedef struct EGB_Entity_s EGB_Entity;
+typedef struct EGB_Component_s EGB_Component;
+typedef struct EGB_Component_Position_s EGB_Component_Position;
+typedef struct EGB_Component_Animation_s EGB_Component_Animation;
+typedef struct EGB_Component_Event_s EGB_Component_Event;
+typedef struct EGB_Entity_Manager_s EGB_Entity_Manager;
+typedef struct EGB_Resource_s EGB_Resource;
+typedef struct EGB_Resource_List_s EGB_Resource_List;
 
 // Va args
 #include <stdarg.h>

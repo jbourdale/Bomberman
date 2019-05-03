@@ -32,7 +32,7 @@ void EGB_Iterate_RootResourcesDir(const char *dirname)
 
 int                     EGB_LoadResources()
 {
-    resources_list_t    *manager;
+    EGB_Resource_List    *manager;
 
     manager = EGB_ResourcesManager(EGB_Manager_Retrieve);
     if (manager->resources_dir == NULL)
@@ -44,9 +44,9 @@ int                     EGB_LoadResources()
 int             EGB_LoadResource(char* resource_path)
 {
     char        *filename, *extension;
-    resource_t  *resource_entry;
+    EGB_Resource  *resource_entry;
     void        *resource;
-    resources_list_t    *manager;
+    EGB_Resource_List    *manager;
 
     manager = EGB_ResourcesManager(EGB_Manager_Retrieve);
     filename = EGB_Str_Remove_Substr(strdup(resource_path), manager->resources_dir);
@@ -65,7 +65,7 @@ int             EGB_LoadResource(char* resource_path)
     else
         return 1;
 
-    resource_entry = malloc(sizeof(resource_t));
+    resource_entry = malloc(sizeof(EGB_Resource));
     resource_entry->resource_path = filename;
     resource_entry->resource = resource;
     resource_entry->font_size = 0;

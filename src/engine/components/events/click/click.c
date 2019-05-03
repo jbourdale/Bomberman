@@ -8,21 +8,21 @@
 
 #include "click.h"
 
-event_component_t       *EGB_Component_CreateEventClick(void(*f))
+EGB_Component_Event       *EGB_Component_CreateEventClick(void(*f))
 {
-    event_component_t   *component;
+    EGB_Component_Event   *component;
 
-    component = malloc(sizeof(event_component_t));
+    component = malloc(sizeof(EGB_Component_Event));
     component->name = strdup("event_click_component");
     component->f = f;
     return component;
 }
 
-int                         EGB_Component_DestroyEventClick(entity_t *entity)
+int                         EGB_Component_DestroyEventClick(EGB_Entity *entity)
 {
-    event_component_t       *comp;
+    EGB_Component_Event       *comp;
 
-    comp = (event_component_t *)EGB_FindComponentByName(entity, "event_click_component");
+    comp = (EGB_Component_Event *)EGB_FindComponentByName(entity, "event_click_component");
     if (comp == NULL)
         return 1;
 
@@ -31,11 +31,11 @@ int                         EGB_Component_DestroyEventClick(entity_t *entity)
     return 0;
 }
 
-entity_manager_t                            *EGB_Observable_Event_Click(Uint32 flags, ...)
+EGB_Entity_Manager                            *EGB_Observable_Event_Click(Uint32 flags, ...)
 {
-    static entity_manager_t                 *manager;
-    entity_linked_list_el_t                 *entity_iterator, *entry;
-    entity_t                                *entity;
+    static EGB_Entity_Manager                 *manager;
+    EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
+    EGB_Entity                                *entity;
     va_list                                 argp;
 
 
@@ -44,17 +44,17 @@ entity_manager_t                            *EGB_Observable_Event_Click(Uint32 f
     if (flags & EGB_Manager_Add)
     {
         va_start(argp, flags);
-        entity = va_arg(argp, entity_t*);
+        entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL)
             return NULL;
 
-        entry = malloc(sizeof(entity_linked_list_el_t));
+        entry = malloc(sizeof(EGB_Entity_LinkedList_Element));
         entry->entity = entity;
         entry->next = NULL;
 
         if (manager == NULL) {
-            manager = malloc(sizeof(entity_manager_t));
+            manager = malloc(sizeof(EGB_Entity_Manager));
             manager->first = entry;
             return NULL;
         }

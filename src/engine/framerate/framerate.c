@@ -17,13 +17,13 @@ void                        EGB_InitFPSRegulation()
 
 void                        EGB_RegulateFPS()
 {
-    entity_t                *entity;
-    fpsrate_component_t     *comp;
+    EGB_Entity                *entity;
+    EGB_Component_FPSRate     *comp;
 
     entity = EGB_Entity_FindFirstByName("fps_indicator");
     if (entity == NULL)
         return ;
-    comp = (fpsrate_component_t *)EGB_FindComponentByName(entity, "fpsrate_component");
+    comp = (EGB_Component_FPSRate *)EGB_FindComponentByName(entity, "fpsrate_component");
     if (comp == NULL)
         return ;
 

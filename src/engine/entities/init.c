@@ -7,12 +7,12 @@
 */
 #include "entities.h"
 
-entity_t        *EGB_Entity_Create(char *name)
+EGB_Entity        *EGB_Entity_Create(char *name)
 {
     log_debug("create_entity");
-    entity_t    *entity;
+    EGB_Entity    *entity;
 
-    entity = malloc(sizeof(entity_t));
+    entity = malloc(sizeof(EGB_Entity));
     entity->name = name;
     entity->components = NULL;
 
@@ -26,7 +26,7 @@ entity_t        *EGB_Entity_Create(char *name)
     return entity;
 }
 
-int                 EGB_Entity_Destroy(entity_t *entity)
+int                 EGB_Entity_Destroy(EGB_Entity *entity)
 {
     free(entity);
     return 0;

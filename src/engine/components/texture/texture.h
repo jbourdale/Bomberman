@@ -11,13 +11,13 @@
 
 #include "../../engine.h"
 
-typedef struct 		texture_component_s
+typedef struct 		EGB_Component_Texture_s
 {
 	char 			*name;
 	SDL_Texture 	*texture;
-}					texture_component_t;
+}					EGB_Component_Texture;
 
-texture_component_t 	*EGB_Component_CreateTexture(char *filename);
+EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename);
 int 					EGB_Component_DestroyTexture();
 
 #endif

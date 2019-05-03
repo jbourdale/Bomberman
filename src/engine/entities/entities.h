@@ -3,7 +3,7 @@
 
 #include "../engine.h"
 
-typedef struct          entity_s {
+typedef struct          EGB_Entity_s {
     char                *name;
     void                **components;
 
@@ -11,48 +11,48 @@ typedef struct          entity_s {
     void                (*on_destroy)();
 
     // GRAPHICAL
-    void                (*render)(SDL_Renderer* renderer, entity_t *self);
+    void                (*render)(SDL_Renderer* renderer, EGB_Entity *self);
     int                 displayed;
-}                       entity_t;
+}                       EGB_Entity;
 
-typedef struct entity_linked_list_el_s entity_linked_list_el_t;
-struct                          entity_linked_list_el_s
+typedef struct EGB_Entity_LinkedList_Element_s EGB_Entity_LinkedList_Element;
+struct                          EGB_Entity_LinkedList_Element_s
 {
-    entity_t                    *entity;
-    entity_linked_list_el_t     *next;
+    EGB_Entity                    *entity;
+    EGB_Entity_LinkedList_Element     *next;
 };
 
-typedef struct                  entity_manager_s
+typedef struct                  EGB_Entity_Manager_s
 {
-    entity_linked_list_el_t     *first;
-}                               entity_manager_t;
+    EGB_Entity_LinkedList_Element     *first;
+}                               EGB_Entity_Manager;
 
 /*
  * components.c
  **/
-int EGB_Component_AddToEntity(entity_t *entity, void *component);
-int EGB_Component_AddManyToEntity(entity_t *entity, void **components);
-int EGB_Observables_RegisterEntity(entity_t *entity, component_t *component);
+int EGB_Component_AddToEntity(EGB_Entity *entity, void *component);
+int EGB_Component_AddManyToEntity(EGB_Entity *entity, void **components);
+int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component);
 
 /*
  * init.c
  **/
-entity_t    *EGB_Entity_Create(char *name);
-int         EGB_Entity_Destroy(entity_t *entity);
+EGB_Entity    *EGB_Entity_Create(char *name);
+int         EGB_Entity_Destroy(EGB_Entity *entity);
 
 /*
  * render.c
  **/
-void EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, entity_t *entity);
+void EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, EGB_Entity *entity);
 void EGB_Render_Entities();
-void EGB_Render_EntityTexture(SDL_Renderer*, entity_t*, position_component_t*);
-void EGB_Render_EntityAnimation(SDL_Renderer*, entity_t *, animation_component_t**, position_component_t*);
+void EGB_Render_EntityTexture(SDL_Renderer*, EGB_Entity*, EGB_Component_Position*);
+void EGB_Render_EntityAnimation(SDL_Renderer*, EGB_Entity *, EGB_Component_Animation**, EGB_Component_Position*);
 
 /*
  * observable.c
  **/
-entity_manager_t    *EGB_Observable_Entity(Uint32 flags, ...);
-entity_t            *EGB_Entity_FindFirstByName(char *name);
+EGB_Entity_Manager    *EGB_Observable_Entity(Uint32 flags, ...);
+EGB_Entity            *EGB_Entity_FindFirstByName(char *name);
 
 #define EGB_Manager_Retrieve            0x0001
 #define EGB_Manager_Add                 0x0010

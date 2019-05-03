@@ -7,17 +7,17 @@
 */
 #include "components.h"
 
-void                *EGB_FindComponentByName(entity_t *entity, char *name)
+void                *EGB_FindComponentByName(EGB_Entity *entity, char *name)
 {
-    component_t     **comp;
+    EGB_Component     **comp;
     int             i;
     int             nb_comp;
 
-    comp = (component_t **)entity->components;
+    comp = (EGB_Component **)entity->components;
     nb_comp = 0;
     while(comp != NULL && *comp++)
         nb_comp++;
-    comp = (component_t **)entity->components;
+    comp = (EGB_Component **)entity->components;
 
     i = 0;
     while(i < nb_comp)
@@ -29,17 +29,17 @@ void                *EGB_FindComponentByName(entity_t *entity, char *name)
     return NULL;
 }
 
-void                **EGB_FindComponentsByName(entity_t *entity, char *name)
+void                **EGB_FindComponentsByName(EGB_Entity *entity, char *name)
 {
-    component_t     **comp_iterator;
+    EGB_Component     **comp_iterator;
     void            **result_comps = NULL;
     int             i, nb_comp, nb_result;
 
-    comp_iterator = (component_t **)entity->components;
+    comp_iterator = (EGB_Component **)entity->components;
     nb_comp = 0;
     while(comp_iterator != NULL && *comp_iterator++)
         nb_comp++;
-    comp_iterator = (component_t **)entity->components;
+    comp_iterator = (EGB_Component **)entity->components;
 
     nb_result = 0;
     i = 0;

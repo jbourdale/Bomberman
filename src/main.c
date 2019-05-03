@@ -3,25 +3,25 @@
 /**
  * MARIO HANDLER CLICK
  */
-void on_mario_click(entity_t *entity, SDL_Event e)
+void on_mario_click(EGB_Entity *entity, SDL_Event e)
 {
     log_debug("on click on : %s", entity->name);
     log_debug("e : %p", &e);
 }
 
-void on_explosion(entity_t *entity) {
+void on_explosion(EGB_Entity *entity) {
     log_debug("BOMB EXPLOSED : %s", entity->name);
 }
-void on_start(entity_t *entity) {
+void on_start(EGB_Entity *entity) {
     log_debug("BOMB PLACED : %s", entity->name);
 }
 
-void on_mario_keystroke(entity_t *entity, SDL_Event e) {
-    position_component_t    *pos_comp;
+void on_mario_keystroke(EGB_Entity *entity, SDL_Event e) {
+    EGB_Component_Position    *pos_comp;
     const Uint8             *key_state = SDL_GetKeyboardState(NULL);
 
     key_state = SDL_GetKeyboardState(NULL);
-    pos_comp = (position_component_t*)EGB_FindComponentByName(entity, "position_component");
+    pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
     if (e.type == SDL_KEYUP)
     {
         return ;
@@ -45,9 +45,9 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
     }
     if (key_state[SDL_SCANCODE_SPACE])
     {
-        entity_t *player = EGB_Entity_Create("bomb");
-        position_component_t *pos_comp2 = EGB_Component_CreatePosition(pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
-        animation_component_t *animation_comp = EGB_Component_CreateAnimation("bomb.png", 0, 24, 24, 0);
+        EGB_Entity *player = EGB_Entity_Create("bomb");
+        EGB_Component_Position *pos_comp2 = EGB_Component_CreatePosition(pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
+        EGB_Component_Animation *animation_comp = EGB_Component_CreateAnimation("bomb.png", 0, 24, 24, 0);
         int start_keyframe = EGB_Animation_AddKeyframe(animation_comp, 400, 0, 0);
         EGB_Keyframe_Set_OnStart(animation_comp, start_keyframe, on_start);
         EGB_Animation_AddKeyframe(animation_comp, 400, 1, 0);
@@ -61,7 +61,7 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
         int keyframe_id = EGB_Animation_AddKeyframe(animation_comp, 200, 0, 1);
         EGB_Keyframe_Set_OnFinish(animation_comp, keyframe_id, on_explosion);
 
-        animation_component_t *animation_comp2 = EGB_Component_CreateAnimation("bomb.png", 1, 24, 24, 0);
+        EGB_Component_Animation *animation_comp2 = EGB_Component_CreateAnimation("bomb.png", 1, 24, 24, 0);
         EGB_Animation_AddKeyframe(animation_comp2, 1000, 5, 2);
         EGB_Animation_AddKeyframe(animation_comp2, 1000, 6, 1);
         EGB_Animation_AddKeyframe(animation_comp2, 1000, 7, 0);
@@ -76,8 +76,8 @@ void on_mario_keystroke(entity_t *entity, SDL_Event e) {
 }
 
 int main() {
-    position_component_t *pos_comp, *pos_comp2;
-    texture_component_t *texture_comp;
+    EGB_Component_Position *pos_comp, *pos_comp2;
+    EGB_Component_Texture *texture_comp;
 
     log_info("### Starting Bomberman");
 
@@ -85,14 +85,14 @@ int main() {
     EGB_Set_Resources_RootDir("./resources");
     EGB_Init();
 
-    entity_t *bg = EGB_Entity_Create("background");
+    EGB_Entity *bg = EGB_Entity_Create("background");
     pos_comp2 = EGB_Component_CreatePosition(0, 0, EGB_Position_Background, 1920, 1080);
     texture_comp = EGB_Component_CreateTexture("background.png");
     EGB_Component_AddToEntity(bg, (void *)pos_comp2);
     EGB_Component_AddToEntity(bg, (void *)texture_comp);
 
-    entity_t *mario = EGB_Entity_Create("player");
-    event_component_t *keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
+    EGB_Entity *mario = EGB_Entity_Create("player");
+    EGB_Component_Event *keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
     pos_comp = EGB_Component_CreatePosition(0, 0, EGB_Position_Classic, 200, 200);
     texture_comp = EGB_Component_CreateTexture("Mario.png");
     EGB_Component_AddToEntity(mario, (void *)keystroke_event);

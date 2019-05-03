@@ -7,11 +7,11 @@
 */
 #include "entities.h"
 
-entity_manager_t                            *EGB_Observable_Entity(Uint32 flags, ...)
+EGB_Entity_Manager                            *EGB_Observable_Entity(Uint32 flags, ...)
 {
-    static entity_manager_t                 *manager;
-    entity_linked_list_el_t                 *entity_iterator, *entry;
-    entity_t                                *entity;
+    static EGB_Entity_Manager                 *manager;
+    EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
+    EGB_Entity                                *entity;
     va_list                                 argp;
 
 
@@ -20,17 +20,17 @@ entity_manager_t                            *EGB_Observable_Entity(Uint32 flags,
     if (flags & EGB_Manager_Add)
     {
         va_start(argp, flags);
-        entity = va_arg(argp, entity_t*);
+        entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL)
             return NULL;
 
-        entry = malloc(sizeof(entity_linked_list_el_t));
+        entry = malloc(sizeof(EGB_Entity_LinkedList_Element));
         entry->entity = entity;
         entry->next = NULL;
 
         if (manager == NULL) {
-            manager = malloc(sizeof(entity_manager_t));
+            manager = malloc(sizeof(EGB_Entity_Manager));
             manager->first = entry;
             return NULL;
         }
@@ -48,10 +48,10 @@ entity_manager_t                            *EGB_Observable_Entity(Uint32 flags,
     return NULL;
 }
 
-entity_t                        *EGB_Entity_FindFirstByName(char *name)
+EGB_Entity                        *EGB_Entity_FindFirstByName(char *name)
 {
-    entity_manager_t            *manager;
-    entity_linked_list_el_t     *manager_entry;
+    EGB_Entity_Manager            *manager;
+    EGB_Entity_LinkedList_Element     *manager_entry;
 
     manager = EGB_Observable_Entity(EGB_Manager_Retrieve);
     manager_entry = manager->first;

@@ -7,12 +7,12 @@
 */
 #include "position.h"
 
-entity_manager_t                            *EGB_Observable_Position(Uint32 flags, ...)
+EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 flags, ...)
 {
-    static entity_manager_t                 *manager;
-    entity_linked_list_el_t                 *entity_iterator, *entry;
-    entity_t                                *entity;
-    position_component_t                    *entity_pos; 
+    static EGB_Entity_Manager                 *manager;
+    EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
+    EGB_Entity                                *entity;
+    EGB_Component_Position                    *entity_pos; 
     va_list                                 argp;
 
 
@@ -21,18 +21,18 @@ entity_manager_t                            *EGB_Observable_Position(Uint32 flag
     if (flags & EGB_Manager_Add)
     {
         va_start(argp, flags);
-        entity = va_arg(argp, entity_t*);
-        entity_pos = va_arg(argp, position_component_t*);
+        entity = va_arg(argp, EGB_Entity*);
+        entity_pos = va_arg(argp, EGB_Component_Position*);
         va_end(argp);
         if (entity == NULL)
             return NULL;
 
-        entry = malloc(sizeof(entity_linked_list_el_t));
+        entry = malloc(sizeof(EGB_Entity_LinkedList_Element));
         entry->entity = entity;
         entry->next = NULL;
 
         if (manager == NULL) {
-            manager = malloc(sizeof(entity_manager_t));
+            manager = malloc(sizeof(EGB_Entity_Manager));
             manager->first = entry;
             return NULL;
         }
@@ -40,12 +40,12 @@ entity_manager_t                            *EGB_Observable_Position(Uint32 flag
         entity_iterator = manager->first;
         while (
             entity_iterator->next != NULL && 
-            ((position_component_t*)EGB_FindComponentByName(entity_iterator->next->entity, "position_component"))->z <= entity_pos->z
+            ((EGB_Component_Position*)EGB_FindComponentByName(entity_iterator->next->entity, "position_component"))->z <= entity_pos->z
         ) {
             entity_iterator = entity_iterator->next;
         }
 
-        if (((position_component_t*)EGB_FindComponentByName(entity_iterator->entity, "position_component"))->z > entity_pos->z) {
+        if (((EGB_Component_Position*)EGB_FindComponentByName(entity_iterator->entity, "position_component"))->z > entity_pos->z) {
             entry->next = entity_iterator;
             entity_iterator = entry;
             if (manager->first == entry->next)

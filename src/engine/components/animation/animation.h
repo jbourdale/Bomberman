@@ -11,9 +11,9 @@
 
 #include "../../engine.h"
 
-typedef struct keyframe_s keyframe_t;
+typedef struct EGB_Animation_Keyframe_s EGB_Animation_Keyframe;
 
-typedef struct 		keyframe_s
+typedef struct 		EGB_Animation_Keyframe_s
 {
 	// position in spritesheet
 	int 			x;
@@ -23,14 +23,14 @@ typedef struct 		keyframe_s
 	// is this keyframe actually display
 	int 			active;
 	// next keyframe
-	keyframe_t		*next;
+	EGB_Animation_Keyframe		*next;
 
 	// events
-	void 			(*on_start)(entity_t *self);
-	void 			(*on_finish)(entity_t *self);	
-}					keyframe_t;
+	void 			(*on_start)(EGB_Entity *self);
+	void 			(*on_finish)(EGB_Entity *self);	
+}					EGB_Animation_Keyframe;
 
-typedef struct 		animation_component_s
+typedef struct 		EGB_Component_Animation_s
 {
 	char 			*name;
 	int 			running;
@@ -38,20 +38,20 @@ typedef struct 		animation_component_s
 	int 			is_looping;
 	int				sprite_width;
 	int 			sprite_height;
-	keyframe_t 		*first_keyframe;
+	EGB_Animation_Keyframe 		*first_keyframe;
 	SDL_Texture 	*spritesheet;
     Uint32          last_animation_tick;
-} 					animation_component_t;
+} 					EGB_Component_Animation;
 
 
 // animation.c
-animation_component_t	*EGB_Component_CreateAnimation(char*, int, int, int, int);
-int 					EGB_Component_StartAnimation(entity_t *, int);
-int						EGB_Component_StopAnimation(entity_t *, int);
+EGB_Component_Animation	*EGB_Component_CreateAnimation(char*, int, int, int, int);
+int 					EGB_Component_StartAnimation(EGB_Entity *, int);
+int						EGB_Component_StopAnimation(EGB_Entity *, int);
 
 // keyframe.c
-int 	EGB_Animation_AddKeyframe(animation_component_t *, int, int, int);
-void 	EGB_Keyframe_Set_OnStart(animation_component_t *, int, void (*f)(entity_t *self));
-void 	EGB_Keyframe_Set_OnFinish(animation_component_t *, int, void (*f)(entity_t *self));
+int 	EGB_Animation_AddKeyframe(EGB_Component_Animation *, int, int, int);
+void 	EGB_Keyframe_Set_OnStart(EGB_Component_Animation *, int, void (*f)(EGB_Entity *self));
+void 	EGB_Keyframe_Set_OnFinish(EGB_Component_Animation *, int, void (*f)(EGB_Entity *self));
 
 #endif

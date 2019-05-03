@@ -7,11 +7,11 @@
 */
 #include "fpsrate.h"
 
-fpsrate_component_t    *EGB_Component_CreateFPSRate(Uint32 fpsrate)
+EGB_Component_FPSRate    *EGB_Component_CreateFPSRate(Uint32 fpsrate)
 {
-    fpsrate_component_t    *component;
+    EGB_Component_FPSRate    *component;
 
-    component = malloc(sizeof(fpsrate_component_t));
+    component = malloc(sizeof(EGB_Component_FPSRate));
     component->name = strdup("fpsrate_component");
     component->fpsrate = fpsrate;
     return component;
@@ -19,9 +19,9 @@ fpsrate_component_t    *EGB_Component_CreateFPSRate(Uint32 fpsrate)
 
 int         EGB_SetFramerate(Uint32 uframerate)
 {
-    entity_t                *entity;
+    EGB_Entity                *entity;
     Uint32                  framerate;
-    fpsrate_component_t     *comp;
+    EGB_Component_FPSRate     *comp;
 
     framerate = uframerate;
     if (!uframerate)
@@ -30,7 +30,7 @@ int         EGB_SetFramerate(Uint32 uframerate)
     entity = EGB_Entity_FindFirstByName("fps_indicator");
     if (entity == NULL)
         return 1;
-    comp = (fpsrate_component_t *)EGB_FindComponentByName(entity, "fpsrate_component");
+    comp = (EGB_Component_FPSRate *)EGB_FindComponentByName(entity, "fpsrate_component");
     if (comp == NULL)
         return 1;
 
@@ -38,11 +38,11 @@ int         EGB_SetFramerate(Uint32 uframerate)
     return 0;
 }
 
-int                         EGB_Component_DestroyFPSRate(entity_t *entity)
+int                         EGB_Component_DestroyFPSRate(EGB_Entity *entity)
 {
-    position_component_t    *comp;
+    EGB_Component_Position    *comp;
 
-    comp = (position_component_t *)EGB_FindComponentByName(entity, "fpsrate_component");
+    comp = (EGB_Component_Position *)EGB_FindComponentByName(entity, "fpsrate_component");
     if (comp == NULL)
         return 1;
 

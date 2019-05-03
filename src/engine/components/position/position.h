@@ -9,7 +9,7 @@
 #define EGB_Position_Top      		1024
 #define EGB_Position_Bottom      	-1024
 
-typedef struct          position_component_s
+typedef struct          EGB_Component_Position_s
 {
     char        *name;
     int         x;
@@ -17,14 +17,14 @@ typedef struct          position_component_s
     int         z;
     int         width;
     int         height;
-}                       position_component_t;
+}                       EGB_Component_Position;
 
 // position.c
-position_component_t *EGB_Component_CreatePosition(int x, int y, int z, int width, int height);
-int EGB_Component_DestroyPosition(entity_t *entity);
-int EGB_Component_PositionToRect(position_component_t *comp, SDL_Rect *rect);
+EGB_Component_Position *EGB_Component_CreatePosition(int x, int y, int z, int width, int height);
+int EGB_Component_DestroyPosition(EGB_Entity *entity);
+int EGB_Component_PositionToRect(EGB_Component_Position *comp, SDL_Rect *rect);
 
 // observable.c
-entity_manager_t  *EGB_Observable_Position(Uint32 flags, ...);
+EGB_Entity_Manager  *EGB_Observable_Position(Uint32 flags, ...);
 
 #endif

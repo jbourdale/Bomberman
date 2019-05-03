@@ -30,13 +30,13 @@ int 			EGB_Event_Handle()
 
 int                         EGB_Event_HandleClick(SDL_Event e)
 {
-    entity_manager_t        *entities_manager;
-    entity_linked_list_el_t *manager_iterator;
-    entity_t                *entity;
+    EGB_Entity_Manager        *entities_manager;
+    EGB_Entity_LinkedList_Element *manager_iterator;
+    EGB_Entity                *entity;
     SDL_Rect                entity_rect;
     SDL_Point               click;
-    position_component_t    *pos_comp;
-    event_component_t       *event_comp;
+    EGB_Component_Position    *pos_comp;
+    EGB_Component_Event       *event_comp;
 
     click.x = e.button.x;
     click.y = e.button.y;
@@ -48,8 +48,8 @@ int                         EGB_Event_HandleClick(SDL_Event e)
     while(manager_iterator != NULL)
     {
         entity = manager_iterator->entity;
-        pos_comp = (position_component_t *)EGB_FindComponentByName(entity, "position_component");
-        event_comp = (event_component_t *)EGB_FindComponentByName(entity, "event_click_component");
+        pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(entity, "position_component");
+        event_comp = (EGB_Component_Event *)EGB_FindComponentByName(entity, "event_click_component");
         EGB_Component_PositionToRect(pos_comp, &entity_rect);
 
         if (SDL_PointInRect(&click, &entity_rect) == SDL_TRUE) {
@@ -63,10 +63,10 @@ int                         EGB_Event_HandleClick(SDL_Event e)
 
 int                             EGB_Event_HandleKeyStroke(SDL_Event e)
 {
-    entity_manager_t            *entities_manager;
-    entity_linked_list_el_t     *manager_iterator;
-    entity_t                    *entity;
-    event_component_t           *event_comp;
+    EGB_Entity_Manager            *entities_manager;
+    EGB_Entity_LinkedList_Element     *manager_iterator;
+    EGB_Entity                    *entity;
+    EGB_Component_Event           *event_comp;
     
     entities_manager = EGB_Observable_Event_KeyStroke(EGB_Manager_Retrieve);
     if (entities_manager == NULL)
@@ -75,7 +75,7 @@ int                             EGB_Event_HandleKeyStroke(SDL_Event e)
     while(manager_iterator != NULL)
     {
         entity = manager_iterator->entity;
-        event_comp = (event_component_t *)EGB_FindComponentByName(entity, "event_keystroke_component");
+        event_comp = (EGB_Component_Event *)EGB_FindComponentByName(entity, "event_keystroke_component");
         event_comp->f(entity, e);
         manager_iterator = manager_iterator->next;
     }

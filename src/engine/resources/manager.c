@@ -7,15 +7,15 @@
 */
 #include "./resources.h"
 
-resources_list_t            *EGB_ResourcesManager(Uint32 flags, ...)
+EGB_Resource_List            *EGB_ResourcesManager(Uint32 flags, ...)
 {
-    static resources_list_t *manager = NULL;
-    resource_t              *resources_iterator, *entry;
+    static EGB_Resource_List *manager = NULL;
+    EGB_Resource              *resources_iterator, *entry;
     char                    *resources_dir;
     va_list                 argp;
 
     if (manager == NULL) {
-        manager = malloc(sizeof(entity_manager_t));
+        manager = malloc(sizeof(EGB_Entity_Manager));
         manager->first = NULL;
         manager->resources_dir = NULL;
     }
@@ -34,7 +34,7 @@ resources_list_t            *EGB_ResourcesManager(Uint32 flags, ...)
     if (flags & EGB_Manager_Add)
     {
         va_start(argp, flags);
-        entry = va_arg(argp, resource_t*);
+        entry = va_arg(argp, EGB_Resource*);
         va_end(argp);
         if (entry == NULL ||
             entry->resource == NULL ||

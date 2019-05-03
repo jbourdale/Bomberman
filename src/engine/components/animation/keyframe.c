@@ -9,11 +9,11 @@
 #include "animation.h"
 
 void 						EGB_Keyframe_Set_OnStart(
-	animation_component_t *animation,
+	EGB_Component_Animation *animation,
 	int keyframe_id,
-	void (*f)(entity_t *)
+	void (*f)(EGB_Entity *)
 ) {
-	keyframe_t 				*keyframe_iterator;
+	EGB_Animation_Keyframe 				*keyframe_iterator;
 	int 					i;
 
 	if (animation != NULL) {
@@ -30,11 +30,11 @@ void 						EGB_Keyframe_Set_OnStart(
 }
 
 void 						EGB_Keyframe_Set_OnFinish(
-	animation_component_t *animation,
+	EGB_Component_Animation *animation,
 	int keyframe_id,
-	void (*f)(entity_t *)
+	void (*f)(EGB_Entity *)
 ) {
-	keyframe_t 				*keyframe_iterator;
+	EGB_Animation_Keyframe 				*keyframe_iterator;
 	int 					i;
 
 
@@ -51,17 +51,17 @@ void 						EGB_Keyframe_Set_OnFinish(
 		log_warn("add_keyframe_on_finish_event > animation provided is NULL");
 }
 
-int 			EGB_Animation_AddKeyframe(animation_component_t *animation, int duration, int x, int y)
+int 			EGB_Animation_AddKeyframe(EGB_Component_Animation *animation, int duration, int x, int y)
 {
-	keyframe_t 	*keyframe_iterator;
-	keyframe_t  *keyframe;
+	EGB_Animation_Keyframe 	*keyframe_iterator;
+	EGB_Animation_Keyframe  *keyframe;
 
 	if (animation == NULL) {
 		log_debug("null animation provided");
 		return 1;
 	}
 
-    keyframe = malloc(sizeof(keyframe_t));
+    keyframe = malloc(sizeof(EGB_Animation_Keyframe));
 	keyframe->duration = duration;
 	keyframe->active = 0;
 	keyframe->on_finish = NULL;

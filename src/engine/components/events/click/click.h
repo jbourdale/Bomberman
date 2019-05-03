@@ -11,8 +11,8 @@
 
 #include "../../../engine.h"
 
-entity_manager_t *EGB_Observable_Event_Click(Uint32 flags, ...);
-event_component_t *EGB_Component_CreateEventClick(void(*f));
-int EGB_Component_DestroyEventClick(entity_t *entity);
+EGB_Entity_Manager *EGB_Observable_Event_Click(Uint32 flags, ...);
+EGB_Component_Event *EGB_Component_CreateEventClick(void(*f));
+int EGB_Component_DestroyEventClick(EGB_Entity *entity);
 
 #endif

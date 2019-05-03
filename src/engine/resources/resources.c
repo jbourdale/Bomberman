@@ -32,8 +32,8 @@ int     EGB_set_resource_font_size(char *resource_path, int size)
 
 void 					*EGB_Get_Resource(const char* resource_path)
 {
-    resources_list_t    *manager;
-    resource_t          *resources_iterator;
+    EGB_Resource_List    *manager;
+    EGB_Resource          *resources_iterator;
 
     manager = EGB_ResourcesManager(EGB_Manager_Retrieve);
     resources_iterator = manager->first;
