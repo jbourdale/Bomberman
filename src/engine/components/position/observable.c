@@ -10,7 +10,7 @@
 EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
-    EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
+    EGB_Entity_Manager_Element                 *entity_iterator, *entry;
     EGB_Entity                                *entity;
     EGB_Component_Position                    *entity_pos; 
     va_list                                 argp;
@@ -27,7 +27,7 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
         if (entity == NULL)
             return NULL;
 
-        entry = malloc(sizeof(EGB_Entity_LinkedList_Element));
+        entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
         entry->next = NULL;
 

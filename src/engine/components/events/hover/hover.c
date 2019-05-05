@@ -69,7 +69,7 @@ int                         EGB_Component_DestroyEventHover(EGB_Entity *entity)
 EGB_Entity_Manager                            *EGB_Observable_Event_Hover(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
-    EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
+    EGB_Entity_Manager_Element                 *entity_iterator, *entry;
     EGB_Entity                                *entity;
     va_list                                 argp;
 
@@ -84,7 +84,7 @@ EGB_Entity_Manager                            *EGB_Observable_Event_Hover(Uint32
         if (entity == NULL)
             return NULL;
 
-        entry = malloc(sizeof(EGB_Entity_LinkedList_Element));
+        entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
         entry->next = NULL;
 
