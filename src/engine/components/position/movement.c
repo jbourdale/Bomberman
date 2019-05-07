@@ -8,6 +8,14 @@
 
 #include "position.h"
 
+
+/**
+ * @brief      Check if the entity can access his current position
+ *
+ * @param      entity  The entity
+ *
+ * @return     status <ul><li>0 : Can't move</li><li>1 : Can move</li></ul>
+ */
 int EGB_Position_Movable(EGB_Entity *entity)
 {
 	EGB_Component_Collision	*entity_collide_comp;
@@ -33,6 +41,14 @@ int EGB_Position_Movable(EGB_Entity *entity)
 	return 1;
 }
 
+/**
+ * @brief      Move a entity to left
+ *
+ * @param      entity  The entity
+ * @param  	   offset  The offset
+ *
+ * @return     status <ul><li>0: Successfuly move</li><li>1: An error occured</li></ul>
+ */
 int EGB_Position_Move_Left(EGB_Entity *entity, int offset)
 {
 	EGB_Component_Position	*entity_position_comp;
@@ -40,14 +56,24 @@ int EGB_Position_Move_Left(EGB_Entity *entity, int offset)
 		entity,
 		"position_component"
 	);
+	if (entity_position_comp == NULL)
+		return 1;
 	entity_position_comp->x -= offset;
 	if (!EGB_Position_Movable(entity)) {
 		entity_position_comp->x += offset;
-		return 0;
+		return 1;
 	}
-	return 1;
+	return 0;
 }
 
+/**
+ * @brief      Move a entity to right
+ *
+ * @param      entity  The entity
+ * @param  	   offset  The offset
+ *
+ * @return     status <ul><li>0: Successfuly move</li><li>1: An error occured</li></ul>
+ */
 int EGB_Position_Move_Right(EGB_Entity *entity, int offset)
 {
 	EGB_Component_Position	*entity_position_comp;
@@ -55,14 +81,24 @@ int EGB_Position_Move_Right(EGB_Entity *entity, int offset)
 		entity,
 		"position_component"
 	);
+	if (entity_position_comp == NULL)
+		return 1;
 	entity_position_comp->x += offset;
 	if (!EGB_Position_Movable(entity)) {
 		entity_position_comp->x -= offset;
-		return 0;
+		return 1;
 	}
-	return 1;
+	return 0;
 }
 
+/**
+ * @brief      Move a entity up
+ *
+ * @param      entity  The entity
+ * @param  	   offset  The offset
+ *
+ * @return     status <ul><li>0: Successfuly move</li><li>1: An error occured</li></ul>
+ */
 int EGB_Position_Move_Up(EGB_Entity *entity, int offset)
 {
 	EGB_Component_Position	*entity_position_comp;
@@ -70,6 +106,8 @@ int EGB_Position_Move_Up(EGB_Entity *entity, int offset)
 		entity,
 		"position_component"
 	);
+	if (entity_position_comp == NULL)
+		return 1;
 	entity_position_comp->y -= offset;
 	if (!EGB_Position_Movable(entity)) {
 		entity_position_comp->y += offset;
@@ -78,6 +116,14 @@ int EGB_Position_Move_Up(EGB_Entity *entity, int offset)
 	return 0;
 }
 
+/**
+ * @brief      Move a entity down
+ *
+ * @param      entity  The entity
+ * @param  	   offset  The offset
+ *
+ * @return     status <ul><li>0: Successfuly move</li><li>1: An error occured</li></ul>
+ */
 int EGB_Position_Move_Down(EGB_Entity *entity, int offset)
 {
 	EGB_Component_Position	*entity_position_comp;
@@ -85,6 +131,8 @@ int EGB_Position_Move_Down(EGB_Entity *entity, int offset)
 		entity,
 		"position_component"
 	);
+	if (entity_position_comp == NULL)
+		return 1;
 	entity_position_comp->y += offset;
 	if (!EGB_Position_Movable(entity)) {
 		entity_position_comp->y -= offset;
