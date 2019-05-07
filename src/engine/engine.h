@@ -26,7 +26,6 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include <limits.h>
 
 // directory handling
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>

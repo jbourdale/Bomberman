@@ -122,16 +122,16 @@ int EGB_Component_DestroyCollision(EGB_Entity *entity)
  *
  * @return     Return the position component that the entity collide, otherwise NULL
  */
-int                                 EGB_Collide(EGB_Entity *entity, EGB_Component_Position *collision)
-{
+int                                 EGB_Collide(
+    EGB_Entity                      *entity,
+    EGB_Component_Position          *collision
+) {
 	EGB_Entity_Manager 				*manager;
 	EGB_Entity_Manager_Element      *manager_iterator;
 	EGB_Entity 						*manager_entity;
-	EGB_Component_Collision 		*manager_entity_colision_comp;
-	EGB_Component_Position 			*entity_position_comp, *manager_entity_position_comp;
-	SDL_Rect 						entity_collision_box, manager_entity_collision_box;
-
-    log_debug("EGB_Collide");
+	EGB_Component_Collision 		*entity_collision;
+	EGB_Component_Position 			*entity_position_comp, *tmp_entity_pos_comp;
+	SDL_Rect 						entity_collision_box, tmp_entity_collision;
 
 	entity_position_comp = (EGB_Component_Position *)EGB_FindComponentByName(
 		entity,
@@ -140,37 +140,37 @@ int                                 EGB_Collide(EGB_Entity *entity, EGB_Componen
 	if (entity_position_comp == NULL)
 		return 0;
 	EGB_Component_PositionToRect(entity_position_comp, &entity_collision_box);
-    log_debug("MOVING Entity position : (%d, %d, %d, %d)", entity_collision_box.x, entity_collision_box.y, entity_collision_box.w, entity_collision_box.h);
 
 	manager = EGB_Manager_Collision(EGB_Manager_Retrieve);
 	manager_iterator = manager->first;
 	while (manager_iterator != NULL) {
 		manager_entity = manager_iterator->entity;
         if (manager_entity != entity) {
-            log_debug("Iterator on collision entities (%s)", manager_entity->name);
-    		manager_entity_colision_comp = (EGB_Component_Collision *)EGB_FindComponentByName(
+    		entity_collision = (EGB_Component_Collision *)EGB_FindComponentByName(
     			manager_entity,
     			"collision_component"
     		);
-    		if (manager_entity_colision_comp->active == 1) {
-                log_debug("entity have collision active");
-    			manager_entity_position_comp = (EGB_Component_Position *)EGB_FindComponentByName(
+    		if (entity_collision->active == 1) {
+    			tmp_entity_pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(
     				manager_entity,
     				"position_component"
     			);
-    			if (manager_entity_colision_comp != NULL && manager_entity_position_comp->z >= entity_position_comp->z) {
-    				EGB_Component_PositionToRect(manager_entity_position_comp, &manager_entity_collision_box);
-                    log_debug("MANAGER Entity position : (%d, %d, %d, %d)", manager_entity_collision_box.x, manager_entity_collision_box.y, manager_entity_collision_box.w, manager_entity_collision_box.h);
-    				if (SDL_HasIntersection(&entity_collision_box, &manager_entity_collision_box) == SDL_TRUE) {
+    			if (entity_collision != NULL &&
+                    tmp_entity_pos_comp->z >= entity_position_comp->z
+                ) {
+    				EGB_Component_PositionToRect(
+                        tmp_entity_pos_comp,
+                        &tmp_entity_collision
+                    );
+    				if (SDL_HasIntersection(&entity_collision_box, &tmp_entity_collision))
+                    {
     					// TODO use collide box
-                        log_debug("INTERSECTION");
-                        collision->x = manager_entity_collision_box.x;
-                        collision->y = manager_entity_collision_box.y;
-                        collision->width = manager_entity_collision_box.w;
-                        collision->height = manager_entity_collision_box.h;
+                        collision->x = tmp_entity_collision.x;
+                        collision->y = tmp_entity_collision.y;
+                        collision->width = tmp_entity_collision.w;
+                        collision->height = tmp_entity_collision.h;
                         return 1;
     				}
-                    log_debug("NO INTERSECTION");
     			}
     		}
         }
