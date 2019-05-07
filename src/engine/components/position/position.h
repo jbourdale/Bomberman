@@ -1,3 +1,10 @@
+/*
+** position.h for  in /Bomberman/bourda_j
+**
+** Made by BOURDALE Jules
+** Login   <bourda_j@etna-alternance.net>
+**
+*/
 #ifndef __POSITION_H__
 #define __POSITION_H__
 

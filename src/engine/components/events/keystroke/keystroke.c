@@ -9,7 +9,7 @@
 
 /**
  * @brief      Create a Event keyboard component
- * 
+ *
  * @note       Allow callback to be bind on the entity
  *
  * @param      f     callback
@@ -56,7 +56,7 @@ int                         EGB_Component_DestroyEventKeyStroke(EGB_Entity *enti
  * @param      flags      The flags
  * @param      entity[optional]  The entity to add. Require flag EGB_Manager_Add
  *
- * @note Availible flag : 
+ * @note Availible flag :
  *  <ul>
  *      <li>EGB_Manager_Retrieve</li>
  *      <li>EGB_Manager_Add</li>
@@ -71,9 +71,6 @@ EGB_Entity_Manager                            *EGB_Observable_Event_KeyStroke(Ui
     EGB_Entity_Manager_Element                 *entity_iterator, *entry;
     EGB_Entity                                *entity;
     va_list                                 argp;
-
-
-    log_debug("event_keystroke_manager");
 
     if (flags & EGB_Manager_Retrieve)
         return manager;

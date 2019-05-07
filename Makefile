@@ -20,11 +20,13 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
 			./src/engine/components/fpsrate/fpsrate.c \
+			./src/engine/components/components.c \
 			./src/engine/components/animation/animation.c \
 			./src/engine/components/animation/keyframe.c \
-			./src/engine/components/components.c \
+			./src/engine/components/collision/collision.c \
 			./src/engine/components/position/observable.c \
 			./src/engine/components/position/position.c \
+			./src/engine/components/position/movement.c \
 			./src/engine/components/events/keystroke/keystroke.c \
 			./src/engine/components/events/hover/hover.c \
 			./src/engine/components/events/click/click.c \
