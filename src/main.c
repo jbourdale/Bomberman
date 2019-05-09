@@ -70,6 +70,7 @@ int main() {
     // INIT ENGINE
     EGB_Set_Resources_RootDir("./resources");
     EGB_SetWindowTitle("Bomberman");
+    EGB_Set_BackgroundColor(255, 255, 255, 255);
     EGB_FPSIndicator_Display(0);
     EGB_Init();
 

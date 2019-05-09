@@ -73,6 +73,7 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 int EGB_Run();
 int EGB_Init();
 int EGB_Quit();
+void EGB_Set_BackgroundColor(int r, int g, int b, int a);
 
 int EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
 
