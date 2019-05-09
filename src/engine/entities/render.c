@@ -49,7 +49,7 @@ void                        EGB_Render_Entities()
 {
     SDL_Renderer            *renderer;
     EGB_Entity_Manager        *entities_manager;
-    EGB_Entity_LinkedList_Element *manager_iterator;
+    EGB_Entity_Manager_Element *manager_iterator;
     EGB_Entity                *entity;
 
     renderer = EGB_SDL_GetCurrentRenderer();

@@ -14,6 +14,7 @@ typedef struct EGB_Component_s EGB_Component;
 typedef struct EGB_Component_Position_s EGB_Component_Position;
 typedef struct EGB_Component_Animation_s EGB_Component_Animation;
 typedef struct EGB_Component_Event_s EGB_Component_Event;
+typedef struct EGB_Component_Collision_s EGB_Component_Collision;
 typedef struct EGB_Entity_Manager_s EGB_Entity_Manager;
 typedef struct EGB_Resource_s EGB_Resource;
 typedef struct EGB_Resource_List_s EGB_Resource_List;
@@ -25,7 +26,6 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include <limits.h>
 
 // directory handling
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
 #include <unistd.h>
@@ -43,6 +43,7 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 
 // COMPONENTS
 #include "./components/animation/animation.h"
+#include "./components/collision/collision.h"
 #include "./components/position/position.h"
 #include "./components/texture/texture.h"
 #include "./components/fpsrate/fpsrate.h"
@@ -75,4 +76,5 @@ int EGB_Quit();
 
 int EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
 
+EGB_Entity_Manager      *EGB_Manager_Collision(Uint32 flags, ...);
 #endif

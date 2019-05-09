@@ -15,16 +15,16 @@ typedef struct          EGB_Entity_s {
     int                 displayed;
 }                       EGB_Entity;
 
-typedef struct EGB_Entity_LinkedList_Element_s EGB_Entity_LinkedList_Element;
-struct                          EGB_Entity_LinkedList_Element_s
+typedef struct EGB_Entity_Manager_Element_s EGB_Entity_Manager_Element;
+struct                          EGB_Entity_Manager_Element_s
 {
     EGB_Entity                    *entity;
-    EGB_Entity_LinkedList_Element     *next;
+    EGB_Entity_Manager_Element     *next;
 };
 
 typedef struct                  EGB_Entity_Manager_s
 {
-    EGB_Entity_LinkedList_Element     *first;
+    EGB_Entity_Manager_Element     *first;
 }                               EGB_Entity_Manager;
 
 /*

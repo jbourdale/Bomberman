@@ -1,3 +1,10 @@
+/*
+** position.h for  in /Bomberman/bourda_j
+**
+** Made by BOURDALE Jules
+** Login   <bourda_j@etna-alternance.net>
+**
+*/
 #ifndef __POSITION_H__
 #define __POSITION_H__
 
@@ -26,5 +33,11 @@ int EGB_Component_PositionToRect(EGB_Component_Position *comp, SDL_Rect *rect);
 
 // observable.c
 EGB_Entity_Manager  *EGB_Observable_Position(Uint32 flags, ...);
+
+// movement.c
+int EGB_Position_Move_Left(EGB_Entity *entity, int offset);
+int EGB_Position_Move_Right(EGB_Entity *entity, int offset);
+int EGB_Position_Move_Up(EGB_Entity *entity, int offset);
+int EGB_Position_Move_Down(EGB_Entity *entity, int offset);
 
 #endif
