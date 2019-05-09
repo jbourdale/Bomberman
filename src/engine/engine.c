@@ -7,6 +7,8 @@
 */
 #include "engine.h"
 
+SDL_Color   EGB_Background_Color = {0, 0, 0, 255};
+
 /**
  * @brief      Engine main loop
  *
@@ -24,7 +26,13 @@ int                 EGB_Run()
     SDL_Renderer    *renderer;
 
     renderer = EGB_SDL_GetCurrentRenderer();
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(
+        renderer,
+        EGB_Background_Color.r,
+        EGB_Background_Color.g,
+        EGB_Background_Color.b,
+        EGB_Background_Color.a
+    );
     quit = 0;
     while (quit == 0)
     {
@@ -77,4 +85,20 @@ int EGB_Quit()
     TTF_Quit();
     SDL_Quit();
     return 0;
+}
+
+/**
+ * @brief      Set background window color
+ *
+ * @param[in]  r     Red
+ * @param[in]  g     Green
+ * @param[in]  b     Blue
+ * @param[in]  a     Alpha
+ */
+void EGB_Set_BackgroundColor(int r, int g, int b, int a)
+{
+    EGB_Background_Color.r = r;
+    EGB_Background_Color.g = g;
+    EGB_Background_Color.b = b;
+    EGB_Background_Color.a = a;
 }

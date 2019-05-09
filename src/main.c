@@ -69,6 +69,7 @@ int main() {
     // INIT ENGINE
     EGB_Set_Resources_RootDir("./resources");
     EGB_SetWindowTitle("Bomberman");
+    EGB_Set_BackgroundColor(255, 255, 255, 255);
     EGB_Init();
 
     EGB_Entity *bg = EGB_Entity_Create("background");
