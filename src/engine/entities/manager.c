@@ -33,12 +33,10 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         return manager;
     if (flags & EGB_Manager_Add)
     {
-        log_debug("add entity");
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL) {
-            log_debug("no entity provided");
             return NULL;
         }
 
@@ -55,7 +53,6 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL) {
             entity_iterator = entity_iterator->next;
-            log_debug("loop");
         }
         entity_iterator->next = entry;
         return NULL;

@@ -68,6 +68,8 @@ int                         EGB_Network_SendEntity(EGB_Entity *entity)
 
     log_debug("sending entity %s", entity->name);
     encodedEntity = EGB_Serializer_EncodeEntity(entity);
+    if (encodedEntity == NULL)
+        return 1;
     log_debug("encodedEntity : %s", encodedEntity);
 
     servaddr.sin_family = AF_INET;

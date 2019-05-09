@@ -51,8 +51,6 @@ EGB_Entity *EGB_FindEntityByPosition(int x, int y, int z) {
     EGB_Entity_Manager_Element  *manager_iterator;
     EGB_Component_Position      *position_comp;
 
-    log_debug("EGB_FindEntityByPosition");
-
     entities_manager = EGB_Observable_Position(EGB_Manager_Retrieve);
     if (entities_manager == NULL)
         return NULL;

@@ -40,7 +40,9 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/events/events.c \
 			./src/engine/framerate/framerate.c \
 			./src/engine/log/log.c \
-			./src/engine/engine.c
+			./src/engine/engine.c \
+			./src/game/map/map.c \
+			./src/game/player/player.c
 
 
 SRC 	= 	$(BASE_SRC)\
