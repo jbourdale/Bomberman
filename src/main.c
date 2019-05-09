@@ -37,6 +37,7 @@ void on_mario_keystroke(EGB_Entity *entity) {
         EGB_Position_Move_Down(entity, 10);
     if (key_state[SDL_SCANCODE_SPACE])
     {
+        EGB_FPSIndicator_Display(1);
         EGB_Entity *player = EGB_Entity_Create("bomb");
         EGB_Component_Position *pos_comp2 = EGB_Component_CreatePosition(
             pos_comp->x, pos_comp->y, EGB_Position_Background, 50, 50);
@@ -70,6 +71,7 @@ int main() {
     EGB_Set_Resources_RootDir("./resources");
     EGB_SetWindowTitle("Bomberman");
     EGB_Set_BackgroundColor(255, 255, 255, 255);
+    EGB_FPSIndicator_Display(0);
     EGB_Init();
 
     EGB_Entity *bg = EGB_Entity_Create("background");
@@ -96,8 +98,9 @@ int main() {
     EGB_Component_AddToEntity(mario2, (void *)texture_comp);
     EGB_Component_AddToEntity(mario2, (void *)collide_comp);
 
-
+    log_debug("set framerate");
     EGB_SetFramerate(120);
+    log_debug("set framerate end");
     EGB_Run();
 
     // STOPING ENGINE

@@ -13,7 +13,7 @@
  * @param  flags      The flags
  * @param  entity[optional]  The entity to add. Require flag EGB_Manager_Add
  *
- * @note Availible flag : 
+ * @note Availible flag :
  *  <ul>
  *      <li>EGB_Manager_Retrieve</li>
  *      <li>EGB_Manager_Add</li>
@@ -75,11 +75,14 @@ EGB_Entity                        *EGB_Entity_FindFirstByName(char *name)
     EGB_Entity_Manager_Element     *manager_entry;
 
     manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
+    if (manager == NULL)
+        return NULL;
     manager_entry = manager->first;
-    while(manager_entry != NULL && manager_entry->next != NULL)
+    while(manager_entry != NULL)
     {
         if (strcmp(manager_entry->entity->name, name) == 0)
             return manager_entry->entity;
+        manager_entry = manager_entry->next;
     }
     return NULL;
 }
