@@ -8,6 +8,8 @@
 
 #include "sdl.h"
 
+char* EGB_window_title = DEFAULT_GUI_WINDOW_TITLE;
+
 /**
  * @brief      Init all SDL Modules needed
  *
@@ -67,7 +69,7 @@ int                     EGB_SDL_InitWindow(SDL_Window **window)
 
     *window = NULL;
     *window = SDL_CreateWindow(
-        GUI_WINDOW_TITLE,
+        EGB_window_title,
         0,
         0,
         mode.w,
@@ -97,4 +99,20 @@ SDL_Renderer        *EGB_SDL_GetCurrentRenderer()
         return NULL;
     }
     return SDL_GetRenderer(window);
+}
+
+
+/**
+ * @brief      Set the GUI Window title
+ *
+ * @param      title  The title
+ */
+void            EGB_SetWindowTitle(char *title) {
+    SDL_Window  *window;
+
+    window = SDL_GL_GetCurrentWindow();
+    if (window != NULL) {
+        SDL_SetWindowTitle(window, title);
+    }
+    EGB_window_title = title;
 }
