@@ -11,9 +11,11 @@ void on_mario_click(EGB_Entity *entity, SDL_Event e)
 
 void on_explosion(EGB_Entity *entity) {
     log_debug("BOMB EXPLOSED : %s", entity->name);
+    EGB_SetWindowTitle("Bomb explosed");
 }
 void on_start(EGB_Entity *entity) {
     log_debug("BOMB PLACED : %s", entity->name);
+    EGB_SetWindowTitle("Bomb placed");
 }
 
 /**
@@ -66,6 +68,7 @@ int main() {
 
     // INIT ENGINE
     EGB_Set_Resources_RootDir("./resources");
+    EGB_SetWindowTitle("Bomberman");
     EGB_Init();
 
     EGB_Entity *bg = EGB_Entity_Create("background");
