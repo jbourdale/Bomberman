@@ -98,5 +98,8 @@ int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
         EGB_Observable_Event_Hover(EGB_Manager_Add, entity, (EGB_Component_Event *) component);
         return 0;
     }
+    else if (strcmp(component->name, "collision_component") == 0) {
+        EGB_Manager_Collision(EGB_Manager_Add, entity, (EGB_Component_Collision *) component);
+    }
     return 1;
 }

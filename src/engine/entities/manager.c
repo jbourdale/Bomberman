@@ -24,7 +24,7 @@
 EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
-    EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
+    EGB_Entity_Manager_Element                 *entity_iterator, *entry;
     EGB_Entity                                *entity;
     va_list                                 argp;
 
@@ -39,7 +39,7 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         if (entity == NULL)
             return NULL;
 
-        entry = malloc(sizeof(EGB_Entity_LinkedList_Element));
+        entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
         entry->next = NULL;
 
@@ -72,7 +72,7 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
 EGB_Entity                        *EGB_Entity_FindFirstByName(char *name)
 {
     EGB_Entity_Manager            *manager;
-    EGB_Entity_LinkedList_Element     *manager_entry;
+    EGB_Entity_Manager_Element     *manager_entry;
 
     manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
     manager_entry = manager->first;

@@ -49,7 +49,7 @@ int 			EGB_Event_Handle()
 int                         EGB_Event_HandleClick(SDL_Event e)
 {
     EGB_Entity_Manager        *entities_manager;
-    EGB_Entity_LinkedList_Element *manager_iterator;
+    EGB_Entity_Manager_Element *manager_iterator;
     EGB_Entity                *entity;
     SDL_Rect                entity_rect;
     SDL_Point               click;
@@ -98,7 +98,7 @@ int                         EGB_Event_HandleClick(SDL_Event e)
 int                             EGB_Event_HandleKeyStroke(SDL_Event e)
 {
     EGB_Entity_Manager            *entities_manager;
-    EGB_Entity_LinkedList_Element     *manager_iterator;
+    EGB_Entity_Manager_Element     *manager_iterator;
     EGB_Entity                    *entity;
     EGB_Component_Event           *event_comp;
     

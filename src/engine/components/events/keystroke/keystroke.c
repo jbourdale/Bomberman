@@ -9,7 +9,7 @@
 
 /**
  * @brief      Create a Event keyboard component
- * 
+ *
  * @note       Allow callback to be bind on the entity
  *
  * @param      f     callback
@@ -56,7 +56,7 @@ int                         EGB_Component_DestroyEventKeyStroke(EGB_Entity *enti
  * @param      flags      The flags
  * @param      entity[optional]  The entity to add. Require flag EGB_Manager_Add
  *
- * @note Availible flag : 
+ * @note Availible flag :
  *  <ul>
  *      <li>EGB_Manager_Retrieve</li>
  *      <li>EGB_Manager_Add</li>
@@ -68,12 +68,9 @@ int                         EGB_Component_DestroyEventKeyStroke(EGB_Entity *enti
 EGB_Entity_Manager                            *EGB_Observable_Event_KeyStroke(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
-    EGB_Entity_LinkedList_Element                 *entity_iterator, *entry;
+    EGB_Entity_Manager_Element                 *entity_iterator, *entry;
     EGB_Entity                                *entity;
     va_list                                 argp;
-
-
-    log_debug("event_keystroke_manager");
 
     if (flags & EGB_Manager_Retrieve)
         return manager;
@@ -85,7 +82,7 @@ EGB_Entity_Manager                            *EGB_Observable_Event_KeyStroke(Ui
         if (entity == NULL)
             return NULL;
 
-        entry = malloc(sizeof(EGB_Entity_LinkedList_Element));
+        entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
         entry->next = NULL;
         log_debug("will add entry (%p) to keystroke manager(%p)", entry, manager);

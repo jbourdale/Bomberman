@@ -28,13 +28,13 @@ void on_mario_keystroke(EGB_Entity *entity) {
     key_state = SDL_GetKeyboardState(NULL);
     pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
     if(key_state[SDL_SCANCODE_LEFT])
-        pos_comp->x -= 10;
+        EGB_Position_Move_Left(entity, 10);
     if (key_state[SDL_SCANCODE_RIGHT])
-        pos_comp->x += 10;
+        EGB_Position_Move_Right(entity, 10);
     if (key_state[SDL_SCANCODE_UP])
-        pos_comp->y -= 10;
+        EGB_Position_Move_Up(entity, 10);
     if (key_state[SDL_SCANCODE_DOWN])
-        pos_comp->y += 10;
+        EGB_Position_Move_Down(entity, 10);
     if (key_state[SDL_SCANCODE_SPACE])
     {
         EGB_Entity *player = EGB_Entity_Create("bomb");
@@ -61,6 +61,7 @@ void on_mario_keystroke(EGB_Entity *entity) {
 
 int main() {
     EGB_Component_Position *pos_comp, *pos_comp2;
+    EGB_Component_Collision *collide_comp;
     EGB_Component_Texture *texture_comp;
 
     log_info("### Starting Bomberman");
@@ -79,10 +80,21 @@ int main() {
     EGB_Entity *mario = EGB_Entity_Create("player");
     EGB_Component_Event *keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
     pos_comp = EGB_Component_CreatePosition(0, 0, EGB_Position_Classic, 200, 200);
+    collide_comp = EGB_Component_CreateCollision(1);
     texture_comp = EGB_Component_CreateTexture("Mario.png");
     EGB_Component_AddToEntity(mario, (void *)keystroke_event);
     EGB_Component_AddToEntity(mario, (void *)pos_comp);
+    EGB_Component_AddToEntity(mario, (void *)collide_comp);
     EGB_Component_AddToEntity(mario, (void *)texture_comp);
+
+    EGB_Entity *mario2 = EGB_Entity_Create("player");
+    pos_comp2 = EGB_Component_CreatePosition(600, 300, EGB_Position_Classic, 200, 200);
+    collide_comp = EGB_Component_CreateCollision(1);
+    texture_comp = EGB_Component_CreateTexture("Mario.png");
+    EGB_Component_AddToEntity(mario2, (void *)pos_comp2);
+    EGB_Component_AddToEntity(mario2, (void *)texture_comp);
+    EGB_Component_AddToEntity(mario2, (void *)collide_comp);
+
 
     EGB_SetFramerate(120);
     EGB_Run();
