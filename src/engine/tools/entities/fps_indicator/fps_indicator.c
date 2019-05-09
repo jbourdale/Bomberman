@@ -8,10 +8,11 @@
 
 #include "fps_indicator.h"
 
-SDL_Color   black = {0,0,0, 255};
+SDL_Color   EGB_Color_Black = {0,0,0, 255};
+int         EGB_FPSIndicator_IsDisplayed = 1;
 
 /**
- * @brief      Create a FPS counter on corner bottom right 
+ * @brief      Create a FPS counter on corner bottom right
  */
 void                        EGB_FPSIndicator_Create()
 {
@@ -22,11 +23,11 @@ void                        EGB_FPSIndicator_Create()
     log_debug("create_fps_indicator");
     EGB_Entity *fps_indicator_entity = EGB_Entity_Create("fps_indicator");
     fps_indicator_entity->render = EGB_FPSIndicator_Renderer;
-    fps_indicator_entity->displayed = 1;
+    fps_indicator_entity->displayed = EGB_FPSIndicator_IsDisplayed;
 
     event_comp = EGB_Component_CreateEventKeyStroke(EGB_FPSIndicator_KeyStrokeEventHandler);
     EGB_Component_AddToEntity(fps_indicator_entity, (void *)event_comp);
-    
+
     pos_comp = EGB_Component_CreatePosition(1820, 1030, EGB_Position_AlwaysOnTop, 100, 75);
     EGB_Component_AddToEntity(fps_indicator_entity, (void *)pos_comp);
 
@@ -40,7 +41,7 @@ void                        EGB_FPSIndicator_Create()
  * @brief      FPS indicator keyboard event handler
  *
  * @param      entity  The entity
- * @param      e       The SDL_Event 
+ * @param      e       The SDL_Event
  */
 void EGB_FPSIndicator_KeyStrokeEventHandler(EGB_Entity *entity, SDL_Event e)
 {
@@ -68,7 +69,7 @@ void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, EG
         return;
 
     font = (TTF_Font *)EGB_Get_Resource("spacefont.ttf"); //this opens a font style and sets a size
-    
+
     pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
     if (pos_comp == NULL) {
         return ;
@@ -78,7 +79,7 @@ void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, EG
     fps = EGB_FPSIndicator_Compute();
     text = malloc(3 * sizeof(char));
     sprintf(text, "%2.f", fps);
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text, black);
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text, EGB_Color_Black);
     SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
 
     SDL_RenderCopy(renderer, message, NULL, &screen_position);
@@ -129,4 +130,15 @@ float               EGB_FPSIndicator_Compute()
     framespersecond = 1000.f / framespersecond;
 
     return framespersecond;
+}
+
+
+void        EGB_FPSIndicator_Display(int display) {
+    EGB_Entity *fps_indicator_entity;
+
+    EGB_FPSIndicator_IsDisplayed = display;
+
+    fps_indicator_entity = EGB_Entity_FindFirstByName("fps_indicator");
+    if (fps_indicator_entity != NULL)
+        fps_indicator_entity->displayed = display;
 }
