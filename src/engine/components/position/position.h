@@ -30,6 +30,7 @@ typedef struct          EGB_Component_Position_s
 EGB_Component_Position *EGB_Component_CreatePosition(int x, int y, int z, int width, int height);
 int EGB_Component_DestroyPosition(EGB_Entity *entity);
 int EGB_Component_PositionToRect(EGB_Component_Position *comp, SDL_Rect *rect);
+EGB_Entity *EGB_FindEntityByPosition(int x, int y, int z);
 
 // observable.c
 EGB_Entity_Manager  *EGB_Observable_Position(Uint32 flags, ...);

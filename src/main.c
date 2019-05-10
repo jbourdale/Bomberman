@@ -97,6 +97,8 @@ int main() {
     EGB_Component_AddToEntity(mario2, (void *)pos_comp2);
     EGB_Component_AddToEntity(mario2, (void *)texture_comp);
     EGB_Component_AddToEntity(mario2, (void *)collide_comp);
+    EGB_Entity *tmp = EGB_FindEntityByPosition(600, 300, EGB_Position_Classic);
+    log_debug("tmp ENTITY : %s", tmp->name);
 
     log_debug("set framerate");
     EGB_SetFramerate(120);
