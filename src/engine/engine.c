@@ -66,6 +66,7 @@ int EGB_Init()
     }
     EGB_LoadResources();
     EGB_FPSIndicator_Create();
+    EGB_RegisterSerializers();
     return 0;
 }
 
@@ -101,4 +102,10 @@ void EGB_Set_BackgroundColor(int r, int g, int b, int a)
     EGB_Background_Color.g = g;
     EGB_Background_Color.b = b;
     EGB_Background_Color.a = a;
+}
+
+void EGB_RegisterSerializers()
+{
+    EGB_Component_RegisterSerializer("position_component", EGB_Component_PositionSerializer);
+    EGB_Component_RegisterSerializer("texture_component", EGB_Component_TextureSerializer);
 }

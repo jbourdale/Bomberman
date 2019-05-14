@@ -41,4 +41,7 @@ int EGB_Position_Move_Right(EGB_Entity *entity, int offset);
 int EGB_Position_Move_Up(EGB_Entity *entity, int offset);
 int EGB_Position_Move_Down(EGB_Entity *entity, int offset);
 
+// serializer.c
+char    *EGB_Component_PositionSerializer(void *comp);
+
 #endif

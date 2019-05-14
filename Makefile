@@ -27,10 +27,13 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/position/observable.c \
 			./src/engine/components/position/position.c \
 			./src/engine/components/position/movement.c \
+			./src/engine/components/position/serializer.c \
 			./src/engine/components/events/keystroke/keystroke.c \
 			./src/engine/components/events/hover/hover.c \
 			./src/engine/components/events/click/click.c \
 			./src/engine/components/texture/texture.c \
+			./src/engine/components/networkable/networkable.c \
+			./src/engine/components/networkable/serializer/serializer.c \
 			./src/engine/tools/entities/fps_indicator/fps_indicator.c \
 			./src/engine/events/events.c \
 			./src/engine/framerate/framerate.c \

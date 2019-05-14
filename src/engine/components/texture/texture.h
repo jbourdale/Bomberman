@@ -14,10 +14,12 @@
 typedef struct 		EGB_Component_Texture_s
 {
 	char 			*name;
+    char            *resource_path;
 	SDL_Texture 	*texture;
 }					EGB_Component_Texture;
 
 EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename);
+char                    *EGB_Component_TextureSerializer(void *comp);
 int 					EGB_Component_DestroyTexture();
 
 #endif
