@@ -25,6 +25,8 @@ int                 EGB_Run()
     int             quit;
     SDL_Renderer    *renderer;
 
+    log_debug("EGB_Run");
+
     renderer = EGB_SDL_GetCurrentRenderer();
     SDL_SetRenderDrawColor(
         renderer,
@@ -36,6 +38,7 @@ int                 EGB_Run()
     quit = 0;
     while (quit == 0)
     {
+        log_debug("loop");
         EGB_InitFPSRegulation();
         quit = EGB_Event_Handle();
         EGB_Render_Entities();

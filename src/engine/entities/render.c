@@ -67,15 +67,15 @@ void                        EGB_Render_Entities()
 
 /**
  * @brief      Default renderer for entity animation
- * 
- * @note       If you override the default entity renderer, 
+ *
+ * @note       If you override the default entity renderer,
  * you still can use this one to render your animation
  *
  * @param      renderer  The SDL renderer
  * @param      entity    The entity to renderer
- * @param      comps     All the animation components from the entity 
+ * @param      comps     All the animation components from the entity
  * @param      pos_comp  The position component of the entity
- * 
+ *
  * @todo       Split this function, refactor params
  */
 void                        EGB_Render_EntityAnimation(
@@ -148,7 +148,7 @@ void                        EGB_Render_EntityAnimation(
 /**
  * @brief      Render an entity texture component
  *
- * @note       If you override the default entity renderer, 
+ * @note       If you override the default entity renderer,
  * you still can use this one to render your animation
  *
  * @param      renderer  The renderer
@@ -163,6 +163,8 @@ void                        EGB_Render_EntityTexture(
 {
     EGB_Component_Texture      *comp;
     SDL_Rect                position_on_screen;
+
+    log_debug("EGB_Render_EntityTexture");
 
     comp = (EGB_Component_Texture*)EGB_FindComponentByName(entity, "texture_component");
     if (comp == NULL)

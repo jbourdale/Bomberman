@@ -40,27 +40,26 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     payload[2] = '\0';
 
     components = entity->components;
-    log_debug("components == NULL : %d", components == NULL);
-    log_debug("*components == NULL : %d", *components == NULL);
+    log_debug("entity->components (%p)", entity->components);
+    log_debug("components (%p) == NULL : %d", components, components == NULL);
+    log_debug("*components (%p) == NULL : %d", *components, *components == NULL);
     while (components != NULL && *components != NULL) {
-        log_debug("iterator");
         if (EGB_Components_Serializers == NULL)
             break;
         iterator = EGB_Components_Serializers->first;
-        log_debug("iterator = %p", iterator);
-        log_debug("iterator->next = %p", iterator->next);
         EGB_Component *comp = (EGB_Component *)(*components);
-        log_debug("COMPONENT NAME %s : ", comp->name);
-        while(iterator != NULL && strcmp(iterator->component_name, ((EGB_Component *)(*components))->name) != 0) {
-            log_debug("iterator->component_name = %p", iterator->component_name);
+        log_debug("COMPONENT NAME : %s", comp->name);
+        while(iterator != NULL && strcmp(iterator->component_name, comp->name) != 0) {
+            log_debug("iterator->component_name = %s", iterator->component_name);
             iterator = iterator->next;
         }
         if (iterator != NULL && iterator->serializer != NULL) {
-            strcat(payload, iterator->serializer(*components));
+            strcat(payload, strdup(iterator->serializer(components)));
             strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
         }
         components++;
     }
+    log_debug("AFTER THE LOOP entity->components (%p)", entity->components);
     return payload;
 }
 
@@ -68,6 +67,7 @@ int                                 EGB_Component_RegisterSerializer(char *name,
 {
     EGB_Components_SerializerListEl *el, *iterator;
 
+    log_debug("EGB_Component_RegisterSerializer");
     el = malloc(sizeof(EGB_Components_SerializerListEl));
     el->component_name = name;
     el->serializer = serializer;

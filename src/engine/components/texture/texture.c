@@ -25,13 +25,15 @@ EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename)
 	return comp;
 }
 
-char    *EGB_Component_TextureSerializer(void *comp)
+char    *EGB_Component_TextureSerializer(void **comp)
 {
     EGB_Component_Texture *component;
     char *payload;
 
+    log_debug("EGB_Component_TextureSerializer");
+
     payload = malloc(1000);
-    component = (EGB_Component_Texture *)comp;
+    component = (EGB_Component_Texture *)*comp;
     sprintf(payload, "texture_component;%s", strdup(component->resource_path));
     return payload;
 }

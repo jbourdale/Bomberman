@@ -53,14 +53,14 @@ OBJ		=	$(SRC:.c=.o)
 
 TEST_OBJ =	$(TEST_SRC:.c=.o)
 
-CFLAGS	+=	-W -Wall -Werror
+CFLAGS	+=	-W -Wall -Werror -g
 
 LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread
 
 all: 		$(NAME)
 
 $(NAME):	$(OBJ)
-			$(CC) -g -o $(NAME) $(OBJ) $(LDFLAGS)
+			$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 			rm -f $(OBJ)
