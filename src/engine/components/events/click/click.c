@@ -10,7 +10,7 @@
 
 /**
  * @brief      Create a Event click component
- * 
+ *
  * @note       Allow callback to be bind on the entity
  *
  * @param      f     callback
@@ -46,8 +46,8 @@ int                         EGB_Component_DestroyEventClick(EGB_Entity *entity)
     if (comp == NULL)
         return 1;
 
-    free(comp->name);
-    free(comp);
+    //free(comp->name);
+    //free(comp);
     return 0;
 }
 
@@ -57,7 +57,7 @@ int                         EGB_Component_DestroyEventClick(EGB_Entity *entity)
  * @param      flags      The flags
  * @param      entity[optional]  The entity to add. Require flag EGB_Manager_Add
  *
- * @note Availible flag : 
+ * @note Availible flag :
  *  <ul>
  *      <li>EGB_Manager_Retrieve</li>
  *      <li>EGB_Manager_Add</li>

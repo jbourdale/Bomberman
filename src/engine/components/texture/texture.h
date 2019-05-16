@@ -20,6 +20,7 @@ typedef struct 		EGB_Component_Texture_s
 
 EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename);
 char                    *EGB_Component_TextureSerializer(void **comp);
+void                    *EGB_Component_TextureUnserializer(char *raw);
 int 					EGB_Component_DestroyTexture();
 
 #endif

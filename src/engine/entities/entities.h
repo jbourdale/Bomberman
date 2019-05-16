@@ -37,7 +37,8 @@ int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
 /*
  * init.c
  **/
-EGB_Entity    *EGB_Entity_Create(char *name);
+EGB_Entity  *EGB_Entity_Copy(EGB_Entity *entity);
+EGB_Entity  *EGB_Entity_Create(char *name);
 int         EGB_Entity_Destroy(EGB_Entity *entity);
 
 /*

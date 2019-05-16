@@ -89,6 +89,40 @@ EGB_Component_Collision *EGB_Component_CreateCollision(int active)
     return component;
 }
 
+char    *EGB_Component_CollisionSerializer(void **comp)
+{
+    EGB_Component_Collision   *component, *cpy;
+    char *payload;
+
+    if (comp == NULL || *comp == NULL)
+        return "";
+
+    log_debug("EGB_Component_CollisionSerializer");
+
+    component = (EGB_Component_Collision*)*comp;
+
+    cpy = malloc(sizeof(EGB_Component_Collision));
+    cpy->name = strdup(component->name);
+    cpy->active = component->active;
+
+    payload = malloc(1000);
+    sprintf(payload, "collision_component;%d", cpy->active);
+    return payload;
+}
+
+void                        *EGB_Component_CollisionUnserializer(char *raw)
+{
+    char    *token;
+    log_debug("EGB_Component_CollisionUnserializer");
+
+    if (raw == NULL)
+        return NULL;
+
+    token = strtok(raw, ";");
+    token = strtok(NULL, ";");
+    return EGB_Component_CreateCollision(atoi(token));
+}
+
 /**
  * @brief      Destroy the Collision component from entity
  *
@@ -108,8 +142,8 @@ int EGB_Component_DestroyCollision(EGB_Entity *entity)
     if (comp == NULL)
         return 1;
 
-    free(comp->name);
-    free(comp);
+    //free(comp->name);
+    //free(comp);
     return 0;
 }
 

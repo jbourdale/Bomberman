@@ -22,6 +22,7 @@ struct                      EGB_Components_SerializerListEl_s
 {
     char                            *component_name;
     char                            *(*serializer)();
+    void                            *(*unserializer)();
     EGB_Components_SerializerListEl *next;
 };
 
@@ -31,7 +32,7 @@ typedef struct                      EGB_Components_SerializerList_s
 }                                   EGB_Components_SerializerList;
 
 char        *EGB_Serializer_EncodeEntity(EGB_Entity *entity);
-int         EGB_Component_RegisterSerializer(char *name, char *(*serializer)());
+int         EGB_Component_RegisterSerializer(char *name, char *(*serializer)(), void *(*unserializer)());
 EGB_Entity  *EGB_Serializer_DecodeEntity(char *raw);
 
 #endif

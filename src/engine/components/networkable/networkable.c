@@ -36,6 +36,30 @@ char                    *EGB_Network_GenerateId(char *str)
     return str;
 }
 
+EGB_Entity *EGB_Network_FindEntityByNetworkId(char *id) {
+    EGB_Entity                  *entity;
+    EGB_Component_Networkable   *networkable_component;
+    EGB_Entity_Manager          *entities_manager;
+    EGB_Entity_Manager_Element  *manager_iterator;
+
+    entities_manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
+    if (entities_manager == NULL)
+        return NULL;
+    manager_iterator = entities_manager->first;
+    while (manager_iterator != NULL)
+    {
+        entity = manager_iterator->entity;
+        networkable_component = EGB_FindComponentByName(
+            entity,
+            "networkable_component"
+        );
+        if (networkable_component != NULL && strcmp(networkable_component->id, id) == 0)
+            return entity;
+        manager_iterator = manager_iterator->next;
+    }
+    return NULL;
+}
+
 int                         EGB_Component_DestroyNetworkable(EGB_Entity *entity)
 {
     EGB_Component_Position    *comp;
@@ -45,7 +69,7 @@ int                         EGB_Component_DestroyNetworkable(EGB_Entity *entity)
     if (comp == NULL)
         return 1;
 
-    free(comp);
+    //free(comp);
     return 0;
 }
 

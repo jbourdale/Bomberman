@@ -35,6 +35,7 @@ int             EGB_Component_AddToEntity(EGB_Entity *entity, void *component)
     entity->components = realloc(entity->components, (nb_comp + 2) * sizeof(void *));
     entity->components[nb_comp] = component;
     entity->components[nb_comp + 1] = NULL;
+    log_debug("SIZE OF COMPONENTS : %d", sizeof(entity->components));
     EGB_Observables_RegisterEntity(entity, (EGB_Component *)component);
     return 0;
 }
@@ -63,13 +64,13 @@ int             EGB_Component_AddManyToEntity(EGB_Entity *entity, void **compone
             return 1;
         }
     }
-    free(comp);
+    //free(comp);
     return 0;
 }
 
 
 /**
- * @brief      Observables are built to notify entity depending on their component. 
+ * @brief      Observables are built to notify entity depending on their component.
  *             This register an entity to a specific observable on the component param.
  *
  * @param      entity     The entity
@@ -81,7 +82,7 @@ int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
 {
     if (entity == NULL || component == NULL)
         return 1;
-    
+
     if(strcmp(component->name, "position_component") == 0) {
         EGB_Observable_Position(EGB_Manager_Add, entity, (EGB_Component_Position *) component);
         return 0;

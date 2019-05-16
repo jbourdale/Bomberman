@@ -29,8 +29,8 @@ int                         EGB_Component_DestroyPosition(EGB_Entity *entity)
     if (comp == NULL)
         return 1;
 
-    free(comp->name);
-    free(comp);
+    //free(comp->name);
+    //free(comp);
     return 0;
 }
 

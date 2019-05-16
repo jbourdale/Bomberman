@@ -27,15 +27,36 @@ EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename)
 
 char    *EGB_Component_TextureSerializer(void **comp)
 {
-    EGB_Component_Texture *component;
+    EGB_Component_Texture *component, *cpy;
     char *payload;
 
     log_debug("EGB_Component_TextureSerializer");
 
-    payload = malloc(1000);
     component = (EGB_Component_Texture *)*comp;
-    sprintf(payload, "texture_component;%s", strdup(component->resource_path));
+
+    cpy = malloc(sizeof(EGB_Component_Texture));
+    cpy->name = strdup(component->name);
+    cpy->resource_path = strdup(component->resource_path);
+
+    payload = malloc(1000);
+    sprintf(payload, "texture_component;%s", strdup(cpy->resource_path));
     return payload;
+}
+
+void                        *EGB_Component_TextureUnserializer(char *raw)
+{
+    char    *token;
+
+    log_debug("EGB_Component_TextureUnserializer");
+
+    if (raw == NULL) {
+        log_debug("no raw data to parse");
+        return NULL;
+    }
+    token = strtok(raw, ";");
+    token = strtok(NULL, ";");
+
+    return EGB_Component_CreateTexture(token);
 }
 
 

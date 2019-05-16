@@ -7,6 +7,8 @@ void on_mario_click(EGB_Entity *entity, SDL_Event e)
 {
     log_debug("on click on : %s", entity->name);
     log_debug("e : %p", &e);
+    char *rawEncoded = EGB_Serializer_EncodeEntity(entity);
+    EGB_Serializer_DecodeEntity(rawEncoded);
 }
 
 void on_explosion(EGB_Entity *entity) {
@@ -24,6 +26,7 @@ void on_start(EGB_Entity *entity) {
 void on_mario_keystroke(EGB_Entity *entity) {
     EGB_Component_Position    *pos_comp;
     const Uint8             *key_state = SDL_GetKeyboardState(NULL);
+
 
     key_state = SDL_GetKeyboardState(NULL);
     pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
@@ -62,7 +65,7 @@ void on_mario_keystroke(EGB_Entity *entity) {
 
 int main() {
     EGB_Component_Position *pos_comp, *pos_comp2;
-    EGB_Component_Collision /**collide_comp,*/ *collide_comp2;
+    EGB_Component_Collision *collide_comp, *collide_comp2;
     EGB_Component_Texture *texture_comp, *texture_comp2;
 
     log_info("### Starting Bomberman");
@@ -82,15 +85,17 @@ int main() {
 
     EGB_Entity *mario = EGB_Entity_Create("player");
     EGB_Component_Event *keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
+    EGB_Component_Event *click_event = EGB_Component_CreateEventClick(on_mario_click);
     pos_comp = EGB_Component_CreatePosition(0, 0, EGB_Position_Classic, 200, 200);
-    //collide_comp = EGB_Component_CreateCollision(1);
+    collide_comp = EGB_Component_CreateCollision(1);
     texture_comp = EGB_Component_CreateTexture("Mario.png");
     EGB_Component_Networkable *networkable_comp = EGB_Component_CreateNetworkable();
-    EGB_Component_AddToEntity(mario, (void *)keystroke_event);
-    EGB_Component_AddToEntity(mario, (void *)pos_comp);
-    //EGB_Component_AddToEntity(mario, (void *)collide_comp);
-    EGB_Component_AddToEntity(mario, (void *)texture_comp);
-    EGB_Component_AddToEntity(mario, (void *)networkable_comp);
+    EGB_Component_AddToEntity(mario, texture_comp);
+    EGB_Component_AddToEntity(mario, keystroke_event);
+    EGB_Component_AddToEntity(mario, click_event);
+    EGB_Component_AddToEntity(mario, pos_comp);
+    EGB_Component_AddToEntity(mario, collide_comp);
+    EGB_Component_AddToEntity(mario, networkable_comp);
 
     log_debug("mario encoded : %s", EGB_Serializer_EncodeEntity(mario));
 

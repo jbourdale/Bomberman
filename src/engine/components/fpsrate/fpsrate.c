@@ -46,7 +46,7 @@ int                         EGB_Component_DestroyFPSRate(EGB_Entity *entity)
     if (comp == NULL)
         return 1;
 
-    free(comp);
+    //free(comp);
     return 0;
 }
 
