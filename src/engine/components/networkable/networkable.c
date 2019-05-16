@@ -23,7 +23,7 @@ EGB_Component_Networkable       *EGB_Component_CreateNetworkable()
 
 char                    *EGB_Network_GenerateId(char *str)
 {
-    static size_t       length = EGB_NETWORKABLE_ID_LENGTH;
+    size_t       length = EGB_NETWORKABLE_ID_LENGTH;
     static const char   charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
 
     log_debug("EGB_Network_GenerateId");

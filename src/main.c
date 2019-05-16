@@ -70,6 +70,12 @@ int main() {
 
     log_info("### Starting Bomberman");
 
+    for (int i = 0; i< 10; i++) {
+        char *tmp = malloc(EGB_NETWORKABLE_ID_LENGTH);
+        EGB_Network_GenerateId(tmp);
+        log_debug("generated id : %s", tmp);
+    }
+
     // INIT ENGINE
     EGB_Set_Resources_RootDir("./resources");
     EGB_SetWindowTitle("Bomberman");

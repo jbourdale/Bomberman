@@ -37,6 +37,8 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     payload[0] = EGB_ENTITY_NETWORK_IDENTIFIER;
     payload[1] = EGB_NETWORK_VALUE_SEPARATOR_CHAR;
     payload[2] = '\0';
+    strcat(payload, networkable_comp->id);
+    strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
     displayed = malloc(50);
     sprintf(displayed, "%d", entity->displayed);
     strcat(payload, displayed);
@@ -102,9 +104,14 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     char                            *token, **serializedComponents;
     int                             i;
 
-    entity = EGB_Entity_Create("tmp");
     log_debug("raw : %s", raw);
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
+
+    token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    log_debug("network identifier : %s", token);
+    entity = EGB_Network_FindEntityByNetworkId(token);
+    if (entity == NULL)
+        entity = EGB_Entity_Create("tmp");
 
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     log_debug("displayed : %s", token);
