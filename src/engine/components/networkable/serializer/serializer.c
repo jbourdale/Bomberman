@@ -37,6 +37,8 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     payload[0] = EGB_ENTITY_NETWORK_IDENTIFIER;
     payload[1] = EGB_NETWORK_VALUE_SEPARATOR_CHAR;
     payload[2] = '\0';
+    strcat(payload, networkable_comp->id);
+    strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
     displayed = malloc(50);
     sprintf(displayed, "%d", entity->displayed);
     strcat(payload, displayed);
@@ -99,12 +101,18 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
 {
     EGB_Components_SerializerListEl *iterator;
     EGB_Entity                      *entity;
+    void                            *recievedComp, *actualComp;
     char                            *token, **serializedComponents;
     int                             i;
 
-    entity = EGB_Entity_Create("tmp");
     log_debug("raw : %s", raw);
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
+
+    token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    log_debug("network identifier : %s", token);
+    entity = EGB_Network_FindEntityByNetworkId(token);
+    if (entity == NULL)
+        entity = EGB_Entity_Create("tmp");
 
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     log_debug("displayed : %s", token);
@@ -140,9 +148,21 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
             iterator = iterator->next;
         }
         if (iterator != NULL && iterator->unserializer != NULL) {
-            void *comp = iterator->unserializer(strdup(serializedComponents[i]));
-            log_debug("created component : %s", ((EGB_Component *)comp)->name);
-            EGB_Component_AddToEntity(entity, comp);
+            recievedComp = iterator->unserializer(strdup(serializedComponents[i]));
+            log_debug("recieved component : %s", ((EGB_Component *)recievedComp)->name);
+            actualComp = EGB_FindComponentByName(entity, ((EGB_Component *)recievedComp)->name);
+            if (actualComp == NULL) {
+                EGB_Component_AddToEntity(entity, recievedComp);
+            }
+            else {
+                log_debug("COMPONENT REPLACED");
+                EGB_Entity_ReplaceComponent(entity, recievedComp);
+                actualComp = recievedComp;
+                if (strcmp(((EGB_Component *)recievedComp)->name, "collision_component") == 0) {
+                    log_debug("collision_component : %d", ((EGB_Component_Collision *)recievedComp)->active);
+                    log_debug("ACTUAL COMP : %d", ((EGB_Component_Collision *)actualComp)->active);
+                }
+            }
         }
         i++;
     }

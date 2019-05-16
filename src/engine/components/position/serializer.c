@@ -39,15 +39,12 @@ char    *EGB_Component_PositionSerializer(void **comp)
 
 void    *EGB_Component_PositionUnserializer(char *raw)
 {
-    EGB_Component_Position  *position_component;
     int     x, y, z, w, h;
     char    *token;
     log_debug("EGB_Component_PositionUnserializer");
 
     if (raw == NULL)
         return NULL;
-
-    position_component = malloc(sizeof(EGB_Component_Position));
 
     log_debug("raw : %s", raw);
 

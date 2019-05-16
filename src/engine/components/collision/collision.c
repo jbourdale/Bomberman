@@ -163,7 +163,7 @@ int                                 EGB_Collide(
 	EGB_Entity_Manager 				*manager;
 	EGB_Entity_Manager_Element      *manager_iterator;
 	EGB_Entity 						*manager_entity;
-	EGB_Component_Collision 		*entity_collision;
+	EGB_Component_Collision 		*manager_entity_collision, *entity_collision;
 	EGB_Component_Position 			*entity_position_comp, *tmp_entity_pos_comp;
 	SDL_Rect 						entity_collision_box, tmp_entity_collision;
 
@@ -171,7 +171,12 @@ int                                 EGB_Collide(
 		entity,
 		"position_component"
 	);
-	if (entity_position_comp == NULL)
+    entity_collision = EGB_FindComponentByName(
+        entity,
+        "collision_component"
+    );
+    log_debug("ENTITY COLLISION : %d", entity_collision->active);
+	if (entity_position_comp == NULL || entity_collision == NULL || !entity_collision->active)
 		return 0;
 	EGB_Component_PositionToRect(entity_position_comp, &entity_collision_box);
 
@@ -180,18 +185,17 @@ int                                 EGB_Collide(
 	while (manager_iterator != NULL) {
 		manager_entity = manager_iterator->entity;
         if (manager_entity != entity) {
-    		entity_collision = (EGB_Component_Collision *)EGB_FindComponentByName(
+    		manager_entity_collision = (EGB_Component_Collision *)EGB_FindComponentByName(
     			manager_entity,
     			"collision_component"
     		);
-    		if (entity_collision->active == 1) {
+    		if (manager_entity_collision != NULL && manager_entity_collision->active == 1) {
     			tmp_entity_pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(
     				manager_entity,
     				"position_component"
     			);
-    			if (entity_collision != NULL &&
-                    tmp_entity_pos_comp->z >= entity_position_comp->z
-                ) {
+    			if (tmp_entity_pos_comp->z >= entity_position_comp->z) 
+                {
     				EGB_Component_PositionToRect(
                         tmp_entity_pos_comp,
                         &tmp_entity_collision

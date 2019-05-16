@@ -22,5 +22,6 @@ typedef struct          EGB_Component_Networkable_s
 EGB_Component_Networkable   *EGB_Component_CreateNetworkable();
 char                        *EGB_Network_GenerateId(char *str);
 int                         EGB_Component_DestroyNetworkable(EGB_Entity *entity);
+EGB_Entity                  *EGB_Network_FindEntityByNetworkId(char *id);
 
 #endif

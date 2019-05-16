@@ -24,7 +24,6 @@ void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, E
     EGB_Component_Position    *pos_comp;
 
     if (!entity->displayed) {
-        log_debug("entity %s displayed : %d", entity->name, entity->displayed);
         return ;
     }
 
@@ -69,7 +68,6 @@ void                        EGB_Render_Entities()
         manager_iterator = manager_iterator->next;
         i++;
     }
-    log_debug("RENDERED %d ENTITIES", i);
     SDL_RenderPresent(renderer);
 }
 
@@ -172,8 +170,6 @@ void                        EGB_Render_EntityTexture(
     EGB_Component_Texture      *comp;
     SDL_Rect                position_on_screen;
 
-    log_debug("render texture for entity (%s)", entity->name);
-
     comp = (EGB_Component_Texture*)EGB_FindComponentByName(entity, "texture_component");
     if (comp == NULL) {
         log_debug("no texture_component founded");
@@ -181,12 +177,5 @@ void                        EGB_Render_EntityTexture(
     }
 
     EGB_Component_PositionToRect(pos_comp, &position_on_screen);
-    log_debug("comp->texture(%p) == NULL : %d", comp->texture, comp->texture == NULL);
-    log_debug("Render texture (%p) at (%d, %d, %d, %d)", comp->texture,
-        position_on_screen.x,
-        position_on_screen.y,
-        position_on_screen.w,
-        position_on_screen.h
-    );
     SDL_RenderCopy(renderer, comp->texture, NULL, &position_on_screen);
 }
