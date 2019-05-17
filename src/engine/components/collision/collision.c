@@ -89,6 +89,40 @@ EGB_Component_Collision *EGB_Component_CreateCollision(int active)
     return component;
 }
 
+char    *EGB_Component_CollisionSerializer(void **comp)
+{
+    EGB_Component_Collision   *component, *cpy;
+    char *payload;
+
+    if (comp == NULL || *comp == NULL)
+        return "";
+
+    log_debug("EGB_Component_CollisionSerializer");
+
+    component = (EGB_Component_Collision*)*comp;
+
+    cpy = malloc(sizeof(EGB_Component_Collision));
+    cpy->name = strdup(component->name);
+    cpy->active = component->active;
+
+    payload = malloc(1000);
+    sprintf(payload, "collision_component;%d", cpy->active);
+    return payload;
+}
+
+void                        *EGB_Component_CollisionUnserializer(char *raw)
+{
+    char    *token;
+    log_debug("EGB_Component_CollisionUnserializer");
+
+    if (raw == NULL)
+        return NULL;
+
+    token = strtok(raw, ";");
+    token = strtok(NULL, ";");
+    return EGB_Component_CreateCollision(atoi(token));
+}
+
 /**
  * @brief      Destroy the Collision component from entity
  *
@@ -108,8 +142,8 @@ int EGB_Component_DestroyCollision(EGB_Entity *entity)
     if (comp == NULL)
         return 1;
 
-    free(comp->name);
-    free(comp);
+    //free(comp->name);
+    //free(comp);
     return 0;
 }
 
@@ -129,7 +163,7 @@ int                                 EGB_Collide(
 	EGB_Entity_Manager 				*manager;
 	EGB_Entity_Manager_Element      *manager_iterator;
 	EGB_Entity 						*manager_entity;
-	EGB_Component_Collision 		*entity_collision;
+	EGB_Component_Collision 		*manager_entity_collision, *entity_collision;
 	EGB_Component_Position 			*entity_position_comp, *tmp_entity_pos_comp;
 	SDL_Rect 						entity_collision_box, tmp_entity_collision;
 
@@ -137,7 +171,12 @@ int                                 EGB_Collide(
 		entity,
 		"position_component"
 	);
-	if (entity_position_comp == NULL)
+    entity_collision = EGB_FindComponentByName(
+        entity,
+        "collision_component"
+    );
+    log_debug("ENTITY COLLISION : %d", entity_collision->active);
+	if (entity_position_comp == NULL || entity_collision == NULL || !entity_collision->active)
 		return 0;
 	EGB_Component_PositionToRect(entity_position_comp, &entity_collision_box);
 
@@ -146,18 +185,17 @@ int                                 EGB_Collide(
 	while (manager_iterator != NULL) {
 		manager_entity = manager_iterator->entity;
         if (manager_entity != entity) {
-    		entity_collision = (EGB_Component_Collision *)EGB_FindComponentByName(
+    		manager_entity_collision = (EGB_Component_Collision *)EGB_FindComponentByName(
     			manager_entity,
     			"collision_component"
     		);
-    		if (entity_collision->active == 1) {
+    		if (manager_entity_collision != NULL && manager_entity_collision->active == 1) {
     			tmp_entity_pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(
     				manager_entity,
     				"position_component"
     			);
-    			if (entity_collision != NULL &&
-                    tmp_entity_pos_comp->z >= entity_position_comp->z
-                ) {
+    			if (tmp_entity_pos_comp->z >= entity_position_comp->z) 
+                {
     				EGB_Component_PositionToRect(
                         tmp_entity_pos_comp,
                         &tmp_entity_collision

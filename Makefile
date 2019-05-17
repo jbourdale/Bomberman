@@ -27,10 +27,15 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/position/observable.c \
 			./src/engine/components/position/position.c \
 			./src/engine/components/position/movement.c \
+			./src/engine/components/position/serializer.c \
 			./src/engine/components/events/keystroke/keystroke.c \
 			./src/engine/components/events/hover/hover.c \
 			./src/engine/components/events/click/click.c \
 			./src/engine/components/texture/texture.c \
+			./src/engine/components/networkable/networkable.c \
+			./src/engine/components/networkable/serializer/serializer.c \
+			./src/engine/network/network.c \
+			./src/engine/network/configuration.c \
 			./src/engine/tools/entities/fps_indicator/fps_indicator.c \
 			./src/engine/events/events.c \
 			./src/engine/framerate/framerate.c \
@@ -50,14 +55,14 @@ OBJ		=	$(SRC:.c=.o)
 
 TEST_OBJ =	$(TEST_SRC:.c=.o)
 
-CFLAGS	+=	-W -Wall -Werror
+CFLAGS	+=	-W -Wall -Werror -g
 
 LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread
 
 all: 		$(NAME)
 
 $(NAME):	$(OBJ)
-			$(CC) -g -o $(NAME) $(OBJ) $(LDFLAGS)
+			$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 			rm -f $(OBJ)

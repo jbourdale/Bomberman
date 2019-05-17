@@ -67,8 +67,8 @@ disable-rules:
   # - InvertedLogic                         # Priority 3
   # - LongClass                             # Priority 3
   # - LongLine                              # Priority 3
-  # - LongMethod                            # Priority 3
-  # - LongVariableName                      # Priority 3
+  - LongMethod                            # Priority 3
+  - LongVariableName                      # Priority 3
   # - MisplacedDefaultLabel                 # Priority 3
   # - MissingDefaultStatement               # Priority 3
   # - NonCaseLabelInSwitchStatement         # Priority 3

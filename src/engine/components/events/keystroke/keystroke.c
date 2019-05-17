@@ -45,8 +45,8 @@ int                         EGB_Component_DestroyEventKeyStroke(EGB_Entity *enti
     if (comp == NULL)
         return 1;
 
-    free(comp->name);
-    free(comp);
+    //free(comp->name);
+    //free(comp);
     return 0;
 }
 

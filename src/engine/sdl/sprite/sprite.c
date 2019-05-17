@@ -32,7 +32,7 @@ int               EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SD
         log_error("[ERROR SDL] Can't create surface (%s)\n", SDL_GetError());
         return 1;
     }
-    free(rwop);
+    //free(rwop);
 
     *sprite = SDL_CreateTextureFromSurface(renderer, surface);
     return 0;

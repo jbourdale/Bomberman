@@ -14,6 +14,7 @@ EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename)
 
 	comp = malloc(sizeof(EGB_Component_Texture));
 	comp->name = strdup("texture_component");
+    comp->resource_path = strdup(filename);
 
 	texture = NULL;
     if((texture = (SDL_Texture *)EGB_Get_Resource(filename)) == NULL) {
@@ -23,6 +24,41 @@ EGB_Component_Texture 	*EGB_Component_CreateTexture(char *filename)
 	comp->texture = texture;
 	return comp;
 }
+
+char    *EGB_Component_TextureSerializer(void **comp)
+{
+    EGB_Component_Texture *component, *cpy;
+    char *payload;
+
+    log_debug("EGB_Component_TextureSerializer");
+
+    component = (EGB_Component_Texture *)*comp;
+
+    cpy = malloc(sizeof(EGB_Component_Texture));
+    cpy->name = strdup(component->name);
+    cpy->resource_path = strdup(component->resource_path);
+
+    payload = malloc(1000);
+    sprintf(payload, "texture_component;%s", strdup(cpy->resource_path));
+    return payload;
+}
+
+void                        *EGB_Component_TextureUnserializer(char *raw)
+{
+    char    *token;
+
+    log_debug("EGB_Component_TextureUnserializer");
+
+    if (raw == NULL) {
+        log_debug("no raw data to parse");
+        return NULL;
+    }
+    token = strtok(raw, ";");
+    token = strtok(NULL, ";");
+
+    return EGB_Component_CreateTexture(token);
+}
+
 
 int 		EGB_Component_DestroyTexture() {
 	return 1;

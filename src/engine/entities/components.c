@@ -63,13 +63,13 @@ int             EGB_Component_AddManyToEntity(EGB_Entity *entity, void **compone
             return 1;
         }
     }
-    free(comp);
+    //free(comp);
     return 0;
 }
 
 
 /**
- * @brief      Observables are built to notify entity depending on their component. 
+ * @brief      Observables are built to notify entity depending on their component.
  *             This register an entity to a specific observable on the component param.
  *
  * @param      entity     The entity
@@ -81,7 +81,7 @@ int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
 {
     if (entity == NULL || component == NULL)
         return 1;
-    
+
     if(strcmp(component->name, "position_component") == 0) {
         EGB_Observable_Position(EGB_Manager_Add, entity, (EGB_Component_Position *) component);
         return 0;
@@ -102,4 +102,41 @@ int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
         EGB_Manager_Collision(EGB_Manager_Add, entity, (EGB_Component_Collision *) component);
     }
     return 1;
+}
+
+
+int EGB_Entity_ReplaceComponent(EGB_Entity *entity, EGB_Component *component)
+{
+    void        **tmp_comp;
+    int         nb_comp;
+
+    if (component == NULL || entity == NULL)
+        return 1;
+    log_debug("replace component %s in entity : %s", component->name, entity->name);
+
+    tmp_comp = entity->components;
+    if (entity->components == NULL)
+        return 1;
+    nb_comp = 0;
+    while(*tmp_comp != NULL) {
+        log_debug("here");
+        EGB_Component *comp = (*tmp_comp);
+        if (comp == NULL)
+            continue;
+        log_debug("comp->name : %s, component->name : %s", comp->name, component->name);
+        if (strcmp(comp->name, component->name) == 0) {
+            log_debug("comp->name == component->name (%s)", component->name);
+            log_debug("nb_comp : %d", nb_comp);
+            break;
+        }
+        tmp_comp++;
+        nb_comp++;
+    }
+
+    log_debug("nb_comp : %d", nb_comp);
+    EGB_Component *comp = entity->components[nb_comp];
+    log_debug("entity component at %d : %s", nb_comp, comp->name);
+    entity->components[nb_comp] = component;
+
+    return 0;
 }

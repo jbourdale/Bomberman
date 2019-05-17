@@ -35,11 +35,21 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+// Network
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+
 // LOGS
 #include "./log/log.h"
 
 // FRAMERATE
 #include "./framerate/framerate.h"
+
+// ENTITY
+#include "./entities/entities.h"
 
 // COMPONENTS
 #include "./components/animation/animation.h"
@@ -52,20 +62,20 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include "./components/events/click/click.h"
 #include "./components/events/hover/hover.h"
 #include "./components/events/keystroke/keystroke.h"
+// NETWORK
+#include "./components/networkable/networkable.h"
+#include "./components/networkable/serializer/serializer.h"
+#include "./network/network.h"
 
 // RESOURCES
 #include "./resources/resources.h"
 #include "./resources/load/load.h"
-
-// ENTITY
-#include "./entities/entities.h"
 
 // SDL
 #include "./sdl/sdl.h"
 
 // EVENTS
 #include "./events/events.h"
-
 
 // TOOLS
 #include "./tools/entities/fps_indicator/fps_indicator.h"
@@ -74,6 +84,7 @@ int EGB_Run();
 int EGB_Init();
 int EGB_Quit();
 void EGB_Set_BackgroundColor(int r, int g, int b, int a);
+void EGB_RegisterSerializers();
 
 int EGB_SDL_LoadTexture(SDL_Renderer* renderer, char *filename, SDL_Texture **sprite);
 

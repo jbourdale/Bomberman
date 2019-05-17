@@ -25,6 +25,8 @@ int                 EGB_Run()
     int             quit;
     SDL_Renderer    *renderer;
 
+    log_debug("EGB_Run");
+
     renderer = EGB_SDL_GetCurrentRenderer();
     SDL_SetRenderDrawColor(
         renderer,
@@ -36,6 +38,7 @@ int                 EGB_Run()
     quit = 0;
     while (quit == 0)
     {
+        EGB_Network_Handle();
         EGB_InitFPSRegulation();
         quit = EGB_Event_Handle();
         EGB_Render_Entities();
@@ -66,11 +69,12 @@ int EGB_Init()
     }
     EGB_LoadResources();
     EGB_FPSIndicator_Create();
+    EGB_RegisterSerializers();
     return 0;
 }
 
 /**
- * @brief      EGB Destructor, free all used memory
+ * @brief      EGB Destructor, //free all used memory
  *
  * @return     status   Initialissation status
  *              <ul>
@@ -101,4 +105,17 @@ void EGB_Set_BackgroundColor(int r, int g, int b, int a)
     EGB_Background_Color.g = g;
     EGB_Background_Color.b = b;
     EGB_Background_Color.a = a;
+}
+
+void EGB_RegisterSerializers()
+{
+    EGB_Component_RegisterSerializer("position_component",
+        EGB_Component_PositionSerializer, EGB_Component_PositionUnserializer
+    );
+    EGB_Component_RegisterSerializer("texture_component",
+        EGB_Component_TextureSerializer, EGB_Component_TextureUnserializer
+    );
+    EGB_Component_RegisterSerializer("collision_component",
+        EGB_Component_CollisionSerializer, EGB_Component_CollisionUnserializer
+    );
 }

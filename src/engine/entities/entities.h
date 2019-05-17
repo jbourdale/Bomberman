@@ -33,11 +33,13 @@ typedef struct                  EGB_Entity_Manager_s
 int EGB_Component_AddToEntity(EGB_Entity *entity, void *component);
 int EGB_Component_AddManyToEntity(EGB_Entity *entity, void **components);
 int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component);
+int EGB_Entity_ReplaceComponent(EGB_Entity *entity, EGB_Component *component);
 
 /*
  * init.c
  **/
-EGB_Entity    *EGB_Entity_Create(char *name);
+EGB_Entity  *EGB_Entity_Copy(EGB_Entity *entity);
+EGB_Entity  *EGB_Entity_Create(char *name);
 int         EGB_Entity_Destroy(EGB_Entity *entity);
 
 /*
