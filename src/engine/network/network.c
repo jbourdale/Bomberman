@@ -7,7 +7,7 @@
 */
 
 #include "network.h"
-SOCKET EGB_Network_UDPsocket = -1;
+SOCKET EGB_Network_UDPsock = -1;
 
 int                 EGB_Network_Handle()
 {
@@ -22,37 +22,37 @@ int                 EGB_Network_Handle()
         return EGB_NETWORK_DISABLED;
     }
 
-    if (EGB_Network_UDPsocket == -1)
-        EGB_Network_UDPsocket = socket(AF_INET, SOCK_DGRAM, 0);
+    if (EGB_Network_UDPsock == -1)
+        EGB_Network_UDPsock = socket(AF_INET, SOCK_DGRAM, 0);
 
     FD_ZERO(&readfs);
-    FD_SET(EGB_Network_UDPsocket, &readfs);
+    FD_SET(EGB_Network_UDPsock, &readfs);
 
-    if ((ret = select(EGB_Network_UDPsocket + 1, &readfs, NULL, NULL, &tv)) < 0)
+    if ((ret = select(EGB_Network_UDPsock + 1, &readfs, NULL, NULL, &tv)) < 0)
     {
         log_error("NETWORK ERROR");
         return EGB_NETWORK_ERROR;
     }
 
-    if (FD_ISSET(EGB_Network_UDPsocket, &readfs))
-    {
-        recvdata = malloc(1024);
-        recvfrom(EGB_Network_UDPsocket, (char*)recvdata, 1024, 0, NULL, NULL);
-        log_debug("recvdata : %s", recvdata);
-        switch (recvdata[0]) {
-            case EGB_EVENT_NETWORK_IDENTIFIER:
-            case EGB_ERROR_NETWORK_IDENTIFIER:
-                break;
-            case EGB_ENTITY_NETWORK_IDENTIFIER:
-                EGB_Serializer_DecodeEntity(recvdata);
-                break;
-            default:
-                log_debug("RECV UNPARSABLE DATA");
-        }
+    if (!FD_ISSET(EGB_Network_UDPsock, &readfs))
+        return EGB_NETWORK_NODATA;
 
-        return EGB_NETWORK_SUCCESS;
+    recvdata = malloc(1024);
+    recvfrom(EGB_Network_UDPsock, (char*)recvdata, 1024, 0, NULL, NULL);
+    log_debug("recvdata : %s", recvdata);
+    switch (recvdata[0]) {
+        case EGB_EVENT_NETWORK_IDENTIFIER:
+            break;
+        case EGB_ERROR_NETWORK_IDENTIFIER:
+            break;
+        case EGB_ENTITY_NETWORK_IDENTIFIER:
+            EGB_Serializer_DecodeEntity(recvdata);
+            break;
+        default:
+            log_debug("RECV UNPARSABLE DATA");
     }
-    return EGB_NETWORK_NODATA;
+
+    return EGB_NETWORK_SUCCESS;
 }
 
 
@@ -74,7 +74,13 @@ int                         EGB_Network_SendEntity(EGB_Entity *entity)
     servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);
     servaddr.sin_addr.s_addr = inet_addr(EGB_Network_GetConfiguration().ip);
 
-    sendtoSuccess = sendto(EGB_Network_UDPsocket, (const char *)encodedEntity, strlen(encodedEntity), 0,
-        (const struct sockaddr*) &servaddr, sizeof(servaddr));
+    sendtoSuccess = sendto(
+        EGB_Network_UDPsock,
+        (const char *)encodedEntity,
+        strlen(encodedEntity),
+        0,
+        (const struct sockaddr*) &servaddr,
+        sizeof(servaddr)
+    );
     return sendtoSuccess;
 }
