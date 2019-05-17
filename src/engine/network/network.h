@@ -38,5 +38,9 @@ void    EGB_Network_Disable();
 int     EGB_Network_IsEnabled();
 void    EGB_Network_SetConfiguration(EGB_Network_Configuration config);
 EGB_Network_Configuration   EGB_Network_GetConfiguration();
+void    EGB_Network_OnEntityUpdated(void (*callback)(EGB_Entity *));
+void    EGB_Network_TriggerOnEntityUpdatedCallback(EGB_Entity *entity);
+void    EGB_Network_OnNewEntityRecv(void (*callback)(EGB_Entity *));
+void    EGB_Network_TriggerOnNewEntityRecvCallback(EGB_Entity *entity);
 
 #endif

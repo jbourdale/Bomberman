@@ -7,8 +7,7 @@ void on_mario_click(EGB_Entity *entity, SDL_Event e)
 {
     log_debug("on click on : %s", entity->name);
     log_debug("e : %p", &e);
-    char *rawEncoded = EGB_Serializer_EncodeEntity(entity);
-    EGB_Serializer_DecodeEntity(rawEncoded);
+    EGB_Network_SendEntity(entity);
 }
 
 void on_explosion(EGB_Entity *entity) {
@@ -71,6 +70,14 @@ void on_mario_keystroke(EGB_Entity *entity) {
     }
 }
 
+void onNewEntityRecv(EGB_Entity *entity) {
+    log_debug("new entity recv : %s", entity->name);
+}
+
+void onEntityUpdate(EGB_Entity *entity) {
+    log_debug("entity updated : %s", entity->name);
+}
+
 int main() {
     EGB_Component_Position *pos_comp, *pos_comp2;
     EGB_Component_Collision *collide_comp, *collide_comp2;
@@ -89,6 +96,8 @@ int main() {
     EGB_SetWindowTitle("Bomberman");
     EGB_Set_BackgroundColor(255, 255, 255, 255);
     EGB_FPSIndicator_Display(0);
+    EGB_Network_OnEntityUpdated(onEntityUpdate);
+    EGB_Network_OnNewEntityRecv(onNewEntityRecv);
     EGB_Network_Configuration config= { "127.0.0.1", 1337 };
     EGB_Network_SetConfiguration(config);
     EGB_Network_Enable();

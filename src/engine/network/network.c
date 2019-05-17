@@ -39,7 +39,17 @@ int                 EGB_Network_Handle()
         recvdata = malloc(1024);
         recvfrom(EGB_Network_UDPsocket, (char*)recvdata, 1024, 0, NULL, NULL);
         log_debug("recvdata : %s", recvdata);
-        EGB_Serializer_DecodeEntity(recvdata);
+        switch (recvdata[0]) {
+            case EGB_EVENT_NETWORK_IDENTIFIER:
+            case EGB_ERROR_NETWORK_IDENTIFIER:
+                break;
+            case EGB_ENTITY_NETWORK_IDENTIFIER:
+                EGB_Serializer_DecodeEntity(recvdata);
+                break;
+            default:
+                log_debug("RECV UNPARSABLE DATA");
+        }
+
         return EGB_NETWORK_SUCCESS;
     }
     return EGB_NETWORK_NODATA;

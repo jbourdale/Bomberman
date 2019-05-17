@@ -28,3 +28,25 @@ void	EGB_Network_SetConfiguration(EGB_Network_Configuration config) {
 EGB_Network_Configuration	EGB_Network_GetConfiguration() {
 	return EGB_Network_Config;
 }
+
+void (*EGB_OnEntityUpdatedCallback)(EGB_Entity *) = NULL;
+void    EGB_Network_OnEntityUpdated(void (*callback)(EGB_Entity *))
+{
+    EGB_OnEntityUpdatedCallback = callback;
+}
+
+void EGB_Network_TriggerOnEntityUpdatedCallback(EGB_Entity *entity)
+{
+    return EGB_OnEntityUpdatedCallback(entity);
+}
+
+void (*EGB_OnNewEntityRecvCallback)(EGB_Entity *) = NULL;
+void    EGB_Network_OnNewEntityRecv(void (*callback)(EGB_Entity *))
+{
+    EGB_OnNewEntityRecvCallback = callback;
+}
+
+void EGB_Network_TriggerOnNewEntityRecvCallback(EGB_Entity *entity)
+{
+    return EGB_OnEntityUpdatedCallback(entity);
+}
