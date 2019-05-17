@@ -68,6 +68,7 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
         }
         components++;
     }
+    payload[strlen(payload) - 1] = '#';
     log_debug("AFTER THE LOOP entity->components (%p)", entity->components);
     return payload;
 }
@@ -105,14 +106,19 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     char                            *token, **serializedComponents;
     int                             i;
 
+    raw = strtok(raw, "#");
     log_debug("raw : %s", raw);
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
 
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     log_debug("network identifier : %s", token);
     entity = EGB_Network_FindEntityByNetworkId(token);
-    if (entity == NULL)
+    if (entity == NULL) {
         entity = EGB_Entity_Create("tmp");
+        EGB_Component_Networkable *networkable_comp = EGB_Component_CreateNetworkable();
+        networkable_comp->id = token;
+        EGB_Component_AddToEntity(entity, networkable_comp);
+    }
 
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     log_debug("displayed : %s", token);

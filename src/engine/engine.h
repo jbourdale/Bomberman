@@ -35,6 +35,13 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+// Network
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <sys/select.h>
+
 // LOGS
 #include "./log/log.h"
 
@@ -58,6 +65,7 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 // NETWORK
 #include "./components/networkable/networkable.h"
 #include "./components/networkable/serializer/serializer.h"
+#include "./network/network.h"
 
 // RESOURCES
 #include "./resources/resources.h"

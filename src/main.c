@@ -30,14 +30,22 @@ void on_mario_keystroke(EGB_Entity *entity) {
 
     key_state = SDL_GetKeyboardState(NULL);
     pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
-    if(key_state[SDL_SCANCODE_LEFT])
+    if(key_state[SDL_SCANCODE_LEFT]) {
         EGB_Position_Move_Left(entity, 10);
-    if (key_state[SDL_SCANCODE_RIGHT])
+        EGB_Network_SendEntity(entity);
+    }
+    if (key_state[SDL_SCANCODE_RIGHT]) {
         EGB_Position_Move_Right(entity, 10);
-    if (key_state[SDL_SCANCODE_UP])
+        EGB_Network_SendEntity(entity);
+    }
+    if (key_state[SDL_SCANCODE_UP]) {
         EGB_Position_Move_Up(entity, 10);
-    if (key_state[SDL_SCANCODE_DOWN])
+        EGB_Network_SendEntity(entity);
+    }
+    if (key_state[SDL_SCANCODE_DOWN]) {
         EGB_Position_Move_Down(entity, 10);
+        EGB_Network_SendEntity(entity);
+    }
     if (key_state[SDL_SCANCODE_SPACE])
     {
         EGB_FPSIndicator_Display(1);
@@ -71,7 +79,7 @@ int main() {
     log_info("### Starting Bomberman");
 
     for (int i = 0; i< 10; i++) {
-        char *tmp = malloc(EGB_NETWORKABLE_ID_LENGTH);
+        char *tmp = malloc(EGB_NETWORKABLE_ID_LENGTH + 10);
         EGB_Network_GenerateId(tmp);
         log_debug("generated id : %s", tmp);
     }
@@ -81,6 +89,9 @@ int main() {
     EGB_SetWindowTitle("Bomberman");
     EGB_Set_BackgroundColor(255, 255, 255, 255);
     EGB_FPSIndicator_Display(0);
+    EGB_Network_Configuration config= { "127.0.0.1", 1337 };
+    EGB_Network_SetConfiguration(config);
+    EGB_Network_Enable();
     EGB_Init();
 
     EGB_Entity *bg = EGB_Entity_Create("background");

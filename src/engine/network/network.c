@@ -1,29 +1,70 @@
 /*
-** engine.c for  in /Bomberman/bourda_j
+** network.c for  in /Bomberman/bourda_j
 **
 ** Made by BOURDALE Jules
 ** Login   <bourda_j@etna-alternance.net>
 **
 */
+
 #include "network.h"
+SOCKET EGB_Network_UDPsocket = -1;
 
-int		EGB_Network_Enabled = EGB_DEFAULT_NETWORK_ACTIVATION;
-void 	EGB_Network_Enable() {
-	EGB_Network_Enabled = EGB_DEFAULT_NETWORK_ACTIVATED;
+int                 EGB_Network_Handle()
+{
+    static fd_set   readfs;
+    static struct   timeval tv;
+    int             ret = 0;
+    char            *recvdata;
+    tv.tv_sec = 0;
+    tv.tv_usec = 100;
+
+    if (!EGB_Network_IsEnabled()) {
+        return EGB_NETWORK_DISABLED;
+    }
+
+    if (EGB_Network_UDPsocket == -1)
+        EGB_Network_UDPsocket = socket(AF_INET, SOCK_DGRAM, 0);
+
+    FD_ZERO(&readfs);
+    FD_SET(EGB_Network_UDPsocket, &readfs);
+
+    if ((ret = select(EGB_Network_UDPsocket + 1, &readfs, NULL, NULL, &tv)) < 0)
+    {
+        log_error("NETWORK ERROR");
+        return EGB_NETWORK_ERROR;
+    }
+
+    if (FD_ISSET(EGB_Network_UDPsocket, &readfs))
+    {
+        recvdata = malloc(1024);
+        recvfrom(EGB_Network_UDPsocket, (char*)recvdata, 1024, 0, NULL, NULL);
+        log_debug("recvdata : %s", recvdata);
+        EGB_Serializer_DecodeEntity(recvdata);
+        return EGB_NETWORK_SUCCESS;
+    }
+    return EGB_NETWORK_NODATA;
 }
 
-void 	EGB_Network_Disable() {
-	EGB_Network_Enabled = EGB_DEFAULT_NETWORK_DISACTIVATED;
-}
 
-EGB_Network_Configuration		*EGB_Network_Config = NULL;
-void	EGB_Network_SetConfiguration(EGB_Network_Configuration *config) {
-	if (EGB_Network_Config == NULL)
-		EGB_Network_Config = malloc(sizeof(EGB_Network_Configuration));
+int                         EGB_Network_SendEntity(EGB_Entity *entity)
+{
+    char                    *encodedEntity;
+    int                     sendtoSuccess;
+    struct sockaddr_in      servaddr;
 
-	EGB_Network_Config = config;
-}
+    if (!EGB_Network_IsEnabled())
+        return EGB_NETWORK_DISABLED;
 
-EGB_Network_Configuration	*EGB_Network_GetConfiguration() {
-	return EGB_Network_Config;
+
+    log_debug("sending entity %s", entity->name);
+    encodedEntity = EGB_Serializer_EncodeEntity(entity);
+    log_debug("encodedEntity : %s", encodedEntity);
+
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);
+    servaddr.sin_addr.s_addr = inet_addr(EGB_Network_GetConfiguration().ip);
+
+    sendtoSuccess = sendto(EGB_Network_UDPsocket, (const char *)encodedEntity, strlen(encodedEntity), 0,
+        (const struct sockaddr*) &servaddr, sizeof(servaddr));
+    return sendtoSuccess;
 }

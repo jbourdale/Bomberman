@@ -11,7 +11,7 @@
 
 #include "../../engine.h"
 
-#define EGB_NETWORKABLE_ID_LENGTH   32
+#define EGB_NETWORKABLE_ID_LENGTH   64
 
 typedef struct          EGB_Component_Networkable_s
 {
