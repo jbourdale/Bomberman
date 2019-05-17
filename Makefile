@@ -40,7 +40,9 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/events/events.c \
 			./src/engine/framerate/framerate.c \
 			./src/engine/log/log.c \
-			./src/engine/engine.c
+			./src/engine/engine.c \
+			./src/game/map/map.c \
+			./src/game/player/player.c
 
 
 SRC 	= 	$(BASE_SRC)\
@@ -57,7 +59,7 @@ TEST_OBJ =	$(TEST_SRC:.c=.o)
 
 CFLAGS	+=	-W -Wall -Werror -g
 
-LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread
+LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread -lm
 
 all: 		$(NAME)
 

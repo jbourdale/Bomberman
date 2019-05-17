@@ -44,6 +44,8 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     strcat(payload, entity->name);
     strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
 
+    log_debug("building payload : %s", payload);
+
     components = entity->components;
     while (components != NULL && *components != NULL) {
         if (EGB_Components_Serializers == NULL)
@@ -62,6 +64,7 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
         components++;
     }
     payload[strlen(payload) - 1] = '#';
+    log_debug("payload returned : %s", payload);
     return payload;
 }
 
