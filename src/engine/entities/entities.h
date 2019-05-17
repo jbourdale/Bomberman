@@ -33,6 +33,7 @@ typedef struct                  EGB_Entity_Manager_s
 int EGB_Component_AddToEntity(EGB_Entity *entity, void *component);
 int EGB_Component_AddManyToEntity(EGB_Entity *entity, void **components);
 int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component);
+int EGB_Entity_ReplaceComponent(EGB_Entity *entity, EGB_Component *component);
 
 /*
  * init.c

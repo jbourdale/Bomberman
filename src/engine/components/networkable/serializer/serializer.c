@@ -101,6 +101,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
 {
     EGB_Components_SerializerListEl *iterator;
     EGB_Entity                      *entity;
+    void                            *recievedComp, *actualComp;
     char                            *token, **serializedComponents;
     int                             i;
 
@@ -147,9 +148,21 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
             iterator = iterator->next;
         }
         if (iterator != NULL && iterator->unserializer != NULL) {
-            void *comp = iterator->unserializer(strdup(serializedComponents[i]));
-            log_debug("created component : %s", ((EGB_Component *)comp)->name);
-            EGB_Component_AddToEntity(entity, comp);
+            recievedComp = iterator->unserializer(strdup(serializedComponents[i]));
+            log_debug("recieved component : %s", ((EGB_Component *)recievedComp)->name);
+            actualComp = EGB_FindComponentByName(entity, ((EGB_Component *)recievedComp)->name);
+            if (actualComp == NULL) {
+                EGB_Component_AddToEntity(entity, recievedComp);
+            }
+            else {
+                log_debug("COMPONENT REPLACED");
+                EGB_Entity_ReplaceComponent(entity, recievedComp);
+                actualComp = recievedComp;
+                if (strcmp(((EGB_Component *)recievedComp)->name, "collision_component") == 0) {
+                    log_debug("collision_component : %d", ((EGB_Component_Collision *)recievedComp)->active);
+                    log_debug("ACTUAL COMP : %d", ((EGB_Component_Collision *)actualComp)->active);
+                }
+            }
         }
         i++;
     }
