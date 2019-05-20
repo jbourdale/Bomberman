@@ -85,6 +85,9 @@ void 						init_player()
     EGB_Component_Networkable  *networkable_comp;
 
 	mario = EGB_Entity_Create("player");
+    log_debug("entity mario : %p", mario);
+    EGB_Entity_Destroy(mario);
+    exit(1);
     keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
     pos_comp = EGB_Component_CreatePosition(125, 125, EGB_Position_Classic, 50, 50);
     texture_comp = EGB_Component_CreateTexture("Mario.png");
@@ -97,4 +100,5 @@ void 						init_player()
     EGB_Component_AddToEntity(mario, texture_comp);
     EGB_Component_AddToEntity(mario, collision_comp);
     EGB_Component_AddToEntity(mario, networkable_comp);
+
 }

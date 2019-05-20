@@ -24,7 +24,7 @@ int main() {
     EGB_Network_Enable();
     EGB_Init();
 
-    init_map();
+    //init_map();
     init_player();
 
     EGB_SetFramerate(120);

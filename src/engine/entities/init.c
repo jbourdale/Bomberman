@@ -61,6 +61,14 @@ EGB_Entity        *EGB_Entity_Copy(EGB_Entity *entity)
 int                 EGB_Entity_Destroy(EGB_Entity *entity)
 {
     log_debug("EGB_Entity_Destroy : %s", entity->name);
+
+    // Remove entity from managers / observables
+    EGB_Manager_Entity(EGB_Manager_Delete, entity);
+    EGB_Observable_Position(EGB_Manager_Delete, entity);
+    EGB_Observable_Event_KeyStroke(EGB_Manager_Delete, entity);
+    EGB_Observable_Event_Click(EGB_Manager_Delete, entity);
+    EGB_Observable_Event_Hover(EGB_Manager_Delete, entity);
+    EGB_Manager_Collision(EGB_Manager_Delete, entity);
     //free(entity);
     return 0;
 }

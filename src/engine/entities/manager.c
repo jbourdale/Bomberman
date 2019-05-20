@@ -24,9 +24,9 @@
 EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
-    EGB_Entity_Manager_Element                 *entity_iterator, *entry;
+    EGB_Entity_Manager_Element                *entity_iterator, *entry, *entity_iterator_prev;
     EGB_Entity                                *entity;
-    va_list                                 argp;
+    va_list                                   argp;
 
 
     if (flags & EGB_Manager_Retrieve)
@@ -39,6 +39,7 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         if (entity == NULL) {
             return NULL;
         }
+        log_debug("Adding entity %s (%p) to manager", entity->name, entity);
 
         entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
@@ -53,11 +54,37 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL) {
             entity_iterator = entity_iterator->next;
+            log_debug("iterator over manager");
         }
+        log_debug("adding it to manager");
         entity_iterator->next = entry;
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
+        log_debug("Deleting from manager");
+        va_start(argp, flags);
+        entity = va_arg(argp, EGB_Entity*);
+        va_end(argp);
+        if (entity == NULL || manager == NULL)
+            return NULL;
+
+        log_debug("Deleting(%p) from manager", entity);
+
+        entity_iterator_prev = NULL;
+        entity_iterator = manager->first;
+        while (entity_iterator != NULL && entity_iterator->entity != entity) {
+            log_debug("entity_iterator entity (%s) : %p", entity_iterator->entity->name, entity_iterator->entity);
+            entity_iterator_prev = entity_iterator;
+            entity_iterator = entity_iterator->next;
+        }
+        if (entity_iterator == NULL)
+            return NULL;
+        if (entity_iterator_prev == NULL) {
+            manager->first = entity_iterator->next;
+        }
+        else {
+            entity_iterator_prev->next = entity_iterator->next;
+        }
         return NULL;
     }
     return NULL;
