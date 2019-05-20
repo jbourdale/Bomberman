@@ -8,6 +8,7 @@
 
 #include "../../engine/engine.h"
 #include "../map/map.h"
+#include "../server/server.h"
 
 /**
  * MARIO HANDLER CLICK
@@ -54,6 +55,9 @@ void on_mario_keystroke(EGB_Entity *entity) {
     if (key_state[SDL_SCANCODE_DOWN]) {
         EGB_Position_Move_Down(entity, 10);
         EGB_Network_SendEntity(entity);
+    }
+    if (key_state[SDL_SCANCODE_S]) {
+        start_server_thread();
     }
     if (key_state[SDL_SCANCODE_SPACE])
     {

@@ -9,6 +9,8 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
+#include "../game.h"
+
 void create_wall_entity(int x, int y);
 void init_background();
 void init_map();

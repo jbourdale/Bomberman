@@ -9,6 +9,9 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
+#include <pthread.h>
+
+#include "../engine/engine.h"
 #include "./map/map.h"
 #include "./player/player.h"
 #include "./menus/home/home.h"
