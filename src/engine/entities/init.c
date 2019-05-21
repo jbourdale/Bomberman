@@ -62,6 +62,9 @@ int                 EGB_Entity_Destroy(EGB_Entity *entity)
 {
     log_debug("EGB_Entity_Destroy : %s", entity->name);
 
+    if (entity->on_destroy != NULL)
+        entity->on_destroy(entity);
+
     // Remove entity from managers / observables
     EGB_Manager_Entity(EGB_Manager_Delete, entity);
     EGB_Observable_Position(EGB_Manager_Delete, entity);
