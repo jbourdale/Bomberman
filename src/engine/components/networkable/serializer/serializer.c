@@ -91,6 +91,32 @@ int                                 EGB_Component_RegisterSerializer(char *name,
     return 0;
 }
 
+void        EGB_Serializer_DecodeEntities(char *raw)
+{
+    char    *token, **rawEntities;
+    int     i;
+
+    log_debug("DECODE ENTITIES : %s", raw);
+    rawEntities = malloc(1000 * sizeof(char *));
+    token = strtok(raw, "#");
+    i = 0;
+    while (token != NULL) {
+        rawEntities[i] = malloc(strlen(token) + 1);
+        strcpy(rawEntities[i], token);
+        i++;
+        token = strtok(NULL, "#");
+    }
+    rawEntities[i] = NULL;
+
+    i = 0;
+    while (rawEntities[i] != NULL)
+    {
+        log_debug("decode entity : %s", rawEntities[i]);
+        EGB_Serializer_DecodeEntity(rawEntities[i]);
+        i++;
+    }
+}
+
 EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
 {
     int                             update = 1; // if we are updating or creating a entity
@@ -100,7 +126,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     char                            *token, *networkable_id, **serializedComponents;
     int                             i;
 
-    raw = strtok(raw, "#");
+    // raw = strtok(raw, "#");
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
 
     networkable_id = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);

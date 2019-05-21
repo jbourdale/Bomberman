@@ -36,5 +36,6 @@ typedef struct                      EGB_Components_SerializerList_s
 char        *EGB_Serializer_EncodeEntity(EGB_Entity *entity);
 int         EGB_Component_RegisterSerializer(char *name, char *(*serializer)(), void *(*unserializer)());
 EGB_Entity  *EGB_Serializer_DecodeEntity(char *raw);
+void        EGB_Serializer_DecodeEntities(char *raw);
 
 #endif
