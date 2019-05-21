@@ -25,10 +25,10 @@ int main() {
     EGB_Init();
 
     // init_map();
-    init_player();
-
+    // init_player();
+    setup_home_menu();
     EGB_SetFramerate(120);
-    log_debug("set framerate end");
+
     EGB_Run();
 
     // STOPING ENGINE
