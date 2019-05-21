@@ -19,6 +19,10 @@ void on_mario_click(EGB_Entity *entity, SDL_Event e)
     EGB_Entity_Destroy(entity);
 }
 
+void player_on_destroy(EGB_Entity *entity) {
+    EGB_Network_DestroyEntity(entity);
+}
+
 void on_explosion(EGB_Entity *entity) {
     log_debug("BOMB EXPLOSED : %s", entity->name);
 }
@@ -86,6 +90,7 @@ void 						init_player()
     EGB_Component_Networkable  *networkable_comp;
 
 	mario = EGB_Entity_Create("player");
+    mario->on_destroy = player_on_destroy;
     log_debug("entity mario : %p", mario);
     keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
     click_event = EGB_Component_CreateEventClick(on_mario_click);

@@ -97,23 +97,28 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     EGB_Components_SerializerListEl *iterator;
     EGB_Entity                      *entity;
     void                            *recievedComp, *actualComp;
-    char                            *token, **serializedComponents;
+    char                            *token, *networkable_id, **serializedComponents;
     int                             i;
 
     raw = strtok(raw, "#");
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
 
+    networkable_id = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    entity = EGB_Network_FindEntityByNetworkId(networkable_id);
+
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-    entity = EGB_Network_FindEntityByNetworkId(token);
+    if (strcmp(token, "destroy") == 0) {
+        if (entity != NULL)
+            EGB_Entity_Destroy(entity);
+        return NULL;
+    }
     if (entity == NULL) {
         update = 0;
         entity = EGB_Entity_Create("tmp");
         EGB_Component_Networkable *networkable_comp = EGB_Component_CreateNetworkable();
-        networkable_comp->id = token;
+        networkable_comp->id = networkable_id;
         EGB_Component_AddToEntity(entity, networkable_comp);
     }
-
-    token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     entity->displayed = atoi(token);
 
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);

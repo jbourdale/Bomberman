@@ -65,7 +65,6 @@ int                         EGB_Network_SendEntity(EGB_Entity *entity)
     if (!EGB_Network_IsEnabled())
         return EGB_NETWORK_DISABLED;
 
-
     log_debug("sending entity %s", entity->name);
     encodedEntity = EGB_Serializer_EncodeEntity(entity);
     if (encodedEntity == NULL)
@@ -85,4 +84,39 @@ int                         EGB_Network_SendEntity(EGB_Entity *entity)
         sizeof(servaddr)
     );
     return sendtoSuccess;
+}
+
+int       EGB_Network_DestroyEntity(EGB_Entity *entity)
+{
+    EGB_Component_Networkable *networkable_comp;
+    char  *payload;
+    struct sockaddr_in      servaddr;
+
+    networkable_comp = EGB_FindComponentByName(entity, "networkable_component");
+    if (networkable_comp == NULL)
+        return -1;
+
+    log_debug("Sending destruction of Entity %s", networkable_comp->id);
+
+    payload = malloc(1000);
+    payload[0] = EGB_ENTITY_NETWORK_IDENTIFIER;
+    payload[1] = EGB_NETWORK_VALUE_SEPARATOR_CHAR;
+    payload[2] = '\0';
+    strcat(payload, networkable_comp->id);
+    strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
+    strcat(payload, "destroy#");
+
+    log_debug("payload : %s", payload);
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);
+    servaddr.sin_addr.s_addr = inet_addr(EGB_Network_GetConfiguration().ip);
+
+    return sendto(
+        EGB_Network_UDPsock,
+        (const char *)payload,
+        strlen(payload),
+        0,
+        (const struct sockaddr*) &servaddr,
+        sizeof(servaddr)
+    );
 }
