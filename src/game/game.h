@@ -11,5 +11,6 @@
 
 #include "./map/map.h"
 #include "./player/player.h"
+#include "./menus/home/home.h"
 
 #endif

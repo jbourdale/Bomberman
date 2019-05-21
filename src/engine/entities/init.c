@@ -60,7 +60,13 @@ EGB_Entity        *EGB_Entity_Copy(EGB_Entity *entity)
  */
 int                 EGB_Entity_Destroy(EGB_Entity *entity)
 {
+    if (entity == NULL)
+        return 1;
+
     log_debug("EGB_Entity_Destroy : %s", entity->name);
+
+    if (strcmp(entity->name, "fps_indicator") == 0)
+        return 1;
 
     if (entity->on_destroy != NULL)
         entity->on_destroy(entity);

@@ -42,7 +42,8 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/log/log.c \
 			./src/engine/engine.c \
 			./src/game/map/map.c \
-			./src/game/player/player.c
+			./src/game/player/player.c \
+			./src/game/menus/home/home.c
 
 
 SRC 	= 	$(BASE_SRC)\
