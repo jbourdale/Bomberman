@@ -60,6 +60,8 @@ void init_map() {
                 case 1:
                     create_wall_entity(i, j);
                     break;
+                default:
+                    break;
             }
         }
     }

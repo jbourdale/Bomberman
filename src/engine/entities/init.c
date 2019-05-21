@@ -69,6 +69,6 @@ int                 EGB_Entity_Destroy(EGB_Entity *entity)
     EGB_Observable_Event_Click(EGB_Manager_Delete, entity);
     EGB_Observable_Event_Hover(EGB_Manager_Delete, entity);
     EGB_Manager_Collision(EGB_Manager_Delete, entity);
-    //free(entity);
+    free(entity);
     return 0;
 }

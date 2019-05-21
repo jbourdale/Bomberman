@@ -64,7 +64,7 @@ disable-rules:
   # - DeepNestedBlock                       # Priority 3
   # - ForLoopShouldBeWhileLoop              # Priority 3
   # - GotoStatement                         # Priority 3
-  # - InvertedLogic                         # Priority 3
+  - InvertedLogic                         # Priority 3
   # - LongClass                             # Priority 3
   # - LongLine                              # Priority 3
   - LongMethod                            # Priority 3

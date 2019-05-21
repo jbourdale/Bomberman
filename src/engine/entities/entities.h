@@ -55,6 +55,7 @@ void EGB_Render_EntityAnimation(SDL_Renderer*, EGB_Entity *, EGB_Component_Anima
  **/
 EGB_Entity_Manager    *EGB_Manager_Entity(Uint32 flags, ...);
 EGB_Entity            *EGB_Entity_FindFirstByName(char *name);
+void                  EGB_Debug_DisplayManager();
 
 #define EGB_Manager_Retrieve            0x0001
 #define EGB_Manager_Add                 0x0010

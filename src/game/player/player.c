@@ -16,6 +16,7 @@ void on_mario_click(EGB_Entity *entity, SDL_Event e)
 {
     log_debug("on click on : %s", entity->name);
     log_debug("e : %p", &e);
+    EGB_Entity_Destroy(entity);
 }
 
 void on_explosion(EGB_Entity *entity) {
@@ -80,15 +81,14 @@ void 						init_player()
 	EGB_Entity 				   *mario;
 	EGB_Component_Position     *pos_comp;
 	EGB_Component_Texture 	   *texture_comp;
-	EGB_Component_Event 	   *keystroke_event;
+	EGB_Component_Event 	   *keystroke_event, *click_event;
     EGB_Component_Collision    *collision_comp;
     EGB_Component_Networkable  *networkable_comp;
 
 	mario = EGB_Entity_Create("player");
     log_debug("entity mario : %p", mario);
-    EGB_Entity_Destroy(mario);
-    exit(1);
     keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
+    click_event = EGB_Component_CreateEventClick(on_mario_click);
     pos_comp = EGB_Component_CreatePosition(125, 125, EGB_Position_Classic, 50, 50);
     texture_comp = EGB_Component_CreateTexture("Mario.png");
     texture_comp = EGB_Component_CreateTexture("Mario.png");
@@ -96,9 +96,9 @@ void 						init_player()
     networkable_comp = EGB_Component_CreateNetworkable();
 
     EGB_Component_AddToEntity(mario, keystroke_event);
+    EGB_Component_AddToEntity(mario, click_event);
     EGB_Component_AddToEntity(mario, pos_comp);
     EGB_Component_AddToEntity(mario, texture_comp);
     EGB_Component_AddToEntity(mario, collision_comp);
     EGB_Component_AddToEntity(mario, networkable_comp);
-
 }

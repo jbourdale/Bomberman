@@ -62,6 +62,7 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
     }
     if (flags & EGB_Manager_Delete) {
         log_debug("Deleting from manager");
+        EGB_Debug_DisplayManager();
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
@@ -73,7 +74,6 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;
         while (entity_iterator != NULL && entity_iterator->entity != entity) {
-            log_debug("entity_iterator entity (%s) : %p", entity_iterator->entity->name, entity_iterator->entity);
             entity_iterator_prev = entity_iterator;
             entity_iterator = entity_iterator->next;
         }
@@ -85,9 +85,28 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         else {
             entity_iterator_prev->next = entity_iterator->next;
         }
+        EGB_Debug_DisplayManager();
         return NULL;
     }
     return NULL;
+}
+
+void        EGB_Debug_DisplayManager() {
+    EGB_Entity_Manager *manager;
+    EGB_Entity_Manager_Element *iterator;
+
+    log_debug("########## Manager");
+    manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
+    if (manager == NULL || manager->first == NULL) {
+        log_debug("Manager not initialized");
+        return ;
+    }
+    iterator = manager->first;
+    while(iterator != NULL) {
+        log_debug("Entity %s (%p)", iterator->entity->name, iterator->entity);
+        iterator = iterator->next;
+    }
+    log_debug("##########");
 }
 
 /**

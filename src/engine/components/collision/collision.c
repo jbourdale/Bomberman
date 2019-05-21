@@ -25,7 +25,7 @@
 EGB_Entity_Manager              *EGB_Manager_Collision(Uint32 flags, ...)
 {
     static EGB_Entity_Manager   *manager;
-    EGB_Entity_Manager_Element  *entity_iterator, *entry;
+    EGB_Entity_Manager_Element  *entity_iterator, *entity_iterator_prev, *entry;
     EGB_Entity                  *entity;
     va_list                     argp;
 
@@ -56,6 +56,29 @@ EGB_Entity_Manager              *EGB_Manager_Collision(Uint32 flags, ...)
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
+        log_debug("Deleting from collision manager");
+        va_start(argp, flags);
+        entity = va_arg(argp, EGB_Entity*);
+        va_end(argp);
+        if (entity == NULL || manager == NULL)
+            return NULL;
+
+        log_debug("Deleting(%p) from collision manager", entity);
+
+        entity_iterator_prev = NULL;
+        entity_iterator = manager->first;
+        while (entity_iterator != NULL && entity_iterator->entity != entity) {
+            entity_iterator_prev = entity_iterator;
+            entity_iterator = entity_iterator->next;
+        }
+        if (entity_iterator == NULL)
+            return NULL;
+        if (entity_iterator_prev == NULL) {
+            manager->first = entity_iterator->next;
+        }
+        else {
+            entity_iterator_prev->next = entity_iterator->next;
+        }
         return NULL;
     }
     return NULL;
@@ -194,7 +217,7 @@ int                                 EGB_Collide(
     				manager_entity,
     				"position_component"
     			);
-    			if (tmp_entity_pos_comp->z >= entity_position_comp->z) 
+    			if (tmp_entity_pos_comp->z >= entity_position_comp->z)
                 {
     				EGB_Component_PositionToRect(
                         tmp_entity_pos_comp,
