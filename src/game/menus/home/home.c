@@ -8,6 +8,8 @@
 
 #include "../../../engine/engine.h"
 #include "home.h"
+#include "../../player/player.h"
+#include "../../server/server.h"
 
 void    setup_home_menu() {
     EGB_Entity_Manager          *manager;
@@ -27,8 +29,17 @@ void    setup_home_menu() {
     create_host_btn();
 }
 
+void start_game() {
+    EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_join"));
+    EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_host"));
+
+    init_map();
+    init_player();
+}
+
 void on_join_btn_click () {
     log_debug("on join btn click");
+    start_game();
 }
 
 void create_join_btn() {
@@ -49,6 +60,8 @@ void create_join_btn() {
 
 void on_host_btn_click() {
     log_debug("on host btn click");
+    start_server_thread();
+    start_game();
 }
 
 void create_host_btn() {

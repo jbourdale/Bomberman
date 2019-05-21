@@ -50,6 +50,10 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
             manager->first = entry;
             return NULL;
         }
+        if (manager->first == NULL) {
+            manager->first = entry;
+            return NULL;
+        }
         // Add entry to manager
         entity_iterator = manager->first;
         log_debug("entity_iterator : %p", entity_iterator);

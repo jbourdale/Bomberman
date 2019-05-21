@@ -17,8 +17,13 @@ void *run_server(void *arg) {
     log_debug("arg : %p", arg);
 
     server_sock = init_server_socket(1337);
+    if (server_sock < 0) {
+        return NULL;
+    }
+    init_game();
     while(1) {
         request = malloc(REQUEST_MAX_LENGTH);
+        memset(request, '\0', REQUEST_MAX_LENGTH);
         n = recvfrom(server_sock, (char *)request, REQUEST_MAX_LENGTH, MSG_WAITALL,
             (struct sockaddr *) &clientaddr, &len);
         request[n] = '\n';

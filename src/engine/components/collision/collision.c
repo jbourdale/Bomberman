@@ -49,6 +49,10 @@ EGB_Entity_Manager              *EGB_Manager_Collision(Uint32 flags, ...)
             manager->first = entry;
             return NULL;
         }
+        if (manager->first == NULL) {
+            manager->first = entry;
+            return NULL;
+        }
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL)
             entity_iterator = entity_iterator->next;
