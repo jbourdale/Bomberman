@@ -69,7 +69,7 @@ int                         EGB_Component_DestroyEventHover(EGB_Entity *entity)
 EGB_Entity_Manager                            *EGB_Observable_Event_Hover(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
-    EGB_Entity_Manager_Element                 *entity_iterator, *entry;
+    EGB_Entity_Manager_Element                *entity_iterator, *entity_iterator_prev, *entry;
     EGB_Entity                                *entity;
     va_list                                 argp;
 
@@ -101,6 +101,29 @@ EGB_Entity_Manager                            *EGB_Observable_Event_Hover(Uint32
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
+        log_debug("Deleting from hover manager");
+        va_start(argp, flags);
+        entity = va_arg(argp, EGB_Entity*);
+        va_end(argp);
+        if (entity == NULL || manager == NULL)
+            return NULL;
+
+        log_debug("Deleting(%p) from hover manager", entity);
+
+        entity_iterator_prev = NULL;
+        entity_iterator = manager->first;
+        while (entity_iterator != NULL && entity_iterator->entity != entity) {
+            entity_iterator_prev = entity_iterator;
+            entity_iterator = entity_iterator->next;
+        }
+        if (entity_iterator == NULL)
+            return NULL;
+        if (entity_iterator_prev == NULL) {
+            manager->first = entity_iterator->next;
+        }
+        else {
+            entity_iterator_prev->next = entity_iterator->next;
+        }
         return NULL;
     }
     return NULL;

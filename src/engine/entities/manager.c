@@ -24,9 +24,9 @@
 EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, ...)
 {
     static EGB_Entity_Manager                 *manager;
-    EGB_Entity_Manager_Element                 *entity_iterator, *entry;
+    EGB_Entity_Manager_Element                *entity_iterator, *entry, *entity_iterator_prev;
     EGB_Entity                                *entity;
-    va_list                                 argp;
+    va_list                                   argp;
 
 
     if (flags & EGB_Manager_Retrieve)
@@ -39,6 +39,7 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         if (entity == NULL) {
             return NULL;
         }
+        log_debug("Adding entity %s (%p) to manager", entity->name, entity);
 
         entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
@@ -53,14 +54,59 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL) {
             entity_iterator = entity_iterator->next;
+            log_debug("iterator over manager");
         }
+        log_debug("adding it to manager");
         entity_iterator->next = entry;
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
+        log_debug("Deleting from manager");
+        EGB_Debug_DisplayManager();
+        va_start(argp, flags);
+        entity = va_arg(argp, EGB_Entity*);
+        va_end(argp);
+        if (entity == NULL || manager == NULL)
+            return NULL;
+
+        log_debug("Deleting(%p) from manager", entity);
+
+        entity_iterator_prev = NULL;
+        entity_iterator = manager->first;
+        while (entity_iterator != NULL && entity_iterator->entity != entity) {
+            entity_iterator_prev = entity_iterator;
+            entity_iterator = entity_iterator->next;
+        }
+        if (entity_iterator == NULL)
+            return NULL;
+        if (entity_iterator_prev == NULL) {
+            manager->first = entity_iterator->next;
+        }
+        else {
+            entity_iterator_prev->next = entity_iterator->next;
+        }
+        EGB_Debug_DisplayManager();
         return NULL;
     }
     return NULL;
+}
+
+void        EGB_Debug_DisplayManager() {
+    EGB_Entity_Manager *manager;
+    EGB_Entity_Manager_Element *iterator;
+
+    log_debug("########## Manager");
+    manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
+    if (manager == NULL || manager->first == NULL) {
+        log_debug("Manager not initialized");
+        return ;
+    }
+    iterator = manager->first;
+    while(iterator != NULL) {
+        log_debug("Entity %s (%p)", iterator->entity->name, iterator->entity);
+        iterator = iterator->next;
+    }
+    log_debug("##########");
 }
 
 /**
