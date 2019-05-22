@@ -80,6 +80,10 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 // TOOLS
 #include "./tools/entities/fps_indicator/fps_indicator.h"
 
+// SERVER SIDE
+#include "./server/entities/entities.h"
+#include "./server/manager/manager.h"
+
 int EGB_Run();
 int EGB_Init();
 int EGB_Quit();

@@ -17,6 +17,8 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/entities/manager.c \
 			./src/engine/entities/components.c \
 			./src/engine/entities/render.c \
+			./src/engine/server/entities/init.c \
+			./src/engine/server/manager/manager.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
 			./src/engine/components/fpsrate/fpsrate.c \
@@ -47,6 +49,12 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/game/server/init.c \
 			./src/game/server/parsing.c \
 			./src/game/server/server.c \
+			./src/game/server/player.c \
+			./src/game/server/state/state.c \
+			./src/game/server/state/init.c \
+			./src/game/server/state/players.c \
+			./src/game/server/state/wall.c \
+			./src/game/server/requests/join.c \
 
 
 SRC 	= 	$(BASE_SRC)\

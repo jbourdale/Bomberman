@@ -32,6 +32,7 @@ typedef struct 			EGB_Network_Configuration_s
 int EGB_Network_Handle();
 int EGB_Network_SendEntity(EGB_Entity *entity);
 int EGB_Network_DestroyEntity(EGB_Entity *entity);
+int EGB_Server_SendEvent(char *event);
 
 //configuration.c
 void    EGB_Network_Enable();

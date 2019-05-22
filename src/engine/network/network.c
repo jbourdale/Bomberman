@@ -37,10 +37,10 @@ int                 EGB_Network_Handle()
     if (!FD_ISSET(EGB_Network_UDPsock, &readfs))
         return EGB_NETWORK_NODATA;
 
-    recvdata = malloc(1024);
-    memset(recvdata, '\0', 1024);
-    recvfrom(EGB_Network_UDPsock, (char*)recvdata, 1024, 0, NULL, NULL);
-    log_debug("recvdata : %s", recvdata);
+    recvdata = malloc(10000);
+    memset(recvdata, '\0', 10000);
+    recvfrom(EGB_Network_UDPsock, (char*)recvdata, 10000, 0, NULL, NULL);
+    log_debug("[CLIENT_SIDE] recvdata : %s", recvdata);
     switch (recvdata[0]) {
         case EGB_EVENT_NETWORK_IDENTIFIER:
             break;
@@ -108,6 +108,30 @@ int       EGB_Network_DestroyEntity(EGB_Entity *entity)
     strcat(payload, "destroy#");
 
     log_debug("payload : %s", payload);
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);
+    servaddr.sin_addr.s_addr = inet_addr(EGB_Network_GetConfiguration().ip);
+
+    return sendto(
+        EGB_Network_UDPsock,
+        (const char *)payload,
+        strlen(payload),
+        0,
+        (const struct sockaddr*) &servaddr,
+        sizeof(servaddr)
+    );
+}
+
+int     EGB_Server_SendEvent(char *event) {
+    char *payload;
+    struct sockaddr_in      servaddr;
+
+    payload = malloc(1000);
+    payload[0] = EGB_EVENT_NETWORK_IDENTIFIER;
+    payload[1] = EGB_NETWORK_VALUE_SEPARATOR_CHAR;
+    payload[2] = '\0';
+    strcat(payload, event);
+
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);
     servaddr.sin_addr.s_addr = inet_addr(EGB_Network_GetConfiguration().ip);

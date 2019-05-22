@@ -16,4 +16,9 @@
 #include "./player/player.h"
 #include "./menus/home/home.h"
 
+// server
+#include "./server/state/state.h"
+#include "./server/server.h"
+#include "./server/requests/requests.h"
+
 #endif

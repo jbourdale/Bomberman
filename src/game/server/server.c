@@ -7,10 +7,14 @@
 */
 
 #include "server.h"
+#include "state/state.h"
+
+pthread_cond_t SERVER_INIT_DONE_COND = PTHREAD_COND_INITIALIZER;
+pthread_mutex_t SERVER_INIT_DONE_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 
 void *run_server(void *arg) {
     struct sockaddr_in clientaddr;
-    socklen_t len;
+    socklen_t addrlen = sizeof(struct sockaddr_in);
     int server_sock, n;
     char *request;
 
@@ -21,16 +25,19 @@ void *run_server(void *arg) {
         return NULL;
     }
     init_game();
+    pthread_cond_signal(&SERVER_INIT_DONE_COND);
     while(1) {
         request = malloc(REQUEST_MAX_LENGTH);
         memset(request, '\0', REQUEST_MAX_LENGTH);
         n = recvfrom(server_sock, (char *)request, REQUEST_MAX_LENGTH, MSG_WAITALL,
-            (struct sockaddr *) &clientaddr, &len);
+            (struct sockaddr *) &clientaddr, &addrlen);
         request[n] = '\n';
-        log_debug("Recieved request : %s", request);
 
-        sendto(server_sock, (const char *)request, strlen(request), 0,
-            (const struct sockaddr *) &clientaddr, len);
+        log_debug("Recieved request : %s from (%s: %d) ", request, inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+        parse_request(server_sock, request, clientaddr);
+
+        // sendto(server_sock, (const char *)request, strlen(request), 0,
+        //     (const struct sockaddr *) &clientaddr, addrlen);
     }
 }
 
@@ -41,6 +48,7 @@ pthread_t start_server_thread()
     if(pthread_create(&server_th, NULL, run_server, NULL) == -1) {
         return (pthread_t) -1;
     }
+    pthread_cond_wait(&SERVER_INIT_DONE_COND, &SERVER_INIT_DONE_MUTEX);
 
     return server_th;
 }

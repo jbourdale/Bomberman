@@ -35,7 +35,9 @@ int             EGB_Component_AddToEntity(EGB_Entity *entity, void *component)
     entity->components = realloc(entity->components, (nb_comp + 2) * sizeof(void *));
     entity->components[nb_comp] = component;
     entity->components[nb_comp + 1] = NULL;
-    EGB_Observables_RegisterEntity(entity, (EGB_Component *)component);
+
+    if (!entity->server_side)
+        EGB_Observables_RegisterEntity(entity, (EGB_Component *)component);
     return 0;
 }
 
@@ -83,6 +85,7 @@ int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
         return 1;
 
     if(strcmp(component->name, "position_component") == 0) {
+        log_debug("REGISTER POSITION COMPONENT ENTITY");
         EGB_Observable_Position(EGB_Manager_Add, entity, (EGB_Component_Position *) component);
         return 0;
     }

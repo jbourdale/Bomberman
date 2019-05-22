@@ -23,6 +23,7 @@ EGB_Entity        *EGB_Entity_Create(char *name)
     entity = malloc(sizeof(EGB_Entity));
     entity->name = name;
     entity->components = NULL;
+    entity->server_side = 0;
 
     entity->on_destroy = NULL;
 

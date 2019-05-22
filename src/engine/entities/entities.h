@@ -1,3 +1,11 @@
+/*
+** entities.h for  in /Bomberman/bourda_j
+**
+** Made by BOURDALE Jules
+** Login   <bourda_j@etna-alternance.net>
+**
+*/
+
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
@@ -13,6 +21,9 @@ typedef struct          EGB_Entity_s {
     // GRAPHICAL
     void                (*render)(SDL_Renderer* renderer, EGB_Entity *self);
     int                 displayed;
+
+    // Tell if the entity is server side or not (if it need to be rendered or not)
+    int                 server_side;
 }                       EGB_Entity;
 
 typedef struct EGB_Entity_Manager_Element_s EGB_Entity_Manager_Element;
