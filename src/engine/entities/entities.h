@@ -62,10 +62,11 @@ void EGB_Render_EntityTexture(SDL_Renderer*, EGB_Entity*, EGB_Component_Position
 void EGB_Render_EntityAnimation(SDL_Renderer*, EGB_Entity *, EGB_Component_Animation**, EGB_Component_Position*);
 
 /*
- * observable.c
+ * manager.c
  **/
 EGB_Entity_Manager    *EGB_Manager_Entity(Uint32 flags, ...);
 EGB_Entity            *EGB_Entity_FindFirstByName(char *name);
+EGB_Entity            **EGB_Entity_FindByName(char *name);
 void                  EGB_Debug_DisplayManager();
 
 #define EGB_Manager_Retrieve            0x0001

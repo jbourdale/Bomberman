@@ -84,17 +84,6 @@ int EGB_Init()
  */
 int                             EGB_Quit()
 {
-    EGB_Entity_Manager          *manager;
-    EGB_Entity_Manager_Element  *iterator;
-
-    manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
-    if (manager != NULL) {
-        iterator = manager->first;
-        while (iterator != NULL) {
-            EGB_Entity_Destroy(iterator->entity);
-            iterator = iterator->next;
-        }
-    }
     SDL_DestroyRenderer(EGB_SDL_GetCurrentRenderer());
     SDL_DestroyWindow(SDL_GL_GetCurrentWindow());
     TTF_Quit();

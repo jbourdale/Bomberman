@@ -138,3 +138,36 @@ EGB_Entity                        *EGB_Entity_FindFirstByName(char *name)
     }
     return NULL;
 }
+
+/**
+ * @brief      Return entities for the given name
+ *
+ * @param      name  The entity name to search for
+ *
+ * @return     array terminated by NULL. NULL if not found.
+ */
+EGB_Entity                        **EGB_Entity_FindByName(char *name)
+{
+    EGB_Entity                    **founded;
+    int                           nb_founded;
+    EGB_Entity_Manager            *manager;
+    EGB_Entity_Manager_Element    *manager_entry;
+
+    manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
+    if (manager == NULL)
+        return NULL;
+    manager_entry = manager->first;
+
+    nb_founded = 0;
+    while(manager_entry != NULL)
+    {
+        if (strcmp(manager_entry->entity->name, name) == 0) {
+            founded = realloc(founded, (nb_founded + 2) * sizeof(void *));
+            founded[nb_founded] = manager_entry->entity;
+            founded[nb_founded + 1] = NULL;
+            nb_founded++;
+        }
+        manager_entry = manager_entry->next;
+    }
+    return NULL;
+}

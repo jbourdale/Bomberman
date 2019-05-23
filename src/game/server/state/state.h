@@ -19,6 +19,7 @@ typedef struct          player_s
 
 // init.c
 void init_background();
+EGB_Entity *init_new_player(int id);
 void init_map();
 void init_game();
 
@@ -28,7 +29,7 @@ void create_indestructible_wall(int x, int y);
 void create_outer_wall(int x, int y);
 
 // players.c
-int add_players(player_t *player);
+EGB_Entity *add_player(player_t *player);
 player_t **get_players();
 
 // state.c

@@ -39,6 +39,7 @@ char    *EGB_Component_PositionSerializer(void **comp)
 
 void    *EGB_Component_PositionUnserializer(char *raw)
 {
+    EGB_Component_Position *comp;
     int     x, y, z, w, h;
     char    *token;
     log_debug("EGB_Component_PositionUnserializer");
@@ -64,7 +65,9 @@ void    *EGB_Component_PositionUnserializer(char *raw)
     token = strtok(NULL, ";");
     log_debug("token : %s", token);
     h = atoi(token);
-    log_debug("UNSERIALIZE POSITION (%d, %d, %d, %d, %d)", x, y, z, w, h);
 
-    return EGB_Component_CreatePosition(x, y, z, w, h);
+    comp = EGB_Component_CreatePosition(x, y, z, w, h);
+    log_debug("UNSERIALIZED POSITION (%d, %d, %d, %d, %d)", comp->x, comp->y, comp->z, comp->width, comp->height);
+
+    return comp;
 }

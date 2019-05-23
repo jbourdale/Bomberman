@@ -8,29 +8,39 @@
 
 #include "requests.h"
 
-int join_game(int sock, player_t *player) {
-    player_t **players;
-    int      error;
-    int      i;
+int can_connect(player_t *player) {
+    player_t    **players;
+    int         i;
 
-    error = 0;
-    i = -1;
     players = get_players();
+    if (players == NULL) {
+        player->id = 0;
+        return 1;
+    }
+
     if (players != NULL) {
         i = 0;
         while (players[i] != NULL)
             i++;
         if (i >= 4)
-            error = 1;
-        else
-            player->id = i;
+            return 0;
     }
-    if (i == -1)
-        player->id = 0;
+    return 1;
+}
 
-    if (error) {
+int             join_game(int sock, player_t *player) {
+    EGB_Entity  *player_entity;
+    char        *encodedPlayer;
+
+    if (!can_connect(player)) {
         return -1;
     }
 
-    return send_state(sock, player);
+    player_entity = add_player(player);
+    if (player_entity == NULL)
+        return -1;
+
+    send_state(sock, player);
+    encodedPlayer = EGB_Serializer_EncodeEntity(player_entity);
+    return broadcast_to_players(sock, encodedPlayer);
 }

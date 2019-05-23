@@ -124,7 +124,7 @@ int       EGB_Network_DestroyEntity(EGB_Entity *entity)
     );
 }
 
-int     EGB_Server_SendEvent(char *event) {
+int     EGB_Network_SendEvent(char *event) {
     char *payload;
     struct sockaddr_in      servaddr;
 

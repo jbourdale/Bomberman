@@ -27,7 +27,7 @@ int main() {
     // init_map();
     // init_player();
     setup_home_menu();
-    EGB_SetFramerate(120);
+    EGB_SetFramerate(60);
 
     EGB_Run();
 

@@ -11,9 +11,9 @@
 #include "../server/server.h"
 
 /**
- * MARIO HANDLER CLICK
+ * PLAYER HANDLER CLICK
  */
-void on_mario_click(EGB_Entity *entity, SDL_Event e)
+void on_player_click(EGB_Entity *entity, SDL_Event e)
 {
     log_debug("on click on : %s", entity->name);
     log_debug("e : %p", &e);
@@ -24,17 +24,10 @@ void player_on_destroy(EGB_Entity *entity) {
     EGB_Network_DestroyEntity(entity);
 }
 
-void on_explosion(EGB_Entity *entity) {
-    log_debug("BOMB EXPLOSED : %s", entity->name);
-}
-void on_start(EGB_Entity *entity) {
-    log_debug("BOMB PLACED : %s", entity->name);
-}
-
 /**
- * On mario keystroke
+ * On player keystroke
  */
-void on_mario_keystroke(EGB_Entity *entity) {
+void on_player_keystroke(EGB_Entity *entity) {
     EGB_Component_Position    *pos_comp;
     const Uint8             *key_state = SDL_GetKeyboardState(NULL);
 
@@ -67,8 +60,7 @@ void on_mario_keystroke(EGB_Entity *entity) {
         EGB_Component_Animation *animation_comp = EGB_Component_CreateAnimation(
             "bomb.png", 0, 24, 24, 0
         );
-        int start_keyframe = EGB_Animation_AddKeyframe(animation_comp, 400, 0, 0);
-        EGB_Keyframe_Set_OnStart(animation_comp, start_keyframe, on_start);
+        EGB_Animation_AddKeyframe(animation_comp, 400, 0, 0);
         EGB_Animation_AddKeyframe(animation_comp, 400, 1, 0);
         EGB_Animation_AddKeyframe(animation_comp, 400, 2, 0);
         EGB_Animation_AddKeyframe(animation_comp, 200, 3, 0);
@@ -84,30 +76,26 @@ void on_mario_keystroke(EGB_Entity *entity) {
 }
 
 
-void 						init_player()
+void 						bind_my_player()
 {
-	EGB_Entity 				   *mario;
-	EGB_Component_Position     *pos_comp;
-	EGB_Component_Texture 	   *texture_comp;
-	EGB_Component_Event 	   *keystroke_event, *click_event;
-    EGB_Component_Collision    *collision_comp;
-    EGB_Component_Networkable  *networkable_comp;
+	EGB_Entity 				**players;
+    int                     i;
+	EGB_Component_Event 	*keystroke_event, *click_event;
 
-	mario = EGB_Entity_Create("player");
-    mario->on_destroy = player_on_destroy;
-    log_debug("entity mario : %p", mario);
-    keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
-    click_event = EGB_Component_CreateEventClick(on_mario_click);
-    pos_comp = EGB_Component_CreatePosition(125, 125, EGB_Position_Classic, 50, 50);
-    texture_comp = EGB_Component_CreateTexture("Mario.png");
-    texture_comp = EGB_Component_CreateTexture("Mario.png");
-    collision_comp = EGB_Component_CreateCollision(1);
-    networkable_comp = EGB_Component_CreateNetworkable();
+	players = EGB_Entity_FindByName("player");
+    if (players == NULL)
+        return ;
+    i = 0;
+    while (players[i] != NULL) {
+        i++;
+    }
+    i--;
+    log_debug("[CLIENT SIDE] BIND MY PLAYER > LAST PLAYER : %d", i);
 
-    EGB_Component_AddToEntity(mario, keystroke_event);
-    EGB_Component_AddToEntity(mario, click_event);
-    EGB_Component_AddToEntity(mario, pos_comp);
-    EGB_Component_AddToEntity(mario, texture_comp);
-    EGB_Component_AddToEntity(mario, collision_comp);
-    EGB_Component_AddToEntity(mario, networkable_comp);
+    players[i]->on_destroy = player_on_destroy;
+    keystroke_event = EGB_Component_CreateEventKeyStroke(on_player_keystroke);
+    click_event = EGB_Component_CreateEventClick(on_player_click);
+
+    EGB_Component_AddToEntity(players[i], keystroke_event);
+    EGB_Component_AddToEntity(players[i], click_event);
 }
