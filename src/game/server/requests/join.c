@@ -31,14 +31,6 @@ int join_game(int sock, player_t *player) {
     if (error) {
         return -1;
     }
-    const char *payload = encode_state();
-    return sendto(
-        sock,
-        payload,
-        strlen(payload),
-        0,
-        (struct sockaddr *) &(player->addr),
-        sizeof(player->addr)
-    );
-    return 0;
+
+    return send_state(sock, player);
 }

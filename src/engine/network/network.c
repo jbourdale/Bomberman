@@ -37,10 +37,12 @@ int                 EGB_Network_Handle()
     if (!FD_ISSET(EGB_Network_UDPsock, &readfs))
         return EGB_NETWORK_NODATA;
 
-    recvdata = malloc(10000);
-    memset(recvdata, '\0', 10000);
-    recvfrom(EGB_Network_UDPsock, (char*)recvdata, 10000, 0, NULL, NULL);
-    log_debug("[CLIENT_SIDE] recvdata : %s", recvdata);
+    recvdata = malloc(1000);
+    memset(recvdata, '\0', 1000);
+    log_debug("[CLIENT_SIDE] going to recv");
+    if (recvfrom(EGB_Network_UDPsock, (char*)recvdata, 1000, 0, NULL, NULL) == -1)
+        return EGB_NETWORK_ERROR;
+    log_debug("[CLIENT_SIDE] recvdata : %d", strlen(recvdata));
     switch (recvdata[0]) {
         case EGB_EVENT_NETWORK_IDENTIFIER:
             break;

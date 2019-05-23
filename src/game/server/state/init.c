@@ -26,7 +26,7 @@ int base_map[11][11] = {
 void init_map() {
     int i, j;
 
-    for(i = 0; i < 8; i++) {
+    for(i = 0; i < 11; i++) {
         for(j = 0; j < 11; j++) {
             switch(base_map[i][j]) {
                 case 1:

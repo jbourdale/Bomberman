@@ -12,5 +12,6 @@
 #include "../state/state.h"
 
 int join_game(int sock, player_t *player);
+int send_state(int sock, player_t *player);
 
 #endif

@@ -20,15 +20,13 @@ char                            *encode_state()
 
     payload = malloc(10000);
     memset(payload, '\0', 10000);
-    log_debug("payload : %s", payload);
     while (iterator != NULL)
     {
         log_debug("iterator->entity (%p) : %s", iterator->entity, iterator->entity->name);
         encodedEntity = EGB_Serializer_EncodeEntity(iterator->entity);
-        log_debug("encodedEntity : %s", encodedEntity);
         strcat(payload, encodedEntity);
-        log_debug("payload : %s", payload);
         iterator = iterator->next;
     }
+    log_debug("[SERVER SIDE] encoded state len : %d", strlen(payload));
     return payload;
 }

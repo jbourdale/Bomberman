@@ -55,6 +55,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/game/server/state/players.c \
 			./src/game/server/state/wall.c \
 			./src/game/server/requests/join.c \
+			./src/game/server/requests/requests.c \
 
 
 SRC 	= 	$(BASE_SRC)\
