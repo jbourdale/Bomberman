@@ -15,7 +15,7 @@ pthread_mutex_t SERVER_INIT_DONE_MUTEX = PTHREAD_MUTEX_INITIALIZER;
 void *run_server(void *arg) {
     struct sockaddr_in clientaddr;
     socklen_t addrlen = sizeof(struct sockaddr_in);
-    int server_sock, n;
+    int server_sock;
     char *request;
 
     log_debug("arg : %p", arg);
@@ -29,9 +29,8 @@ void *run_server(void *arg) {
     while(1) {
         request = malloc(REQUEST_MAX_LENGTH);
         memset(request, '\0', REQUEST_MAX_LENGTH);
-        n = recvfrom(server_sock, (char *)request, REQUEST_MAX_LENGTH, MSG_WAITALL,
+        recvfrom(server_sock, (char *)request, REQUEST_MAX_LENGTH, MSG_WAITALL,
             (struct sockaddr *) &clientaddr, &addrlen);
-        request[n] = '\n';
 
         log_debug("Recieved request : %s from (%s: %d) ", request, inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
         parse_request(server_sock, request, clientaddr);

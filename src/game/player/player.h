@@ -10,5 +10,6 @@
 #define __PLAYER_H__
 
 void init_player();
+void bind_my_player();
 
 #endif

@@ -76,21 +76,27 @@ void on_player_keystroke(EGB_Entity *entity) {
 }
 
 
-void 						bind_my_player()
+void 						    bind_my_player()
 {
-	EGB_Entity 				**players;
-    int                     i;
-	EGB_Component_Event 	*keystroke_event, *click_event;
+	EGB_Entity 				    **players;
+    int                         i;
+    EGB_Component_Networkable   *network_comp;
+	EGB_Component_Event 	    *keystroke_event, *click_event;
 
 	players = EGB_Entity_FindByName("player");
     if (players == NULL)
         return ;
+
     i = 0;
     while (players[i] != NULL) {
+        network_comp = EGB_FindComponentByName(players[i], "networkable_component");
+        if (network_comp == NULL)
+            continue;
+        if (network_comp->owner)
+            break;
         i++;
     }
-    i--;
-    log_debug("[CLIENT SIDE] BIND MY PLAYER > LAST PLAYER : %d", i);
+    log_debug("[CLIENT SIDE] BIND MY PLAYER > MY PLAYER : %d", i);
 
     players[i]->on_destroy = player_on_destroy;
     keystroke_event = EGB_Component_CreateEventKeyStroke(on_player_keystroke);

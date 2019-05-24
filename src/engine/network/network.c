@@ -45,6 +45,7 @@ int                 EGB_Network_Handle()
     log_debug("[CLIENT_SIDE] recvdata : %d", strlen(recvdata));
     switch (recvdata[0]) {
         case EGB_EVENT_NETWORK_IDENTIFIER:
+            EGB_Network_ParseEventRequest(recvdata);
             break;
         case EGB_ERROR_NETWORK_IDENTIFIER:
             break;

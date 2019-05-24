@@ -32,6 +32,7 @@ void create_outer_wall(int x, int y);
 // players.c
 EGB_Entity *add_player(player_t *player);
 player_t **get_players();
+int     get_nb_players();
 
 // state.c
 char *encode_state();

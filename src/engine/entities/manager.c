@@ -159,6 +159,7 @@ EGB_Entity                        **EGB_Entity_FindByName(char *name)
     manager_entry = manager->first;
 
     nb_founded = 0;
+    founded = NULL;
     while(manager_entry != NULL)
     {
         if (strcmp(manager_entry->entity->name, name) == 0) {
@@ -169,5 +170,5 @@ EGB_Entity                        **EGB_Entity_FindByName(char *name)
         }
         manager_entry = manager_entry->next;
     }
-    return NULL;
+    return founded;
 }

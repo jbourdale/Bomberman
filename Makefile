@@ -37,6 +37,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/networkable/networkable.c \
 			./src/engine/components/networkable/serializer/serializer.c \
 			./src/engine/network/network.c \
+			./src/engine/network/events/events.c \
 			./src/engine/network/configuration.c \
 			./src/engine/tools/entities/fps_indicator/fps_indicator.c \
 			./src/engine/events/events.c \

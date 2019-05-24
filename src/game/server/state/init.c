@@ -105,6 +105,6 @@ void init_map() {
 }
 
 void init_game() {
-    //init_background();
-    //init_map();
+    init_background();
+    init_map();
 }

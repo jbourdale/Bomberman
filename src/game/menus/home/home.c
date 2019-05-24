@@ -29,12 +29,18 @@ void    setup_home_menu() {
     create_host_btn();
 }
 
+
+void on_game_start(char *data) {
+    log_debug("ON GAME START : %s", data);
+    bind_my_player();
+}
+
 void start_game() {
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_join"));
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_host"));
 
+    EGB_Network_RegisterEvent("START", on_game_start);
     EGB_Network_SendEvent("JOIN");
-    //bind_my_player();
 }
 
 void on_join_btn_click () {

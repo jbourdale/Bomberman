@@ -14,6 +14,7 @@
 int join_game(int sock, player_t *player);
 
 // requests.c
+int broadcast_event_to_players(int sock, char *event);
 int broadcast_to_players(int sock, char *payload);
 int send_state(int sock, player_t *player);
 

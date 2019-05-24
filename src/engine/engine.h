@@ -66,6 +66,7 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include "./components/networkable/networkable.h"
 #include "./components/networkable/serializer/serializer.h"
 #include "./network/network.h"
+#include "./network/events/events.h"
 
 // RESOURCES
 #include "./resources/resources.h"

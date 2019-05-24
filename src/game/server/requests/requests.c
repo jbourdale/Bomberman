@@ -8,6 +8,19 @@
 
 #include "requests.h"
 
+int         broadcast_event_to_players(int sock, char *event) 
+{
+    char        *payload;
+
+    payload = malloc(1000);
+    payload[0] = EGB_EVENT_NETWORK_IDENTIFIER;
+    payload[1] = EGB_NETWORK_VALUE_SEPARATOR_CHAR;
+    payload[2] = '\0';
+    strcat(payload, event);
+
+    return broadcast_to_players(sock, payload);
+}
+
 int         broadcast_to_players(int sock, char *payload)
 {
     player_t    **players;
