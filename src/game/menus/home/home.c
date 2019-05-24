@@ -33,7 +33,6 @@ void start_game() {
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_join"));
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_host"));
 
-    init_background();
     EGB_Network_SendEvent("JOIN");
     //bind_my_player();
 }

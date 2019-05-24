@@ -70,7 +70,7 @@ OBJ		=	$(SRC:.c=.o)
 
 TEST_OBJ =	$(TEST_SRC:.c=.o)
 
-CFLAGS	+=	-W -Wall -Werror -g
+CFLAGS	+=	-W -Wall -Werror -g -D_GNU_SOURCE
 
 LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread -lm
 

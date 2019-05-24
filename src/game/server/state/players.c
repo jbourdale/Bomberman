@@ -26,9 +26,22 @@ EGB_Entity  *add_player(player_t *player) {
     player->id = i;
     players[i] = player;
     log_debug("[SERVER SIDE] Player accepted with id : %d", i);
-    return init_new_player(player->id);
+    return init_new_player(player->id, player->addr);
 }
 
 player_t **get_players() {
     return players;
+}
+
+int     get_nb_players() {
+    int i;
+
+    if (players == NULL)
+        return 0;
+
+    i = 0;
+    while (players[i] != NULL) {
+        i++;
+    }
+    return i;
 }

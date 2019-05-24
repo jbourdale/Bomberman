@@ -32,6 +32,9 @@ int             join_game(int sock, player_t *player) {
     EGB_Entity  *player_entity;
     char        *encodedPlayer;
 
+
+    log_debug("[SERVER SIDE] [JOIN GAME] RECIEVED REQUEST FROM : %s", player->s_addr);
+
     if (!can_connect(player)) {
         return -1;
     }

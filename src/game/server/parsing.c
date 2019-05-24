@@ -25,11 +25,14 @@ int             parse_event_requests(int sock, char *event_request, player_t *pl
 
 int parse_request(int sock, char *payload, struct sockaddr_in clientaddr) {
     player_t *player;
+    char     *addr;
 
     player = find_player_by_addr(clientaddr);
     if (player == NULL) {
         player = malloc(sizeof(player_t));
+        asprintf(&addr, "%s:%d", inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
         player->addr = clientaddr;
+        player->s_addr = addr;
     }
 
     switch (payload[0]) {

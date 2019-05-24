@@ -38,8 +38,8 @@ int                 EGB_Run()
     quit = 0;
     while (quit == 0)
     {
-        EGB_Network_Handle();
         EGB_InitFPSRegulation();
+        EGB_Network_Handle();
         quit = EGB_Event_Handle();
         EGB_Render_Entities();
         EGB_RegulateFPS();

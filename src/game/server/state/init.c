@@ -23,12 +23,13 @@ int base_map[11][11] = {
     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
 };
 
-EGB_Entity *init_new_player(int id) {
+EGB_Entity                      *init_new_player(int id, struct sockaddr_in client_addr) {
     EGB_Entity                 *player;
     EGB_Component_Position     *pos_comp;
     EGB_Component_Texture      *texture_comp;
     EGB_Component_Collision    *collision_comp;
     EGB_Component_Networkable  *networkable_comp;
+    char                       *addr;
     int                        x, y;
 
     x = 100;
@@ -56,12 +57,29 @@ EGB_Entity *init_new_player(int id) {
     texture_comp = EGB_Component_CreateTexture("Mario.png");
     collision_comp = EGB_Component_CreateCollision(1);
     networkable_comp = EGB_Component_CreateNetworkable();
+    asprintf(&addr, "%s:%d", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+    networkable_comp->owner_addr = addr;
 
     EGB_Component_AddToEntity(player, pos_comp);
     EGB_Component_AddToEntity(player, texture_comp);
     EGB_Component_AddToEntity(player, collision_comp);
     EGB_Component_AddToEntity(player, networkable_comp);
     return player;
+}
+
+void init_background() {
+    EGB_Entity *bg;
+    EGB_Component_Texture *texture_comp;
+    EGB_Component_Position *pos_comp;
+    EGB_Component_Networkable *network_comp;
+
+    bg = EGBS_Entity_Create("background");
+    pos_comp = EGB_Component_CreatePosition(0, 0, EGB_Position_Background, 1920, 1080);
+    network_comp = EGB_Component_CreateNetworkable();
+    texture_comp = EGB_Component_CreateTexture("background.png");
+    EGB_Component_AddToEntity(bg, (void *)pos_comp);
+    EGB_Component_AddToEntity(bg, (void *)texture_comp);
+    EGB_Component_AddToEntity(bg, (void *)network_comp);
 }
 
 void init_map() {
@@ -87,5 +105,6 @@ void init_map() {
 }
 
 void init_game() {
-    init_map();
+    //init_background();
+    //init_map();
 }

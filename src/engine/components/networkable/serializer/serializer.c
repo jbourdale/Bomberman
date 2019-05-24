@@ -21,7 +21,7 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
 {
     EGB_Components_SerializerListEl *iterator;
     EGB_Component_Networkable       *networkable_comp;
-    char                            *payload, *displayed/*, *network_owner*/;
+    char                            *payload, *displayed, *network_owner;
     void                            **components;
 
     networkable_comp = (EGB_Component_Networkable *)EGB_FindComponentByName(
@@ -40,10 +40,10 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     strcat(payload, networkable_comp->id);
     strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
 
-    // network_owner = malloc(2);
-    // sprintf(network_owner, "%d", 0);
-    // strcat(payload, network_owner);
-    // strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
+    network_owner = malloc(2);
+    sprintf(network_owner, "%d", networkable_comp->owner);
+    strcat(payload, network_owner);
+    strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
 
     displayed = malloc(2);
     sprintf(displayed, "%d", entity->displayed);
@@ -131,7 +131,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     EGB_Components_SerializerListEl *iterator;
     EGB_Entity                      *entity;
     void                            *recievedComp, *actualComp;
-    char                            *token, *networkable_id/*, *network_ownership*/;
+    char                            *token, *networkable_id, *network_ownership;
     char                            **serializedComponents;
     int                             i;
 
@@ -139,8 +139,8 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
 
     networkable_id = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-    // network_ownership = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-    // log_debug("[DECODE ENTITY] NETWORK OWNERSHIP : %s", network_ownership);
+    network_ownership = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    log_debug("[DECODE ENTITY] NETWORK OWNERSHIP : %s", network_ownership);
     entity = EGB_Network_FindEntityByNetworkId(networkable_id);
 
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
@@ -155,7 +155,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
         entity = EGB_Entity_Create("tmp");
         EGB_Component_Networkable *networkable_comp = EGB_Component_CreateNetworkable();
         networkable_comp->id = networkable_id;
-        // networkable_comp->owner = 0;
+        networkable_comp->owner = atoi(network_ownership);
         EGB_Component_AddToEntity(entity, networkable_comp);
     }
     entity->displayed = atoi(token);

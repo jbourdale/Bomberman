@@ -35,7 +35,7 @@ void                        EGB_RegulateFPS()
     if (comp == NULL)
         return ;
 
-    if ( (SDL_GetTicks() - EGB_fps_timer) < 1000 / comp->fpsrate ) {
+    if ((SDL_GetTicks() - EGB_fps_timer) < 1000 / comp->fpsrate) {
         SDL_Delay((1000 / comp->fpsrate) - (SDL_GetTicks() - EGB_fps_timer));
     }
 }

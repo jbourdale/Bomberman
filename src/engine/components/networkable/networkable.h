@@ -17,8 +17,8 @@ typedef struct          EGB_Component_Networkable_s
 {
     char                *name;
     char                *id;
-    // int                 owner;
-    // struct sockaddr_in  owner_addr;
+    int                 owner;
+    char  				*owner_addr;
 }                       EGB_Component_Networkable;
 
 EGB_Component_Networkable   *EGB_Component_CreateNetworkable();

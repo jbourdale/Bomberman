@@ -15,11 +15,12 @@ typedef struct          player_s
 {
     int                 id;
     struct sockaddr_in  addr;
+    char 				*s_addr;
 }                       player_t;
 
 // init.c
 void init_background();
-EGB_Entity *init_new_player(int id);
+EGB_Entity *init_new_player(int id, struct sockaddr_in addr);
 void init_map();
 void init_game();
 

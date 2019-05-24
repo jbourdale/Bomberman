@@ -7,18 +7,6 @@
 */
 #include "../../engine/engine.h"
 
-void init_background() {
-    EGB_Entity *bg;
-    EGB_Component_Texture *texture_comp;
-    EGB_Component_Position *pos_comp;
-
-    bg = EGB_Entity_Create("background");
-    pos_comp = EGB_Component_CreatePosition(0, 0, EGB_Position_Background, 1920, 1080);
-    texture_comp = EGB_Component_CreateTexture("background.png");
-    EGB_Component_AddToEntity(bg, (void *)pos_comp);
-    EGB_Component_AddToEntity(bg, (void *)texture_comp);
-}
-
 void bomb_explose(EGB_Entity *bomb) {
     EGB_Component_Position  *position;
     EGB_Component_Collision *collision;

@@ -72,6 +72,10 @@ int                         EGB_Event_HandleClick(SDL_Event e)
         event_comp = (EGB_Component_Event *)EGB_FindComponentByName(
             entity, "event_click_component"
         );
+        if (pos_comp == NULL || event_comp == NULL) {
+            log_debug("entity (%s) has no event_comp!!", entity->name);
+            continue;
+        }
         EGB_Component_PositionToRect(pos_comp, &entity_rect);
 
         if (SDL_PointInRect(&click, &entity_rect) == SDL_TRUE) {

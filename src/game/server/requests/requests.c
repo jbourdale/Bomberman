@@ -34,6 +34,7 @@ int                            send_state(int sock, player_t *player)
     char                        *encodedEntity;
     EGB_Entity_Manager          *manager;
     EGB_Entity_Manager_Element  *iterator;
+    EGB_Component_Networkable   *networkable_component;
 
     manager = EGBS_Manager_Entity(EGB_Manager_Retrieve);
     if (manager == NULL)
@@ -42,13 +43,23 @@ int                            send_state(int sock, player_t *player)
     iterator = manager->first;
     while (iterator != NULL)
     {
+        networkable_component = NULL;
+        if (strcmp(iterator->entity->name, "player") == 0) {
+            networkable_component = EGB_FindComponentByName(iterator->entity, "networkable_component");
+            if(strcmp(networkable_component->owner_addr, player->s_addr) == 0) {
+                networkable_component->owner = 1;
+            }
+        }
         log_debug("iterator->entity (%p) : %s", iterator->entity, iterator->entity->name);
         encodedEntity = EGB_Serializer_EncodeEntity(iterator->entity);
+        if (networkable_component != NULL) {
+            networkable_component->owner = 0;
+        }
         if (encodedEntity == NULL) {
             log_error("ENCODED ENTITY : %s", encodedEntity);
             continue;
         }
-        log_debug("[SERVER]::send_state > sending %d bytes", strlen(encodedEntity));
+        log_debug("[SERVER]::send_state > sending %d bytes (%s)", strlen(encodedEntity), encodedEntity);
         sendto(
             sock,
             encodedEntity,
