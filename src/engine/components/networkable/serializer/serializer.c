@@ -157,6 +157,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
         networkable_comp->id = networkable_id;
         networkable_comp->owner = atoi(network_ownership);
         EGB_Component_AddToEntity(entity, networkable_comp);
+        log_debug("[CREATING NEW ENTITY]");
     }
     entity->displayed = atoi(token);
 

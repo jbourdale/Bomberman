@@ -48,5 +48,5 @@ void    EGB_Network_OnNewEntityRecv(void (*callback)(EGB_Entity *))
 
 void EGB_Network_TriggerOnNewEntityRecvCallback(EGB_Entity *entity)
 {
-    return EGB_OnEntityUpdatedCallback(entity);
+    return EGB_OnNewEntityRecvCallback(entity);
 }

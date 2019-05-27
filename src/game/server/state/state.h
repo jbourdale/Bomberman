@@ -28,6 +28,7 @@ void init_game();
 void create_wall_entity(int x, int y);
 void create_indestructible_wall(int x, int y);
 void create_outer_wall(int x, int y);
+void create_floor(int x, int y);
 
 // players.c
 EGB_Entity *add_player(player_t *player);

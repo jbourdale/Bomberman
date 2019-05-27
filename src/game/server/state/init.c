@@ -53,7 +53,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
 
     player = EGBS_Entity_Create("player");
     log_debug("[SERVER SIDE] entity player : %p at (%d,%d)", player, x, y);
-    pos_comp = EGB_Component_CreatePosition(x, y, EGB_Position_Classic, 100, 100);
+    pos_comp = EGB_Component_CreatePosition(x + 350, y, EGB_Position_Classic, 100, 100);
     texture_comp = EGB_Component_CreateTexture("Mario.png");
     collision_comp = EGB_Component_CreateCollision(1);
     networkable_comp = EGB_Component_CreateNetworkable();
@@ -88,6 +88,9 @@ void init_map() {
     for(i = 0; i < 11; i++) {
         for(j = 0; j < 11; j++) {
             switch(base_map[i][j]) {
+                case 0:
+                    create_floor(i, j);
+                    break;
                 case 1:
                     create_wall_entity(i, j);
                     break;
@@ -105,6 +108,6 @@ void init_map() {
 }
 
 void init_game() {
-    init_background();
+    //init_background();
     init_map();
 }

@@ -3,6 +3,9 @@
 
 void onNewEntityRecv(EGB_Entity *entity) {
     log_debug("new entity recv : %s", entity->name);
+    if (strcmp(entity->name, "player") == 0) {
+        add_idle_animation(entity);
+    }
 }
 
 void onEntityUpdate(EGB_Entity *entity) {
@@ -15,7 +18,7 @@ int main() {
     // INIT ENGINE
     EGB_Set_Resources_RootDir("./resources");
     EGB_SetWindowTitle("Bomberman");
-    EGB_Set_BackgroundColor(255, 255, 255, 255);
+    EGB_Set_BackgroundColor(90, 106, 108, 255);
     EGB_FPSIndicator_Display(0);
     EGB_Network_OnEntityUpdated(onEntityUpdate);
     EGB_Network_OnNewEntityRecv(onNewEntityRecv);
