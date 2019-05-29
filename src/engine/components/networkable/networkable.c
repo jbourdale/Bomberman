@@ -15,10 +15,12 @@ EGB_Component_Networkable       *EGB_Component_CreateNetworkable()
     log_debug("EGB_Component_CreateNetworkable");
 
     component = malloc(sizeof(EGB_Component_FPSRate));
-    component->name = strdup("networkable_component");
+    component->name = "networkable_component";
     component->id = malloc(EGB_NETWORKABLE_ID_LENGTH + 10); // + 10 is to store pid
     component->id = EGB_Network_GenerateId(component->id);
-    // component->owner = 0;
+    component->owner = 0;
+
+    log_debug("Networkable component created : (%s, %s)", component->name, component->id);
     return component;
 }
 
@@ -28,7 +30,6 @@ char                    *EGB_Network_GenerateId(char *str)
     size_t       length = EGB_NETWORKABLE_ID_LENGTH;
     static const char   charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
 
-    log_debug("EGB_Network_GenerateId");
     --length;
     for (size_t n = 0; n < length; n++) {
         int key = rand() % (int) (sizeof(charset) - 1);

@@ -23,13 +23,31 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     EGB_Component_Networkable       *networkable_comp;
     char                            *payload, *displayed, *network_owner;
     void                            **components;
+    EGB_Component                   **comp;
 
-    networkable_comp = (EGB_Component_Networkable *)EGB_FindComponentByName(
+    networkable_comp = EGB_FindComponentByName(
         entity,
         "networkable_component"
     );
     if (networkable_comp == NULL) {
         log_error("TRYING TO SERIALIZE ENTITY (%s) THAT DOESN'T HAVE NETWORKABLE COMP", entity->name);
+        comp = (EGB_Component **)entity->components;
+        int nb_comp = 0;
+        if (comp == NULL)
+            log_error("ENTITY COMP ARE EMPTY, WTF");
+
+        while(comp != NULL && *comp++)
+            nb_comp++;
+        comp = (EGB_Component **)entity->components;
+
+        int i = 0;
+        while(i < nb_comp)
+        {
+            log_debug("comp : %s", comp[i]->name);
+            i++;
+        }
+
+        exit(1);
         return NULL;
     }
 
@@ -52,8 +70,6 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     strcat(payload, entity->name);
     strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
 
-    log_debug("building payload : %s", payload);
-
     components = entity->components;
     while (components != NULL && *components != NULL) {
         if (EGB_Components_Serializers == NULL)
@@ -72,7 +88,6 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
         components++;
     }
     payload[strlen(payload) - 1] = '#';
-    log_debug("payload returned : %s", payload);
     return payload;
 }
 
@@ -104,15 +119,17 @@ void        EGB_Serializer_DecodeEntities(char *raw)
     char    *token, **rawEntities;
     int     i;
 
+    if (raw == NULL)
+        return ;
     log_debug("DECODE ENTITIES : %s", raw);
     rawEntities = malloc(1000 * sizeof(char *));
-    token = strtok(raw, "#");
+    token = strtok_r(raw, "#", &raw);
     i = 0;
     while (token != NULL) {
         rawEntities[i] = malloc(strlen(token) + 1);
         strcpy(rawEntities[i], token);
         i++;
-        token = strtok(NULL, "#");
+        token = strtok_r(NULL, "#", &raw);
     }
     rawEntities[i] = NULL;
 
@@ -136,14 +153,14 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     int                             i;
 
     // raw = strtok(raw, "#");
-    token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
+    token = strtok_r(raw, EGB_NETWORK_VALUE_SEPARATOR, &raw); // NETWORK IDENTIFIER
 
-    networkable_id = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-    network_ownership = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    networkable_id = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &raw);
+    network_ownership = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &raw);
     log_debug("[DECODE ENTITY] NETWORK OWNERSHIP : %s", network_ownership);
     entity = EGB_Network_FindEntityByNetworkId(networkable_id);
 
-    token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    token = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &raw);
     log_debug("NEXT TOKEN  : %s", token);
     if (strcmp(token, "destroy") == 0) {
         if (entity != NULL)
@@ -161,23 +178,24 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     }
     entity->displayed = atoi(token);
 
-    token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    token = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &raw);
     entity->name = token;
 
     serializedComponents = malloc(1000 * sizeof(char *));
-    token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+    token = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &raw);
     i = 0;
     while (token != NULL) {
         serializedComponents[i] = malloc(strlen(token) + 1);
         strcpy(serializedComponents[i], token);
-        token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+        token = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &raw);
         i++;
     }
     serializedComponents[i] = NULL;
 
     i = 0;
     while(serializedComponents[i] != NULL) {
-        token = strtok(strdup(serializedComponents[i]), ";"); // retrieving the component name
+        char *cpy = strdup(serializedComponents[i]);
+        token = strtok_r(cpy, ";", &cpy); // retrieving the component name
 
         iterator = EGB_Components_Serializers->first;
         while(iterator != NULL && strcmp(iterator->component_name, token) != 0) {

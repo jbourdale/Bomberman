@@ -11,36 +11,38 @@
 /**
  * @brief      Handle SDL Events
  *
- * @return     return -1 if a QUIT Event has been triggered. 
+ * @return     return -1 if a QUIT Event has been triggered.
  * This will stop the main engine loop. Return 0 overwise.
  */
 int 			EGB_Event_Handle()
 {
-	SDL_Event 	e;
+	SDL_Event 	*e;
 
-	if (SDL_PollEvent(&e))
+    e = malloc(sizeof(SDL_Event));
+	if (SDL_PollEvent(e))
     {
-        if (e.type == SDL_QUIT) {
+        if (e->type == SDL_QUIT) {
             return -1;
         }
-        else if (e.type == SDL_MOUSEBUTTONDOWN) {
-            EGB_Event_HandleClick(e);
+        else if (e->type == SDL_MOUSEBUTTONDOWN) {
+            EGB_Event_HandleClick(*e);
         }
-        else if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) {
-            EGB_Event_HandleKeyStroke(e);
+        else if (e->type == SDL_KEYDOWN || e->type == SDL_KEYUP) {
+            EGB_Event_HandleKeyStroke(*e);
         }
     }
 
+    free(e);
     return 0;
 }
 
 /**
- * @brief      Handle click event. Iterate over all the entities that have a click 
+ * @brief      Handle click event. Iterate over all the entities that have a click
  * EGB_Component_Event and notify them if the click is on them
  *
  * @param  e     The SDL_Event to compute
  *
- * @return     status   The main loop execution status 
+ * @return     status   The main loop execution status
  *              <ul>
  *                  <li>0 = OK</li>
  *                  <li>1 = An error occured</li>
@@ -88,12 +90,12 @@ int                         EGB_Event_HandleClick(SDL_Event e)
 
 
 /**
- * @brief      Handle keyboard events. Iterate over all the entities that have a 
+ * @brief      Handle keyboard events. Iterate over all the entities that have a
  * keystroke EGB_Component_Event and notify them
  *
  * @param  e   SDL_Event to handle
  *
- * @return     status   The main loop execution status 
+ * @return     status   The main loop execution status
  *              <ul>
  *                  <li>0 = OK</li>
  *                  <li>1 = An error occured</li>
@@ -105,7 +107,7 @@ int                             EGB_Event_HandleKeyStroke(SDL_Event e)
     EGB_Entity_Manager_Element     *manager_iterator;
     EGB_Entity                    *entity;
     EGB_Component_Event           *event_comp;
-    
+
     entities_manager = EGB_Observable_Event_KeyStroke(EGB_Manager_Retrieve);
     if (entities_manager == NULL)
         return 1;

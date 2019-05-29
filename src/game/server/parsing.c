@@ -12,9 +12,8 @@ int             parse_event_requests(int sock, char *event_request, player_t *pl
     char        *token;
 
     log_debug("event request : %s", event_request);
-    token = strtok(event_request, "\n");
-    token = strtok(event_request, "|");
-    token = strtok(NULL, "|");
+    token = strtok_r(event_request, "|", &event_request);
+    token = strtok_r(NULL, "|", &event_request);
 
     if (strcmp(token, "JOIN") == 0) {
         join_game(sock, player);

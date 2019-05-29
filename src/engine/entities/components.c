@@ -85,7 +85,6 @@ int EGB_Observables_RegisterEntity(EGB_Entity *entity, EGB_Component *component)
         return 1;
 
     if(strcmp(component->name, "position_component") == 0) {
-        log_debug("REGISTER POSITION COMPONENT ENTITY");
         EGB_Observable_Position(EGB_Manager_Add, entity, (EGB_Component_Position *) component);
         return 0;
     }
@@ -122,24 +121,16 @@ int EGB_Entity_ReplaceComponent(EGB_Entity *entity, EGB_Component *component)
         return 1;
     nb_comp = 0;
     while(*tmp_comp != NULL) {
-        log_debug("here");
         EGB_Component *comp = (*tmp_comp);
         if (comp == NULL)
             continue;
-        log_debug("comp->name : %s, component->name : %s", comp->name, component->name);
         if (strcmp(comp->name, component->name) == 0) {
-            log_debug("comp->name == component->name (%s)", component->name);
-            log_debug("nb_comp : %d", nb_comp);
             break;
         }
         tmp_comp++;
         nb_comp++;
     }
 
-    log_debug("nb_comp : %d", nb_comp);
-    EGB_Component *comp = entity->components[nb_comp];
-    log_debug("entity component at %d : %s", nb_comp, comp->name);
     entity->components[nb_comp] = component;
-
     return 0;
 }

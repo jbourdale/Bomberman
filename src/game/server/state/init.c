@@ -59,6 +59,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
     networkable_comp = EGB_Component_CreateNetworkable();
     asprintf(&addr, "%s:%d", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
     networkable_comp->owner_addr = addr;
+    log_debug("networkable_comp (%p) addr : %s", networkable_comp, networkable_comp->owner_addr);
 
     EGB_Component_AddToEntity(player, pos_comp);
     EGB_Component_AddToEntity(player, texture_comp);

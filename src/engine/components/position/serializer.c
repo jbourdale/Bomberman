@@ -49,20 +49,20 @@ void    *EGB_Component_PositionUnserializer(char *raw)
 
     log_debug("raw : %s", raw);
 
-    token = strtok(raw, ";");
-    token = strtok(NULL, ";");
+    token = strtok_r(raw, ";", &raw);
+    token = strtok_r(NULL, ";", &raw);
     log_debug("token : %s", token);
     x = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     log_debug("token : %s", token);
     y = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     log_debug("token : %s", token);
     z = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     log_debug("token : %s", token);
     w = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     log_debug("token : %s", token);
     h = atoi(token);
 

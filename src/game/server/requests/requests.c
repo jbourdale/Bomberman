@@ -8,7 +8,7 @@
 
 #include "requests.h"
 
-int         broadcast_event_to_players(int sock, char *event) 
+int         broadcast_event_to_players(int sock, char *event)
 {
     char        *payload;
 
@@ -59,6 +59,7 @@ int                            send_state(int sock, player_t *player)
         networkable_component = NULL;
         if (strcmp(iterator->entity->name, "player") == 0) {
             networkable_component = EGB_FindComponentByName(iterator->entity, "networkable_component");
+            log_debug("In SEND STATE : networkable_component (%p) : %s", networkable_component, networkable_component->owner_addr);
             if(strcmp(networkable_component->owner_addr, player->s_addr) == 0) {
                 networkable_component->owner = 1;
             }
