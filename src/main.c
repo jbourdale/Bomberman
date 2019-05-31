@@ -7,6 +7,9 @@ void onNewEntityRecv(EGB_Entity *entity) {
         add_idle_animations(entity);
         add_walking_animations(entity);
         EGB_Component_StartAnimation(entity, FRONT_IDLE_ANIMATION_ID);
+    } else if (strcmp(entity->name, "bomb") == 0) {
+        create_bomb_animation(entity);
+        EGB_Component_StartAnimation(entity, BOMB_ANIMATION_ID);
     }
 }
 

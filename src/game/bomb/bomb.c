@@ -9,10 +9,11 @@
 #include "bomb.h"
 
 
-void 						place_bomb(EGB_Entity *player) 
+void 							place_bomb(EGB_Entity *player) 
 {
-	EGB_Entity 				*bomb;
-	EGB_Component_Position 	*position, *player_position;
+	EGB_Entity 					*bomb;
+	EGB_Component_Position 		*position, *player_position;
+	EGB_Component_Networkable 	*networkable;
 
 	log_debug("PLACE BOMB");
 
@@ -21,12 +22,15 @@ void 						place_bomb(EGB_Entity *player)
 		return ;
 
 	bomb = EGB_Entity_Create("bomb");
-
+	networkable = EGB_Component_CreateNetworkable();
 	position = EGB_Component_CreatePosition(
     	player_position->x, player_position->y, EGB_Position_Top, 100, 75
 	);
 	EGB_Component_AddToEntity(bomb, position);
+	EGB_Component_AddToEntity(bomb, networkable);
 
 	create_bomb_animation(bomb);
 	EGB_Component_StartAnimation(bomb, BOMB_ANIMATION_ID);
+
+	EGB_Network_SendEntity(bomb);
 }
