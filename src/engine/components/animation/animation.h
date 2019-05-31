@@ -51,6 +51,7 @@ typedef struct 		EGB_Component_Animation_s
 EGB_Component_Animation	*EGB_Component_CreateAnimation(char*, int, int, int, int);
 int 					EGB_Component_StartAnimation(EGB_Entity *, int);
 int						EGB_Component_StopAnimation(EGB_Entity *, int);
+int 					EGB_Component_FindRunningAnimation(EGB_Entity *entity);
 
 // keyframe.c
 int 	EGB_Animation_AddKeyframe(EGB_Component_Animation *, int, int, int);

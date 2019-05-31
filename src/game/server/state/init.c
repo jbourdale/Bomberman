@@ -37,12 +37,12 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
     y = 100;
     switch(id) {
         case 1:
-            x = 900;
-            y = 100;
-            break;
-        case 2:
             x = 100;
             y = 900;
+            break;
+        case 2:
+            x = 900;
+            y = 100;
             break;
         case 3:
             x = 900;

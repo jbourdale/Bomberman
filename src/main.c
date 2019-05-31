@@ -12,6 +12,9 @@ void onNewEntityRecv(EGB_Entity *entity) {
 
 void onEntityUpdate(EGB_Entity *entity) {
     log_debug("entity updated : %s", entity->name);
+    if (strcmp(entity->name, "player") == 0) {
+        start_walking_animation(entity);
+    }
 }
 
 int main() {
@@ -32,7 +35,7 @@ int main() {
     // init_map();
     // init_player();
     setup_home_menu();
-    EGB_SetFramerate(30000);
+    EGB_SetFramerate(60);
 
     EGB_Run();
 

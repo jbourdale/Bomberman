@@ -13,7 +13,6 @@ void 						place_bomb(EGB_Entity *player)
 {
 	EGB_Entity 				*bomb;
 	EGB_Component_Position 	*position, *player_position;
-	EGB_Component_Texture 	*texture;
 
 	log_debug("PLACE BOMB");
 

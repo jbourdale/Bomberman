@@ -47,7 +47,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
             EGB_Component_Velocity_SetX(entity, 0);
             EGB_Component_StartAnimation(entity, LEFT_IDLE_ANIMATION_ID);
         }
-        // EGB_Network_SendEntity(entity);
+        EGB_Network_SendEntity(entity);
     }
     else if (e.key.keysym.sym == SDLK_RIGHT) {
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
@@ -57,7 +57,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
             EGB_Component_Velocity_SetX(entity, 0);
             EGB_Component_StartAnimation(entity, RIGHT_IDLE_ANIMATION_ID);
         }
-        // EGB_Network_SendEntity(entity);
+        EGB_Network_SendEntity(entity);
     }
     else if (e.key.keysym.sym == SDLK_UP) {
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
@@ -67,7 +67,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
             EGB_Component_Velocity_SetY(entity, 0);
             EGB_Component_StartAnimation(entity, BACK_IDLE_ANIMATION_ID);
         }
-        // EGB_Network_SendEntity(entity);
+        EGB_Network_SendEntity(entity);
     }
     else if (e.key.keysym.sym == SDLK_DOWN) {
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
@@ -77,7 +77,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
             EGB_Component_Velocity_SetY(entity, 0);
             EGB_Component_StartAnimation(entity, FRONT_IDLE_ANIMATION_ID);
         }
-        // EGB_Network_SendEntity(entity);
+        EGB_Network_SendEntity(entity);
     }
     else if (e.key.keysym.sym == SDLK_SPACE) {
         place_bomb(entity);

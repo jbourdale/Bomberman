@@ -30,4 +30,6 @@ void add_animation_keyframes(EGB_Component_Animation *comp, Animation_Descriptio
 void add_idle_animations(EGB_Entity *player);
 void add_walking_animations(EGB_Entity *player);
 
+void start_walking_animation(EGB_Entity *entity);
+
 #endif

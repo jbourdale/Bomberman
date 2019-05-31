@@ -46,7 +46,7 @@ int             join_game(int sock, player_t *player) {
     send_state(sock, player);
     encodedPlayer = EGB_Serializer_EncodeEntity(player_entity);
     broadcast_to_players(sock, encodedPlayer);
-    if (get_nb_players() == 1) {
+    if (get_nb_players() == 2) {
         broadcast_event_to_players(sock, "START");
     }
     return 0;

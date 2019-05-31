@@ -45,3 +45,37 @@ void 	add_animation_keyframes(EGB_Component_Animation *comp, Animation_Descripti
 		i++;
 	}
 }
+
+void start_walking_animation(EGB_Entity *entity) 
+{
+    EGB_Component_Velocity *velocity;
+    int running_animation;
+
+    velocity = EGB_FindComponentByName(entity, "velocity_component");
+    if (velocity == NULL)
+        return;
+
+    running_animation = EGB_Component_FindRunningAnimation(entity);
+
+    if (velocity->x > 0) {
+        EGB_Component_StartAnimation(entity, RIGHT_WALKING_ANIMATION_ID);
+    } else if (velocity->x < 0) {
+        EGB_Component_StartAnimation(entity, LEFT_WALKING_ANIMATION_ID);
+    } else if (velocity->x == 0) {
+        if (running_animation == LEFT_WALKING_ANIMATION_ID)
+            EGB_Component_StartAnimation(entity, LEFT_IDLE_ANIMATION_ID);
+        else if (running_animation == RIGHT_WALKING_ANIMATION_ID)
+            EGB_Component_StartAnimation(entity, RIGHT_IDLE_ANIMATION_ID);
+    }
+
+    if (velocity->y > 0) {
+        EGB_Component_StartAnimation(entity, FRONT_WALKING_ANIMATION_ID);
+    } else if (velocity->y < 0) {
+        EGB_Component_StartAnimation(entity, BACK_WALKING_ANIMATION_ID);
+    } else if (velocity->y == 0) {
+        if (running_animation == FRONT_WALKING_ANIMATION_ID)
+            EGB_Component_StartAnimation(entity, FRONT_IDLE_ANIMATION_ID);
+        else if (running_animation == BACK_WALKING_ANIMATION_ID)
+            EGB_Component_StartAnimation(entity, BACK_IDLE_ANIMATION_ID);
+    }
+}
