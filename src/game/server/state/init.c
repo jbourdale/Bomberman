@@ -26,9 +26,10 @@ int base_map[11][11] = {
 EGB_Entity                      *init_new_player(int id, struct sockaddr_in client_addr) {
     EGB_Entity                 *player;
     EGB_Component_Position     *pos_comp;
-    EGB_Component_Texture      *texture_comp;
+    EGB_Component_Id           *id_comp;
     EGB_Component_Collision    *collision_comp;
     EGB_Component_Networkable  *networkable_comp;
+    EGB_Component_Velocity     *velocity_comp;
     char                       *addr;
     int                        x, y;
 
@@ -53,15 +54,18 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
 
     player = EGBS_Entity_Create("player");
     log_debug("[SERVER SIDE] entity player : %p at (%d,%d)", player, x, y);
-    pos_comp = EGB_Component_CreatePosition(x + 350, y, EGB_Position_Classic, 100, 100);
-    texture_comp = EGB_Component_CreateTexture("Mario.png");
+    pos_comp = EGB_Component_CreatePosition(x + 360, y + 10, EGB_Position_Classic, 80, 80);
+
     collision_comp = EGB_Component_CreateCollision(1);
+    id_comp = EGB_Component_CreateId(id);
+    velocity_comp = EGB_Component_CreateVelocity(0, 0);
     networkable_comp = EGB_Component_CreateNetworkable();
     asprintf(&addr, "%s:%d", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
     networkable_comp->owner_addr = addr;
 
     EGB_Component_AddToEntity(player, pos_comp);
-    EGB_Component_AddToEntity(player, texture_comp);
+    EGB_Component_AddToEntity(player, id_comp);
+    EGB_Component_AddToEntity(player, velocity_comp);
     EGB_Component_AddToEntity(player, collision_comp);
     EGB_Component_AddToEntity(player, networkable_comp);
     return player;

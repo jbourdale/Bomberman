@@ -16,7 +16,7 @@ char    *EGB_Component_PositionSerializer(void **comp)
     if (comp == NULL)
         return "";
 
-    log_debug("EGB_Component_PositionSerializer");
+    // log_debug("EGB_Component_PositionSerializer");
     position_component = (EGB_Component_Position *)*comp;
 
     cpy = malloc(sizeof(EGB_Component_Position));
@@ -42,32 +42,24 @@ void    *EGB_Component_PositionUnserializer(char *raw)
     EGB_Component_Position *comp;
     int     x, y, z, w, h;
     char    *token;
-    log_debug("EGB_Component_PositionUnserializer");
+    // log_debug("EGB_Component_PositionUnserializer");
 
     if (raw == NULL)
         return NULL;
 
-    log_debug("raw : %s", raw);
-
     token = strtok(raw, ";");
     token = strtok(NULL, ";");
-    log_debug("token : %s", token);
     x = atoi(token);
     token = strtok(NULL, ";");
-    log_debug("token : %s", token);
     y = atoi(token);
     token = strtok(NULL, ";");
-    log_debug("token : %s", token);
     z = atoi(token);
     token = strtok(NULL, ";");
-    log_debug("token : %s", token);
     w = atoi(token);
     token = strtok(NULL, ";");
-    log_debug("token : %s", token);
     h = atoi(token);
 
     comp = EGB_Component_CreatePosition(x, y, z, w, h);
-    log_debug("UNSERIALIZED POSITION (%d, %d, %d, %d, %d)", comp->x, comp->y, comp->z, comp->width, comp->height);
 
     return comp;
 }

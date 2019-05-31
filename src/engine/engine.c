@@ -118,4 +118,10 @@ void EGB_RegisterSerializers()
     EGB_Component_RegisterSerializer("collision_component",
         EGB_Component_CollisionSerializer, EGB_Component_CollisionUnserializer
     );
+    EGB_Component_RegisterSerializer("id_component",
+        EGB_Component_IdSerializer, EGB_Component_IdUnserializer
+    );
+    EGB_Component_RegisterSerializer("velocity_component",
+        EGB_Component_VelocitySerializer, EGB_Component_VelocityUnserializer
+    );
 }

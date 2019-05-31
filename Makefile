@@ -24,6 +24,9 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/fpsrate/fpsrate.c \
 			./src/engine/components/components.c \
 			./src/engine/components/animation/animation.c \
+			./src/engine/components/id/id.c \
+			./src/engine/components/velocity/velocity.c \
+			./src/engine/components/velocity/movement.c \
 			./src/engine/components/animation/keyframe.c \
 			./src/engine/components/collision/collision.c \
 			./src/engine/components/position/observable.c \
@@ -47,6 +50,10 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/game/map/map.c \
 			./src/game/player/player.c \
 			./src/game/player/animations/idle.c \
+			./src/game/player/animations/walking.c \
+			./src/game/player/animations/animations.c \
+			./src/game/bomb/bomb.c \
+			./src/game/bomb/animations/animations.c \
 			./src/game/menus/home/home.c \
 			./src/game/server/init.c \
 			./src/game/server/parsing.c \

@@ -11,6 +11,9 @@
 
 #include "../../engine.h"
 
+#define EGB_Animation_Looping 		1
+#define EGB_Animation_NotLooping 	0
+
 typedef struct EGB_Animation_Keyframe_s EGB_Animation_Keyframe;
 
 typedef struct 		EGB_Animation_Keyframe_s

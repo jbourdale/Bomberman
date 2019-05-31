@@ -4,7 +4,9 @@
 void onNewEntityRecv(EGB_Entity *entity) {
     log_debug("new entity recv : %s", entity->name);
     if (strcmp(entity->name, "player") == 0) {
-        add_idle_animation(entity);
+        add_idle_animations(entity);
+        add_walking_animations(entity);
+        EGB_Component_StartAnimation(entity, FRONT_IDLE_ANIMATION_ID);
     }
 }
 
@@ -30,7 +32,7 @@ int main() {
     // init_map();
     // init_player();
     setup_home_menu();
-    EGB_SetFramerate(60);
+    EGB_SetFramerate(30000);
 
     EGB_Run();
 

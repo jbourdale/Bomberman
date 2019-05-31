@@ -32,7 +32,6 @@ int EGB_Position_Movable(EGB_Entity *entity)
 		entity,
 		"collision_component"
 	);
-	log_debug("entity_collide_comp == NULL : %d", entity_collide_comp == NULL);
 	if (
 		entity_collide_comp != NULL &&
 		entity_collide_comp->active == 1 &&

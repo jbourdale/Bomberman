@@ -13,7 +13,9 @@ typedef struct EGB_Entity_s EGB_Entity;
 typedef struct EGB_Component_s EGB_Component;
 typedef struct EGB_Component_Position_s EGB_Component_Position;
 typedef struct EGB_Component_Animation_s EGB_Component_Animation;
+typedef struct EGB_Component_Velocity_s EGB_Component_Velocity;
 typedef struct EGB_Component_Event_s EGB_Component_Event;
+typedef struct EGB_Component_Id_s EGB_Component_Id;
 typedef struct EGB_Component_Collision_s EGB_Component_Collision;
 typedef struct EGB_Entity_Manager_s EGB_Entity_Manager;
 typedef struct EGB_Resource_s EGB_Resource;
@@ -53,12 +55,14 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 
 // COMPONENTS
 #include "./components/animation/animation.h"
+#include "./components/velocity/velocity.h"
 #include "./components/collision/collision.h"
 #include "./components/position/position.h"
 #include "./components/texture/texture.h"
 #include "./components/fpsrate/fpsrate.h"
 #include "./components/components.h"
 #include "./components/events/events.h"
+#include "./components/id/id.h"
 #include "./components/events/click/click.h"
 #include "./components/events/hover/hover.h"
 #include "./components/events/keystroke/keystroke.h"

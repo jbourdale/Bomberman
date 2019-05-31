@@ -9,11 +9,21 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
+
+typedef struct 	Animation_Description_s 
+{
+	int 		duration;
+	int 		x;
+	int 		y;
+}				Animation_Description;
+
 #include <pthread.h>
 
 #include "../engine/engine.h"
 #include "./map/map.h"
 #include "./player/player.h"
+#include "./bomb/bomb.h"
+#include "./bomb/animations/animations.h"
 #include "./player/animations/animations.h"
 #include "./menus/home/home.h"
 

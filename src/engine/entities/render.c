@@ -23,7 +23,10 @@ void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, E
     EGB_Component_Animation   **animation_comps;
     EGB_Component_Position    *pos_comp;
 
+    log_debug("Rendering entity : %s", entity->name);
+
     if (!entity->displayed) {
+        log_debug("Entity not displayed (%s)", entity->name);
         return ;
     }
 
@@ -32,6 +35,8 @@ void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, E
         log_debug("position_component not founded in entity");
         return ;
     }
+
+    EGB_Entity_HandleVelocity(entity);
 
     animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(
         entity,

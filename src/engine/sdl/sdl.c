@@ -45,6 +45,7 @@ int                 EGB_SDL_Init()
         log_debug("Can't init TTF INIT");
         return 1;
     }
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
     return 0;
 }
 

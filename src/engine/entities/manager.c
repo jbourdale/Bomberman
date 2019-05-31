@@ -39,7 +39,6 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         if (entity == NULL) {
             return NULL;
         }
-        log_debug("Adding entity %s (%p) to manager", entity->name, entity);
 
         entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
@@ -56,12 +55,9 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         }
         // Add entry to manager
         entity_iterator = manager->first;
-        log_debug("entity_iterator : %p", entity_iterator);
         while (entity_iterator->next != NULL) {
             entity_iterator = entity_iterator->next;
-            log_debug("iterator over manager");
         }
-        log_debug("adding it to manager");
         entity_iterator->next = entry;
         return NULL;
     }

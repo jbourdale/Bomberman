@@ -32,7 +32,7 @@ void *run_server(void *arg) {
         recvfrom(server_sock, (char *)request, REQUEST_MAX_LENGTH, MSG_WAITALL,
             (struct sockaddr *) &clientaddr, &addrlen);
 
-        log_debug("Recieved request : %s from (%s: %d) ", request, inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
+        // log_debug("Recieved request : %s from (%s: %d) ", request, inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
         parse_request(server_sock, request, clientaddr);
 
         // sendto(server_sock, (const char *)request, strlen(request), 0,

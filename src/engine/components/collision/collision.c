@@ -60,14 +60,12 @@ EGB_Entity_Manager              *EGB_Manager_Collision(Uint32 flags, ...)
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
-        log_debug("Deleting from collision manager");
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL || manager == NULL)
             return NULL;
 
-        log_debug("Deleting(%p) from collision manager", entity);
 
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;
@@ -124,8 +122,6 @@ char    *EGB_Component_CollisionSerializer(void **comp)
     if (comp == NULL || *comp == NULL)
         return "";
 
-    log_debug("EGB_Component_CollisionSerializer");
-
     component = (EGB_Component_Collision*)*comp;
 
     cpy = malloc(sizeof(EGB_Component_Collision));
@@ -140,7 +136,6 @@ char    *EGB_Component_CollisionSerializer(void **comp)
 void                        *EGB_Component_CollisionUnserializer(char *raw)
 {
     char    *token;
-    log_debug("EGB_Component_CollisionUnserializer");
 
     if (raw == NULL)
         return NULL;
@@ -202,7 +197,6 @@ int                                 EGB_Collide(
         entity,
         "collision_component"
     );
-    log_debug("ENTITY COLLISION : %d", entity_collision->active);
 	if (entity_position_comp == NULL || entity_collision == NULL || !entity_collision->active)
 		return 0;
 	EGB_Component_PositionToRect(entity_position_comp, &entity_collision_box);
