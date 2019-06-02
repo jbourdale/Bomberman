@@ -31,3 +31,22 @@ EGB_Entity        *EGBS_Entity_Create(char *name)
     EGBS_Manager_Entity(EGB_Manager_Add, entity);
     return entity;
 }
+
+int                 EGBS_Entity_Destroy(EGB_Entity *entity)
+{
+    if (entity == NULL)
+        return 1;
+
+    log_debug("EGB_Entity_Destroy : %s", entity->name);
+
+    if (strcmp(entity->name, "fps_indicator") == 0)
+        return 1;
+
+    if (entity->on_destroy != NULL)
+        entity->on_destroy(entity);
+
+    // Remove entity from manager
+    EGBS_Manager_Entity(EGB_Manager_Delete, entity);
+    free(entity);
+    return 0;
+}

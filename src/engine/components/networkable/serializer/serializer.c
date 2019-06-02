@@ -99,6 +99,12 @@ int                                 EGB_Component_RegisterSerializer(char *name,
     return 0;
 }
 
+EGB_Components_SerializerList *EGB_Components_GetSerializers() 
+{
+    return EGB_Components_Serializers;
+}
+
+
 void        EGB_Serializer_DecodeEntities(char *raw)
 {
     char    *token, **rawEntities;
@@ -140,7 +146,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
     networkable_id = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     network_ownership = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-    entity = EGB_Network_FindEntityByNetworkId(networkable_id)
+    entity = EGB_Network_FindEntityByNetworkId(networkable_id);
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     if (strcmp(token, "destroy") == 0) {
         if (entity != NULL)

@@ -18,6 +18,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/entities/components.c \
 			./src/engine/entities/render.c \
 			./src/engine/server/entities/init.c \
+			./src/engine/server/entities/serializer.c \
 			./src/engine/server/manager/manager.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
