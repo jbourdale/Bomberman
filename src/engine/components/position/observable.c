@@ -85,8 +85,6 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
-        log_debug("Deleting from position manager");
-        EGB_Debug_DisplayPositionManager();
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
@@ -109,7 +107,6 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
         else {
             entity_iterator_prev->next = entity_iterator->next;
         }
-        EGB_Debug_DisplayPositionManager();
         return NULL;
     }
     return NULL;

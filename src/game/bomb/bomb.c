@@ -8,6 +8,10 @@
 
 #include "bomb.h"
 
+void on_bomb_destroy(EGB_Entity *bomb) 
+{
+	EGB_Network_DestroyEntity(bomb);
+}
 
 void 							place_bomb(EGB_Entity *player) 
 {
@@ -22,6 +26,7 @@ void 							place_bomb(EGB_Entity *player)
 		return ;
 
 	bomb = EGB_Entity_Create("bomb");
+	bomb->on_destroy = on_bomb_destroy;
 	networkable = EGB_Component_CreateNetworkable();
 	position = EGB_Component_CreatePosition(
     	player_position->x, player_position->y, EGB_Position_Top, 100, 75

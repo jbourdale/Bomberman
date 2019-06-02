@@ -107,10 +107,12 @@ void        EGB_Serializer_DecodeEntities(char *raw)
     // log_debug("DECODE ENTITIES : %s", raw);
     rawEntities = malloc(1000 * sizeof(char *));
     token = strtok(raw, "#");
+    log_debug("got token : %s", token);
     i = 0;
     while (token != NULL) {
         rawEntities[i] = malloc(strlen(token) + 1);
         strcpy(rawEntities[i], token);
+        log_debug("rawEntities[%d] = %s", i, rawEntities[i]);
         i++;
         token = strtok(NULL, "#");
     }
@@ -119,8 +121,8 @@ void        EGB_Serializer_DecodeEntities(char *raw)
     i = 0;
     while (rawEntities[i] != NULL)
     {
-        // log_debug("decode entity : %s", rawEntities[i]);
-        EGB_Serializer_DecodeEntity(rawEntities[i]);
+        log_debug("decode entity : %s", rawEntities[i]);
+        EGB_Serializer_DecodeEntity(strdup(rawEntities[i]));
         i++;
     }
 }
@@ -135,16 +137,11 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     char                            **serializedComponents;
     int                             i;
 
-    // raw = strtok(raw, "#");
     token = strtok(raw, EGB_NETWORK_VALUE_SEPARATOR); // NETWORK IDENTIFIER
-
     networkable_id = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     network_ownership = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-    // log_debug("[DECODE ENTITY] NETWORK OWNERSHIP : %s", network_ownership);
-    entity = EGB_Network_FindEntityByNetworkId(networkable_id);
-
+    entity = EGB_Network_FindEntityByNetworkId(networkable_id)
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-    // log_debug("NEXT TOKEN  : %s", token);
     if (strcmp(token, "destroy") == 0) {
         if (entity != NULL)
             EGB_Entity_Destroy(entity);

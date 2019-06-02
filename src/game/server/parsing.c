@@ -42,7 +42,7 @@ int parse_request(int sock, char *payload, struct sockaddr_in clientaddr) {
         case EGB_ERROR_NETWORK_IDENTIFIER:
             break;
         case EGB_ENTITY_NETWORK_IDENTIFIER:
-            broadcast_to_players(sock, payload);
+            handle_entities_request(sock, payload);
             break;
         default:
             log_debug("RECV UNPARSABLE DATA");

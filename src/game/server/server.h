@@ -27,4 +27,7 @@ pthread_t start_server_thread();
 // player.c
 player_t *find_player_by_addr(struct sockaddr_in clientaddr);
 
+// entities.c
+void handle_entities_request(int sock, char *raw);
+
 #endif

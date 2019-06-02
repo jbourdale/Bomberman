@@ -62,15 +62,12 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
-        log_debug("Deleting from manager");
-        EGB_Debug_DisplayManager();
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL || manager == NULL)
             return NULL;
 
-        log_debug("Deleting(%p) from manager", entity);
 
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;
@@ -86,7 +83,6 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         else {
             entity_iterator_prev->next = entity_iterator->next;
         }
-        EGB_Debug_DisplayManager();
         return NULL;
     }
     return NULL;

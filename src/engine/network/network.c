@@ -42,7 +42,7 @@ int                 EGB_Network_Handle()
     // log_debug("[CLIENT_SIDE] going to recv");
     if (recvfrom(EGB_Network_UDPsock, (char*)recvdata, 1000, 0, NULL, NULL) == -1)
         return EGB_NETWORK_ERROR;
-    // log_debug("[CLIENT_SIDE] recvdata : %d", strlen(recvdata));
+    log_debug("[CLIENT_SIDE] recvdata : (%s)", recvdata);
     switch (recvdata[0]) {
         case EGB_EVENT_NETWORK_IDENTIFIER:
             EGB_Network_ParseEventRequest(recvdata);
@@ -107,6 +107,8 @@ int       EGB_Network_DestroyEntity(EGB_Entity *entity)
     payload[1] = EGB_NETWORK_VALUE_SEPARATOR_CHAR;
     payload[2] = '\0';
     strcat(payload, networkable_comp->id);
+    strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
+    strcat(payload, "0"); // network ownership 
     strcat(payload, EGB_NETWORK_VALUE_SEPARATOR);
     strcat(payload, "destroy#");
 
