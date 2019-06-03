@@ -29,8 +29,6 @@ EGB_Entity_Manager              *EGBS_Manager_Entity(Uint32 flags, ...)
     va_list                     argp;
 
 
-    log_debug("EGBS_Manager_Entity");
-
     if (flags & EGB_Manager_Retrieve)
         return manager;
     if (flags & EGB_Manager_Add)
@@ -41,8 +39,6 @@ EGB_Entity_Manager              *EGBS_Manager_Entity(Uint32 flags, ...)
         if (entity == NULL) {
             return NULL;
         }
-
-        log_debug("ADDING ENTITY %p TO SERVER MANAGER", entity);
 
         entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
@@ -90,4 +86,31 @@ EGB_Entity_Manager              *EGBS_Manager_Entity(Uint32 flags, ...)
         return NULL;
     }
     return NULL;
+}
+
+EGB_Entity                        **EGBS_Entity_FindByName(char *name)
+{
+    EGB_Entity                    **founded;
+    int                           nb_founded;
+    EGB_Entity_Manager            *manager;
+    EGB_Entity_Manager_Element    *manager_entry;
+
+    manager = EGBS_Manager_Entity(EGB_Manager_Retrieve);
+    if (manager == NULL)
+        return NULL;
+    manager_entry = manager->first;
+
+    nb_founded = 0;
+    founded = NULL;
+    while(manager_entry != NULL)
+    {
+        if (strcmp(manager_entry->entity->name, name) == 0) {
+            founded = realloc(founded, (nb_founded + 2) * sizeof(void *));
+            founded[nb_founded] = manager_entry->entity;
+            founded[nb_founded + 1] = NULL;
+            nb_founded++;
+        }
+        manager_entry = manager_entry->next;
+    }
+    return founded;
 }

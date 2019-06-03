@@ -17,7 +17,6 @@
  */
 EGB_Entity        *EGB_Entity_Create(char *name)
 {
-    log_debug("create_entity");
     EGB_Entity    *entity;
 
     entity = malloc(sizeof(EGB_Entity));
@@ -30,7 +29,6 @@ EGB_Entity        *EGB_Entity_Create(char *name)
     entity->render = EGB_Entity_DefaultRenderer;
     entity->displayed = 1;
 
-    log_debug("entity created : %p", entity);
     EGB_Manager_Entity(EGB_Manager_Add, entity);
     return entity;
 }

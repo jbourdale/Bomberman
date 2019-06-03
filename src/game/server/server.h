@@ -28,7 +28,7 @@ pthread_t start_server_thread();
 player_t *find_player_by_addr(struct sockaddr_in clientaddr);
 
 // entities.c
-void handle_entity_destruction(char *payload);
+void handle_entity_destruction(int sock, char *raw);
 void handle_entities_request(int sock, char *raw, player_t *player);
 
 #endif

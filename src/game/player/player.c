@@ -7,7 +7,6 @@
 */
 
 #include "../../engine/engine.h"
-#include "../map/map.h"
 #include "../server/server.h"
 
 /**
@@ -21,6 +20,10 @@ void on_player_click(EGB_Entity *entity, SDL_Event e)
 }
 
 void player_on_destroy(EGB_Entity *entity) {
+    EGB_Component_Networkable *networkable;
+
+    networkable = EGB_FindComponentByName(entity, "networkable_component");
+    log_debug("PLAYER DESTROYED, NETWORK OWNER : %d", networkable->owner);
     EGB_Network_DestroyEntity(entity);
 }
 
@@ -82,51 +85,6 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
     else if (e.key.keysym.sym == SDLK_SPACE && e.type == SDL_KEYDOWN) {
         place_bomb(entity);
     }
-
-    // key_state = SDL_GetKeyboardState(NULL);
-    // pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
-    // if(key_state[SDL_SCANCODE_LEFT]) {
-    //     log_debug("MOVE");
-    // }
-    // if (key_state[SDL_SCANCODE_RIGHT]) {
-    //     log_debug("MOVE");
-    //     EGB_Component_Velocity_SetX(entity, 1);
-    //     EGB_Network_SendEntity(entity);
-    // }
-    // if (key_state[SDL_SCANCODE_UP]) {
-    //     log_debug("MOVE");
-    //     EGB_Component_Velocity_SetY(entity, -1);
-    //     EGB_Network_SendEntity(entity);
-    // }
-    // if (key_state[SDL_SCANCODE_DOWN]) {
-    //     log_debug("MOVE");
-    //     EGB_Component_Velocity_SetY(entity, 1);
-    //     EGB_Network_SendEntity(entity);
-    // }
-    // if (key_state[SDL_SCANCODE_S]) {
-    //     start_server_thread();
-    // }
-    // if (key_state[SDL_SCANCODE_SPACE])
-    // {
-    //     EGB_Entity *player = EGB_Entity_Create("bomb");
-    //     EGB_Component_Position *pos_comp2 = EGB_Component_CreatePosition(
-    //         pos_comp->x, pos_comp->y, EGB_Position_Background, 75, 75);
-    //     EGB_Component_Animation *animation_comp = EGB_Component_CreateAnimation(
-    //         "bomb.png", 0, 24, 24, 0
-    //     );
-    //     EGB_Animation_AddKeyframe(animation_comp, 400, 0, 0);
-    //     EGB_Animation_AddKeyframe(animation_comp, 400, 1, 0);
-    //     EGB_Animation_AddKeyframe(animation_comp, 400, 2, 0);
-    //     EGB_Animation_AddKeyframe(animation_comp, 200, 3, 0);
-    //     EGB_Animation_AddKeyframe(animation_comp, 200, 0, 4);
-    //     EGB_Animation_AddKeyframe(animation_comp, 200, 0, 3);
-    //     EGB_Animation_AddKeyframe(animation_comp, 200, 0, 2);
-    //     int keyframe_id = EGB_Animation_AddKeyframe(animation_comp, 200, 0, 1);
-    //     EGB_Keyframe_Set_OnFinish(animation_comp, keyframe_id, bomb_explose);
-    //     EGB_Component_AddToEntity(player, (void *)pos_comp2);
-    //     EGB_Component_AddToEntity(player, (void *)animation_comp);
-    //     EGB_Component_StartAnimation(player, 0);
-    // }
 }
 
 

@@ -8,6 +8,7 @@
 
 #include "../../../engine/engine.h"
 #include "state.h"
+#include "../requests/requests.h"
 
 int base_map[11][11] = {
     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
@@ -114,4 +115,29 @@ void init_map() {
 void init_game() {
     //init_background();
     init_map();
+}
+
+
+void check_game_over(int sock) 
+{
+    EGB_Entity **players;
+    int i;
+
+    players = EGBS_Entity_FindByName("player");
+    if (players == NULL || *players == NULL) {
+        broadcast_event_to_players(sock, "END");
+        return ;
+    }
+
+    i = 0;
+    while (*players != NULL)
+    {
+        i++;
+        players++;
+    }
+
+    if (i <= 1)
+    {
+        broadcast_event_to_players(sock, "END");
+    }
 }

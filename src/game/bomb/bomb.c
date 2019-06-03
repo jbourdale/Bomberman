@@ -18,6 +18,7 @@ void 							place_bomb(EGB_Entity *player)
 	EGB_Entity 					*bomb;
 	EGB_Component_Position 		*position, *player_position;
 	EGB_Component_Networkable 	*networkable;
+	int 						x, y;
 
 	player_position = EGB_FindComponentByName(player, "position_component");
 	if (player_position == NULL)
@@ -26,8 +27,12 @@ void 							place_bomb(EGB_Entity *player)
 	bomb = EGB_Entity_Create("bomb");
 	bomb->on_destroy = on_bomb_destroy;
 	networkable = EGB_Component_CreateNetworkable();
+
+	x = floor(((player_position->x + player_position->width / 2) - 350) / 100) * 100 + 350;
+	y = floor((player_position->y + player_position->height / 2) / 100) * 100;
+
 	position = EGB_Component_CreatePosition(
-    	player_position->x, player_position->y, EGB_Position_Top, 100, 75
+    	x, y, EGB_Position_Top, 100, 75
 	);
 	EGB_Component_AddToEntity(bomb, position);
 	EGB_Component_AddToEntity(bomb, networkable);

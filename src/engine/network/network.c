@@ -39,10 +39,8 @@ int                 EGB_Network_Handle()
 
     recvdata = malloc(1000);
     memset(recvdata, '\0', 1000);
-    // log_debug("[CLIENT_SIDE] going to recv");
     if (recvfrom(EGB_Network_UDPsock, (char*)recvdata, 1000, 0, NULL, NULL) == -1)
         return EGB_NETWORK_ERROR;
-    log_debug("[CLIENT_SIDE] recvdata : (%s)", recvdata);
     switch (recvdata[0]) {
         case EGB_EVENT_NETWORK_IDENTIFIER:
             EGB_Network_ParseEventRequest(recvdata);
@@ -69,11 +67,9 @@ int                         EGB_Network_SendEntity(EGB_Entity *entity)
     if (!EGB_Network_IsEnabled())
         return EGB_NETWORK_DISABLED;
 
-    // log_debug("sending entity %s", entity->name);
     encodedEntity = EGB_Serializer_EncodeEntity(entity);
     if (encodedEntity == NULL)
         return 1;
-    // log_debug("encodedEntity : %s", encodedEntity);
 
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);

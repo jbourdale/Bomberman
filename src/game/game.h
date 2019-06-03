@@ -20,7 +20,6 @@ typedef struct 	Animation_Description_s
 #include <pthread.h>
 
 #include "../engine/engine.h"
-#include "./map/map.h"
 #include "./player/player.h"
 #include "./bomb/bomb.h"
 #include "./bomb/animations/animations.h"

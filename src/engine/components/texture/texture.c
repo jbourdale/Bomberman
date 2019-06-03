@@ -30,8 +30,6 @@ char    *EGB_Component_TextureSerializer(void **comp)
     EGB_Component_Texture *component, *cpy;
     char *payload;
 
-    log_debug("EGB_Component_TextureSerializer");
-
     component = (EGB_Component_Texture *)*comp;
 
     cpy = malloc(sizeof(EGB_Component_Texture));
@@ -46,8 +44,6 @@ char    *EGB_Component_TextureSerializer(void **comp)
 void                        *EGB_Component_TextureUnserializer(char *raw)
 {
     char    *token;
-
-    log_debug("EGB_Component_TextureUnserializer");
 
     if (raw == NULL) {
         log_debug("no raw data to parse");

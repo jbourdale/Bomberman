@@ -16,12 +16,10 @@ void        EGBS_Serializer_DecodeEntities(char *raw)
     // log_debug("DECODE ENTITIES : %s", raw);
     rawEntities = malloc(1000 * sizeof(char *));
     token = strtok(raw, "#");
-    log_debug("got token : %s", token);
     i = 0;
     while (token != NULL) {
         rawEntities[i] = malloc(strlen(token) + 1);
         strcpy(rawEntities[i], token);
-        log_debug("rawEntities[%d] = %s", i, rawEntities[i]);
         i++;
         token = strtok(NULL, "#");
     }
@@ -30,7 +28,6 @@ void        EGBS_Serializer_DecodeEntities(char *raw)
     i = 0;
     while (rawEntities[i] != NULL)
     {
-        log_debug("decode entity : %s", rawEntities[i]);
         EGBS_Serializer_DecodeEntity(strdup(rawEntities[i]));
         i++;
     }
@@ -59,9 +56,7 @@ EGB_Entity                          *EGBS_Serializer_DecodeEntity(char *raw)
         return NULL;
     }
     if (entity == NULL) {
-        log_debug("DECODE ENTITY SERVER SIDE : ENTITY NOT FOUNDED");
         entity = EGBS_Entity_Create("tmp");
-        log_debug("ENTITY CREATED : %s", entity->name);
         EGB_Component_Networkable *networkable_comp = EGB_Component_CreateNetworkable();
         networkable_comp->id = networkable_id;
         networkable_comp->owner = atoi(network_ownership);

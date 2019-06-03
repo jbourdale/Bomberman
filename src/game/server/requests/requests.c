@@ -63,16 +63,13 @@ int                            send_state(int sock, player_t *player)
                 networkable_component->owner = 1;
             }
         }
-        log_debug("iterator->entity (%p) : %s", iterator->entity, iterator->entity->name);
         encodedEntity = EGB_Serializer_EncodeEntity(iterator->entity);
         if (networkable_component != NULL) {
             networkable_component->owner = 0;
         }
         if (encodedEntity == NULL) {
-            log_error("ENCODED ENTITY : %s", encodedEntity);
             continue;
         }
-        log_debug("[SERVER]::send_state > sending %d bytes (%s)", strlen(encodedEntity), encodedEntity);
         sendto(
             sock,
             encodedEntity,

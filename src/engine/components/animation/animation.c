@@ -75,7 +75,6 @@ int 						EGB_Component_StartAnimation(EGB_Entity *entity, int animation_id) {
 	while (animation_comps != NULL && animation_comps[i] != NULL) {
 		animation_comps[i]->running = 0;
 		if (animation_comps[i]->id == animation_id && animation_comps[i]->running == 0) {
-			log_debug("STARTING ANIMATION %d, running : %d", animation_id, animation_comps[i]->running);
 			animation_comps[i]->last_animation_tick = SDL_GetTicks();
 			animation_comps[i]->running = 1;
 

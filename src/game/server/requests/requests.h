@@ -18,4 +18,7 @@ int broadcast_event_to_players(int sock, char *event);
 int broadcast_to_players(int sock, char *payload, player_t *player);
 int send_state(int sock, player_t *player);
 
+// entities.c
+void destroy_entity(int sock, EGB_Entity *entity);
+
 #endif

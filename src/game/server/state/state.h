@@ -22,13 +22,14 @@ typedef struct          player_s
 void init_background();
 EGB_Entity *init_new_player(int id, struct sockaddr_in addr);
 void init_map();
+void check_game_over(int sock);
 void init_game();
 
 // wall.c
 void create_wall_entity(int x, int y);
 void create_indestructible_wall(int x, int y);
 void create_outer_wall(int x, int y);
-void create_floor(int x, int y);
+EGB_Entity *create_floor(int x, int y);
 
 // players.c
 EGB_Entity *add_player(player_t *player);
@@ -37,5 +38,10 @@ int     get_nb_players();
 
 // state.c
 char *encode_state();
+
+// bomb.c
+void handle_bomb_explosion(int sock, EGB_Entity *bomb);
+void destroy_wall(int sock, int x, int y);
+void destroy_players(int sock, int x, int y);
 
 #endif

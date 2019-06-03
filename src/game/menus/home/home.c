@@ -29,9 +29,15 @@ void    setup_home_menu() {
     create_host_btn();
 }
 
+void on_game_end()
+{
+    log_debug("END GAME");
+    setup_home_menu();
+}
 
 void on_game_start(char *data) {
     log_debug("ON GAME START : %s", data);
+    EGB_Network_RegisterEvent("END", on_game_end);
     bind_my_player();
 }
 
