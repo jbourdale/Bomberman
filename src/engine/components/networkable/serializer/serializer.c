@@ -112,6 +112,8 @@ void        EGB_Serializer_DecodeEntities(char *raw)
 
     // log_debug("DECODE ENTITIES : %s", raw);
     rawEntities = malloc(1000 * sizeof(char *));
+    if (raw[strlen(raw) -1] != '#')
+        return ;
     token = strtok(raw, "#");
     i = 0;
     while (token != NULL) {
@@ -144,6 +146,11 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
     networkable_id = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     network_ownership = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     entity = EGB_Network_FindEntityByNetworkId(networkable_id);
+    
+    if (entity != NULL) {
+        log_debug("REQUEST AFFECTING ENTITY %s", entity->name);
+    }
+
     token = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
     if (strcmp(token, "destroy") == 0) {
         if (entity != NULL)

@@ -114,3 +114,31 @@ EGB_Entity                        **EGBS_Entity_FindByName(char *name)
     }
     return founded;
 }
+
+
+EGB_Entity *EGBS_FindEntityByPosition(int x, int y, int z)
+{
+    EGB_Entity                  *entity;
+    EGB_Entity_Manager          *entities_manager;
+    EGB_Entity_Manager_Element  *manager_iterator;
+    EGB_Component_Position      *position_comp;
+
+    entities_manager = EGBS_Manager_Entity(EGB_Manager_Retrieve);
+    if (entities_manager == NULL)
+        return NULL;
+    manager_iterator = entities_manager->first;
+    while (manager_iterator != NULL)
+    {
+        entity = manager_iterator->entity;
+        position_comp = EGB_FindComponentByName(
+            entity,
+            "position_component"
+        );
+        if (position_comp->x == x
+            && position_comp->y == y
+            && position_comp->z == z)
+            return entity;
+        manager_iterator = manager_iterator->next;
+    }
+    return NULL;
+}

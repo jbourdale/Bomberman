@@ -87,3 +87,41 @@ void create_bomb_animation(EGB_Entity *bomb)
     EGB_Keyframe_Set_OnFinish(anim, frame_id, on_bomb_explose);
 	EGB_Component_AddToEntity(bomb, anim);
 }
+
+Animation_Description explosion_anim[] = {
+    { 80, 0, 0 },
+    { 80, 1, 0 },
+    { 80, 2, 0 },
+    { 80, 0, 1 },
+    { 80, 1, 1 },
+    { 80, 2, 1 },
+    { 80, 0, 2 },
+    { 80, 1, 2 },
+    { 80, 2, 2 },
+};
+
+void on_explosion_over(EGB_Entity *explosion)
+{
+    log_debug(NULL, explosion);
+    //EGB_Entity_Destroy(explosion);
+}
+
+void create_explosion_animation(EGB_Entity *explosion)
+{
+    EGB_Component_Animation *anim;
+    int i, frame_id;
+
+    anim = EGB_Component_CreateAnimation(
+        "bomb/explosion.png", EXPLOSION_ANIMATION_ID, 572, 572, EGB_Animation_NotLooping
+    );
+
+    i = 0;
+    while (i < 9) {
+        frame_id = EGB_Animation_AddKeyframe(anim, explosion_anim[i].duration, explosion_anim[i].x, explosion_anim[i].y);
+        i++;
+    }
+    frame_id = frame_id;
+
+    //EGB_Keyframe_Set_OnFinish(anim, frame_id, on_explosion_over);
+    EGB_Component_AddToEntity(explosion, anim);
+}

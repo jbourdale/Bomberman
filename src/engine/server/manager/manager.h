@@ -13,5 +13,6 @@
 
 EGB_Entity_Manager *EGBS_Manager_Entity(Uint32 flags, ...);
 EGB_Entity **EGBS_Entity_FindByName(char *name);
+EGB_Entity *EGBS_FindEntityByPosition(int x, int y, int z);
 
 #endif

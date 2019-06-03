@@ -67,7 +67,8 @@ void                        EGB_Render_Entities()
     while (manager_iterator != NULL)
     {
         entity = manager_iterator->entity;
-        entity->render(renderer, entity);
+        if (entity->render != NULL)
+            entity->render(renderer, entity);
         manager_iterator = manager_iterator->next;
         i++;
     }

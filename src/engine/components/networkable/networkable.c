@@ -24,11 +24,11 @@ EGB_Component_Networkable       *EGB_Component_CreateNetworkable()
 
 char                    *EGB_Network_GenerateId(char *str)
 {
-    char                *pid; // Used to generate different ID between different clients
+    char                *pid, *thread_id; // Used to generate different ID between different clients
     size_t       length = EGB_NETWORKABLE_ID_LENGTH;
     static const char   charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
 
-    // log_debug("EGB_Network_GenerateId");
+    log_debug("EGB_Network_GenerateId");
     --length;
     for (size_t n = 0; n < length; n++) {
         int key = rand() % (int) (sizeof(charset) - 1);
@@ -38,6 +38,9 @@ char                    *EGB_Network_GenerateId(char *str)
     pid = malloc(10);
     sprintf(pid, "%d", getpid());
     str = strcat(str, pid);
+    thread_id = malloc(10);
+    sprintf(thread_id, "%d", (unsigned int)pthread_self());
+    str = strcat(str, thread_id);
     return str;
 }
 

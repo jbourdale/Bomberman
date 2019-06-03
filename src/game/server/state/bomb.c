@@ -14,6 +14,7 @@ void handle_bomb_explosion(int sock, EGB_Entity *bomb)
 	EGB_Component_Position  *position;
 
     int range[4][2] = {
+        {0, 0},
         {-1, 0},
         {1, 0},
         {0, -1},
@@ -37,6 +38,8 @@ void handle_bomb_explosion(int sock, EGB_Entity *bomb)
         tmpx = x + range[i][0];
         tmpy = y + range[i][1];
 
+        log_debug("tmpx : %d, tmpy : %d", tmpx, tmpy);
+        create_explosion(sock, tmpx, tmpy);
         destroy_wall(sock, tmpx, tmpy);
         destroy_players(sock, tmpx, tmpy);
     }
@@ -49,7 +52,7 @@ void destroy_wall(int sock, int x, int y)
     EGB_Entity *wall, *floor;
     char    *encoded_floor;
 
-    wall = EGB_FindEntityByPosition(
+    wall = EGBS_FindEntityByPosition(
             (x * 100) + 350,
             y * 100,
             EGB_Position_Top
@@ -92,5 +95,39 @@ void destroy_players(int sock, int x, int y)
         }
         players++;
     }
+}
 
+void create_explosion(int sock, int x, int y)
+{
+    char *encoded_explosion;
+    EGB_Entity *explosion, *wall;
+    EGB_Component_Position *position;
+    EGB_Component_Networkable *networkable;
+
+    wall = EGBS_FindEntityByPosition(
+            (x * 100) + 350,
+            y * 100,
+            EGB_Position_Top
+    );
+    if (wall != NULL && ( 
+        strcmp(wall->name, "indestructible_wall") == 0 || 
+        strcmp(wall->name, "outer_wall") == 0
+    ))
+        return ;
+
+    explosion = EGBS_Entity_Create("explosion");
+    position = EGB_Component_CreatePosition(
+        x * 100 + 350,
+        y * 100,
+        EGB_Position_AlwaysOnTop,
+        100,
+        100
+    );
+    networkable = EGB_Component_CreateNetworkable();
+
+    EGB_Component_AddToEntity(explosion, position);
+    EGB_Component_AddToEntity(explosion, networkable);
+
+    encoded_explosion = EGB_Serializer_EncodeEntity(explosion);
+    broadcast_to_players(sock, encoded_explosion, NULL);
 }

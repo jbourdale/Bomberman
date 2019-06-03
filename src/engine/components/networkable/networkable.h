@@ -10,6 +10,7 @@
 #define __NETWORKABLE_H__
 
 #include "../../engine.h"
+#include <pthread.h>
 
 #define EGB_NETWORKABLE_ID_LENGTH   64
 

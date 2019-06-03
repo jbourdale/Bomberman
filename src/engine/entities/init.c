@@ -61,6 +61,8 @@ int                 EGB_Entity_Destroy(EGB_Entity *entity)
 {
     if (entity == NULL)
         return 1;
+    if (entity->name == NULL)
+        return 1;
 
     log_debug("EGB_Entity_Destroy : %s", entity->name);
 

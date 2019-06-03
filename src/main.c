@@ -9,6 +9,9 @@ void onNewEntityRecv(EGB_Entity *entity) {
     } else if (strcmp(entity->name, "bomb") == 0) {
         create_bomb_animation(entity);
         EGB_Component_StartAnimation(entity, BOMB_ANIMATION_ID);
+    } else if (strcmp(entity->name, "explosion") == 0) {
+        create_explosion_animation(entity);
+        EGB_Component_StartAnimation(entity, EXPLOSION_ANIMATION_ID);
     }
 }
 

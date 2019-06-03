@@ -136,7 +136,7 @@ void check_game_over(int sock)
         players++;
     }
 
-    if (i <= 1)
+    if (i < 1)
     {
         broadcast_event_to_players(sock, "END");
     }
