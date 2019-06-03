@@ -31,7 +31,7 @@ void        EGBS_Serializer_DecodeEntities(char *raw)
     while (rawEntities[i] != NULL)
     {
         log_debug("decode entity : %s", rawEntities[i]);
-        EGB_Serializer_DecodeEntity(strdup(rawEntities[i]));
+        EGBS_Serializer_DecodeEntity(strdup(rawEntities[i]));
         i++;
     }
 }
@@ -59,7 +59,9 @@ EGB_Entity                          *EGBS_Serializer_DecodeEntity(char *raw)
         return NULL;
     }
     if (entity == NULL) {
+        log_debug("DECODE ENTITY SERVER SIDE : ENTITY NOT FOUNDED");
         entity = EGBS_Entity_Create("tmp");
+        log_debug("ENTITY CREATED : %s", entity->name);
         EGB_Component_Networkable *networkable_comp = EGB_Component_CreateNetworkable();
         networkable_comp->id = networkable_id;
         networkable_comp->owner = atoi(network_ownership);

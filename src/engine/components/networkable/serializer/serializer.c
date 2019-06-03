@@ -113,12 +113,10 @@ void        EGB_Serializer_DecodeEntities(char *raw)
     // log_debug("DECODE ENTITIES : %s", raw);
     rawEntities = malloc(1000 * sizeof(char *));
     token = strtok(raw, "#");
-    log_debug("got token : %s", token);
     i = 0;
     while (token != NULL) {
         rawEntities[i] = malloc(strlen(token) + 1);
         strcpy(rawEntities[i], token);
-        log_debug("rawEntities[%d] = %s", i, rawEntities[i]);
         i++;
         token = strtok(NULL, "#");
     }
@@ -127,7 +125,6 @@ void        EGB_Serializer_DecodeEntities(char *raw)
     i = 0;
     while (rawEntities[i] != NULL)
     {
-        log_debug("decode entity : %s", rawEntities[i]);
         EGB_Serializer_DecodeEntity(strdup(rawEntities[i]));
         i++;
     }

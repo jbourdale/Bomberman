@@ -91,8 +91,6 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
         if (entity == NULL || manager == NULL)
             return NULL;
 
-        log_debug("Deleting(%p) from position manager", entity);
-
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;
         while (entity_iterator != NULL && entity_iterator->entity != entity) {

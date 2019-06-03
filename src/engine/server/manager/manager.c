@@ -29,6 +29,8 @@ EGB_Entity_Manager              *EGBS_Manager_Entity(Uint32 flags, ...)
     va_list                     argp;
 
 
+    log_debug("EGBS_Manager_Entity");
+
     if (flags & EGB_Manager_Retrieve)
         return manager;
     if (flags & EGB_Manager_Add)
@@ -40,7 +42,7 @@ EGB_Entity_Manager              *EGBS_Manager_Entity(Uint32 flags, ...)
             return NULL;
         }
 
-        log_debug("Adding entity %p to server manager", entity);
+        log_debug("ADDING ENTITY %p TO SERVER MANAGER", entity);
 
         entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
@@ -58,7 +60,6 @@ EGB_Entity_Manager              *EGBS_Manager_Entity(Uint32 flags, ...)
         // Add entry to manager
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL) {
-            log_debug("iterate over server manager");
             entity_iterator = entity_iterator->next;
         }
         entity_iterator->next = entry;

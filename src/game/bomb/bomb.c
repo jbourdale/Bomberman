@@ -19,8 +19,6 @@ void 							place_bomb(EGB_Entity *player)
 	EGB_Component_Position 		*position, *player_position;
 	EGB_Component_Networkable 	*networkable;
 
-	log_debug("PLACE BOMB");
-
 	player_position = EGB_FindComponentByName(player, "position_component");
 	if (player_position == NULL)
 		return ;

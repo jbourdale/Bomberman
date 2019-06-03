@@ -2,7 +2,6 @@
 #include "game/game.h"
 
 void onNewEntityRecv(EGB_Entity *entity) {
-    log_debug("new entity recv : %s", entity->name);
     if (strcmp(entity->name, "player") == 0) {
         add_idle_animations(entity);
         add_walking_animations(entity);
@@ -14,7 +13,6 @@ void onNewEntityRecv(EGB_Entity *entity) {
 }
 
 void onEntityUpdate(EGB_Entity *entity) {
-    log_debug("entity updated : %s", entity->name);
     if (strcmp(entity->name, "player") == 0) {
         start_walking_animation(entity);
     }

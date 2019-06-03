@@ -18,17 +18,17 @@ int         broadcast_event_to_players(int sock, char *event)
     payload[2] = '\0';
     strcat(payload, event);
 
-    return broadcast_to_players(sock, payload);
+    return broadcast_to_players(sock, payload, NULL);
 }
 
-int         broadcast_to_players(int sock, char *payload)
+int         broadcast_to_players(int sock, char *payload, player_t *player)
 {
     player_t    **players;
     int         i;
 
     players = get_players();
     i = 0;
-    while (players[i] != NULL) {
+    while (players[i] != NULL && players[i] != player) {
         sendto(
             sock,
             payload,

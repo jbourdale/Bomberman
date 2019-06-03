@@ -79,7 +79,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
         }
         EGB_Network_SendEntity(entity);
     }
-    else if (e.key.keysym.sym == SDLK_SPACE) {
+    else if (e.key.keysym.sym == SDLK_SPACE && e.type == SDL_KEYDOWN) {
         place_bomb(entity);
     }
 
