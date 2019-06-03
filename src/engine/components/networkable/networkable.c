@@ -28,7 +28,6 @@ char                    *EGB_Network_GenerateId(char *str)
     size_t       length = EGB_NETWORKABLE_ID_LENGTH;
     static const char   charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
 
-    log_debug("EGB_Network_GenerateId");
     --length;
     for (size_t n = 0; n < length; n++) {
         int key = rand() % (int) (sizeof(charset) - 1);

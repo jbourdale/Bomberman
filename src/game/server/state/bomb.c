@@ -13,7 +13,7 @@ void handle_bomb_explosion(int sock, EGB_Entity *bomb)
 {
 	EGB_Component_Position  *position;
 
-    int range[4][2] = {
+    int range[5][2] = {
         {0, 0},
         {-1, 0},
         {1, 0},
@@ -34,7 +34,7 @@ void handle_bomb_explosion(int sock, EGB_Entity *bomb)
     log_debug("BOMB POSITION (%d, %d) THAT MEAN IT'S ON (%d, %d)", position->x, position->y, x, y);
     log_debug("x : %d, y : %d", x, y);
 
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 5; i++) {
         tmpx = x + range[i][0];
         tmpy = y + range[i][1];
 
@@ -52,11 +52,21 @@ void destroy_wall(int sock, int x, int y)
     EGB_Entity *wall, *floor;
     char    *encoded_floor;
 
+    log_debug("DESTROY WALL");
+
+    log_debug("LOOKING FOR WALL AT (%d, %d)", (x * 100) + 350, y * 100);
     wall = EGBS_FindEntityByPosition(
             (x * 100) + 350,
             y * 100,
             EGB_Position_Top
         );
+
+    if (wall == NULL) {
+        log_debug("WALL NOT FOUNDED HERE");
+    } else {
+        log_debug("WALL FOUNDED (%s)", wall->name);
+    }
+
     if (wall == NULL || strcmp(wall->name, "wall") != 0)
         return ;
 
