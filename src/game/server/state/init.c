@@ -30,6 +30,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
     EGB_Component_Id           *id_comp;
     EGB_Component_Collision    *collision_comp;
     EGB_Component_Networkable  *networkable_comp;
+    EGB_Component_Range        *range_comp;
     EGB_Component_Velocity     *velocity_comp;
     char                       *addr;
     int                        x, y;
@@ -59,6 +60,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
 
     collision_comp = EGB_Component_CreateCollision(1);
     id_comp = EGB_Component_CreateId(id);
+    range_comp = EGB_Component_CreateRange(2);
     velocity_comp = EGB_Component_CreateVelocity(0, 0);
     networkable_comp = EGB_Component_CreateNetworkable();
     asprintf(&addr, "%s:%d", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
@@ -66,6 +68,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
 
     EGB_Component_AddToEntity(player, pos_comp);
     EGB_Component_AddToEntity(player, id_comp);
+    EGB_Component_AddToEntity(player, range_comp);
     EGB_Component_AddToEntity(player, velocity_comp);
     EGB_Component_AddToEntity(player, collision_comp);
     EGB_Component_AddToEntity(player, networkable_comp);

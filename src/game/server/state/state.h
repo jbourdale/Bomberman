@@ -41,7 +41,7 @@ char *encode_state();
 
 // bomb.c
 void handle_bomb_explosion(int sock, EGB_Entity *bomb);
-void destroy_wall(int sock, int x, int y);
+int destroy_wall(int sock, int x, int y);
 void destroy_players(int sock, int x, int y);
 void create_explosion(int sock, int x, int y);
 

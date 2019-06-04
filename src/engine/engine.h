@@ -63,6 +63,7 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include "./components/components.h"
 #include "./components/events/events.h"
 #include "./components/id/id.h"
+#include "./components/range/range.h"
 #include "./components/events/click/click.h"
 #include "./components/events/hover/hover.h"
 #include "./components/events/keystroke/keystroke.h"

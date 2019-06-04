@@ -26,6 +26,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/components.c \
 			./src/engine/components/animation/animation.c \
 			./src/engine/components/id/id.c \
+			./src/engine/components/range/range.c \
 			./src/engine/components/velocity/velocity.c \
 			./src/engine/components/velocity/movement.c \
 			./src/engine/components/animation/keyframe.c \

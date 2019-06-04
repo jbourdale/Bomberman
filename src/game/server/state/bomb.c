@@ -11,41 +11,46 @@
 
 void handle_bomb_explosion(int sock, EGB_Entity *bomb)
 {
-	EGB_Component_Position  *position;
+    EGB_Component_Position  *position;
+	EGB_Component_Range  *range_comp;
 
-    int range[5][2] = {
+    int area[5][2] = {
         {0, 0},
         {-1, 0},
         {1, 0},
         {0, -1},
         {0, 1}
     };
-    int x, y, tmpx, tmpy, i;
+    int x, y, tmpx, tmpy, i, j;
 
-    position = EGB_FindComponentByName(
-        bomb,
-        "position_component"
-    );
-    if (position == NULL)
+    position = EGB_FindComponentByName(bomb,"position_component");
+    range_comp = EGB_FindComponentByName(bomb, "range_component");
+    if (position == NULL || range_comp == NULL)
         return ;
 
     x = floor((position->x - 350)/ 100);
     y = floor(position->y / 100);
 
     for (i = 0; i < 5; i++) {
-        tmpx = x + range[i][0];
-        tmpy = y + range[i][1];
+        for (j = 1; j <= range_comp->range; j++) {
+            tmpx = x + (area[i][0] * j);
+            tmpy = y + (area[i][1] * j);
 
-        log_debug("tmpx : %d, tmpy : %d", tmpx, tmpy);
-        create_explosion(sock, tmpx, tmpy);
-        destroy_wall(sock, tmpx, tmpy);
-        destroy_players(sock, tmpx, tmpy);
+            if (tmpx < 0 || tmpx > 10 || tmpy < 0 || tmpy > 10)
+                continue;
+
+            log_debug("tmpx : %d, tmpy : %d", tmpx, tmpy);
+            create_explosion(sock, tmpx, tmpy);
+            destroy_players(sock, tmpx, tmpy);
+            if (destroy_wall(sock, tmpx, tmpy))
+                break;
+        }
     }
     check_game_over(sock);
     return ;
 }
 
-void destroy_wall(int sock, int x, int y)
+int destroy_wall(int sock, int x, int y)
 {
     EGB_Entity *wall, *floor;
     char    *encoded_floor;
@@ -56,13 +61,18 @@ void destroy_wall(int sock, int x, int y)
             EGB_Position_Top
         );
 
-    if (wall == NULL || strcmp(wall->name, "wall") != 0)
-        return ;
+    if (wall == NULL) 
+        return 0;
+    if (strcmp(wall->name, "outer_wall") == 0 ||
+        strcmp(wall->name, "indestructible_wall") == 0   
+    )
+        return 1;
 
     floor = create_floor(x, y);
     encoded_floor = EGB_Serializer_EncodeEntity(floor);
     broadcast_to_players(sock, encoded_floor, NULL);
     destroy_entity(sock, wall);
+    return 1;
 }
 
 void destroy_players(int sock, int x, int y)

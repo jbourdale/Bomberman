@@ -126,4 +126,7 @@ void EGB_RegisterSerializers()
     EGB_Component_RegisterSerializer("velocity_component",
         EGB_Component_VelocitySerializer, EGB_Component_VelocityUnserializer
     );
+    EGB_Component_RegisterSerializer("range_component",
+        EGB_Component_RangeSerializer, EGB_Component_RangeUnserializer
+    );
 }
