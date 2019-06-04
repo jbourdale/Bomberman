@@ -15,15 +15,16 @@ void generate_bonus(int sock, int x, int y)
 	int draw;
 
 	draw = floor(rand() % (100));
+	log_debug("DRAW: %d", draw);
 
 	if (draw <= 20) { // 20% of chance
-		create_range_bonus(sock, x, y);
+		create_bonus(sock, "range_bonus", x, y);
 	} else if (draw >= 80) { // 20% of chance
-		log_debug("create nb bomb bonus");
+		create_bonus(sock, "add_bomb_bonus", x, y);
 	}
 }
 
-void create_range_bonus(int sock, int x, int y)
+void create_bonus(int sock, char *bonus_name, int x, int y)
 {
 	EGB_Entity 					*range_bonus;
 	EGB_Component_Position 		*position;
@@ -31,9 +32,9 @@ void create_range_bonus(int sock, int x, int y)
 	EGB_Component_Collision 	*collision;
 	char 						*encoded;
 
-	log_debug("CREATE RANGE BONUS AT (%d, %d)", x, y);
+	log_debug("CREATE BONUS (%s) AT (%d, %d)", bonus_name, x, y);
 
-	range_bonus = EGBS_Entity_Create("range_bonus");
+	range_bonus = EGBS_Entity_Create(bonus_name);
 	position = EGB_Component_CreatePosition(
 		x * 100 + 350 + 25,
         y * 100 + 25,

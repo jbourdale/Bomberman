@@ -69,6 +69,11 @@ int destroy_wall(int sock, int x, int y)
     )
         return 1;
 
+    if (strcmp(wall->name, "bomb") == 0) {
+        log_debug("A ANOTHER BOMB HAVE BEEN DESTROYED");
+        exit(1);
+    }
+
     floor = create_floor(x, y);
     encoded_floor = EGB_Serializer_EncodeEntity(floor);
     broadcast_to_players(sock, encoded_floor, NULL);

@@ -156,6 +156,8 @@ void handle_walk_into_explosion(EGB_Entity *player)
                 EGB_Entity_Destroy(player);
             else if(strcmp(collide_with->name, "range_bonus") == 0)
                 collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
         }
         position->x -= velocity->x;
     }
@@ -169,6 +171,8 @@ void handle_walk_into_explosion(EGB_Entity *player)
                 EGB_Entity_Destroy(player);
             else if(strcmp(collide_with->name, "range_bonus") == 0)
                 collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
         }
         position->x -= velocity->x;
     }
@@ -183,6 +187,8 @@ void handle_walk_into_explosion(EGB_Entity *player)
                 EGB_Entity_Destroy(player);
             else if(strcmp(collide_with->name, "range_bonus") == 0)
                 collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
         }
         position->y -= velocity->y;
     }
@@ -196,6 +202,8 @@ void handle_walk_into_explosion(EGB_Entity *player)
                 EGB_Entity_Destroy(player);
             else if(strcmp(collide_with->name, "range_bonus") == 0)
                 collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
         }
         position->y -= velocity->y;
     }

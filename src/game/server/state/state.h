@@ -47,6 +47,6 @@ void create_explosion(int sock, int x, int y);
 
 // bonus.c
 void generate_bonus(int sock, int x, int y);
-void create_range_bonus(int sock, int x, int y);
+void create_bonus(int sock, char *bonus_name, int x, int y);
 
 #endif
