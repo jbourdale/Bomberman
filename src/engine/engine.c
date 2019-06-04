@@ -28,6 +28,8 @@ int                 EGB_Run()
     log_debug("EGB_Run");
 
     renderer = EGB_SDL_GetCurrentRenderer();
+    SDL_FlushEvent(SDL_MOUSEBUTTONDOWN);
+    SDL_FlushEvent(SDL_MOUSEBUTTONUP);
     SDL_SetRenderDrawColor(
         renderer,
         EGB_Background_Color.r,

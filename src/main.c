@@ -3,6 +3,7 @@
 
 void onNewEntityRecv(EGB_Entity *entity) {
     if (strcmp(entity->name, "player") == 0) {
+        entity->render = player_custom_renderer;
         add_idle_animations(entity);
         add_walking_animations(entity);
         EGB_Component_StartAnimation(entity, FRONT_IDLE_ANIMATION_ID);

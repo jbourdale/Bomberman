@@ -117,3 +117,65 @@ void 						    bind_my_player()
     EGB_Component_AddToEntity(players[i], keystroke_event);
     EGB_Component_AddToEntity(players[i], click_event);
 }
+
+void test(char **str)
+{
+    char *oui;
+
+    oui = strdup("oui");
+    *str = oui;
+}
+
+void player_custom_renderer(SDL_Renderer *renderer, EGB_Entity *player)
+{
+    EGB_Entity_DefaultRenderer(renderer, player);
+    handle_walk_into_explosion(player);
+}
+
+void handle_walk_into_explosion(EGB_Entity *player)
+{
+    EGB_Component_Position pos;
+    EGB_Component_Velocity  *velocity;
+    EGB_Component_Position  *position;
+    char *collide_with;
+
+    velocity = EGB_FindComponentByName(player, "velocity_component");
+    position = EGB_FindComponentByName(player, "position_component");
+    if (velocity == NULL || position == NULL) {
+        return;
+    }
+
+    if (velocity->x > 0) {
+        position->x += velocity->x;
+        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
+        {
+            EGB_Entity_Destroy(player);
+        }
+        position->x -= velocity->x;
+    }
+    else if (velocity->x < 0) {
+        position->x -= -velocity->x;
+        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
+        {
+            EGB_Entity_Destroy(player);
+        }
+        position->x += -velocity->x;
+    }
+
+    if (velocity->y > 0) {
+        position->y -= velocity->y;
+        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
+        {
+            EGB_Entity_Destroy(player);
+        }
+        position->y += velocity->y;
+    }
+    else if (velocity->y < 0) {
+        position->y += -velocity->y;
+        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
+        {
+            EGB_Entity_Destroy(player);
+        }
+        position->y -= -velocity->y;
+    }
+}

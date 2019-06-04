@@ -103,7 +103,7 @@ Animation_Description explosion_anim[] = {
 void on_explosion_over(EGB_Entity *explosion)
 {
     log_debug(NULL, explosion);
-    //EGB_Entity_Destroy(explosion);
+    EGB_Entity_Destroy(explosion);
 }
 
 void create_explosion_animation(EGB_Entity *explosion)
@@ -122,6 +122,6 @@ void create_explosion_animation(EGB_Entity *explosion)
     }
     frame_id = frame_id;
 
-    //EGB_Keyframe_Set_OnFinish(anim, frame_id, on_explosion_over);
+    EGB_Keyframe_Set_OnFinish(anim, frame_id, on_explosion_over);
     EGB_Component_AddToEntity(explosion, anim);
 }

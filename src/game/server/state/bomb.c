@@ -31,8 +31,6 @@ void handle_bomb_explosion(int sock, EGB_Entity *bomb)
 
     x = floor((position->x - 350)/ 100);
     y = floor(position->y / 100);
-    log_debug("BOMB POSITION (%d, %d) THAT MEAN IT'S ON (%d, %d)", position->x, position->y, x, y);
-    log_debug("x : %d, y : %d", x, y);
 
     for (i = 0; i < 5; i++) {
         tmpx = x + range[i][0];
@@ -52,20 +50,11 @@ void destroy_wall(int sock, int x, int y)
     EGB_Entity *wall, *floor;
     char    *encoded_floor;
 
-    log_debug("DESTROY WALL");
-
-    log_debug("LOOKING FOR WALL AT (%d, %d)", (x * 100) + 350, y * 100);
     wall = EGBS_FindEntityByPosition(
             (x * 100) + 350,
             y * 100,
             EGB_Position_Top
         );
-
-    if (wall == NULL) {
-        log_debug("WALL NOT FOUNDED HERE");
-    } else {
-        log_debug("WALL FOUNDED (%s)", wall->name);
-    }
 
     if (wall == NULL || strcmp(wall->name, "wall") != 0)
         return ;
@@ -92,12 +81,8 @@ void destroy_players(int sock, int x, int y)
         if (pos == NULL)
             continue;
 
-        log_debug("for player at (%d, %d)", pos->x, pos->y);
-
         player_x = floor(((pos->x + pos->width / 2) - 350) / 100);
         player_y = floor((pos->y + pos->height / 2) / 100);
-
-        log_debug("he is on case (%d, %d) and the bomb explosed on (%d, %d)", player_x, player_y, x, y);
 
         if (player_x == x && player_y == y)
         {
@@ -112,6 +97,7 @@ void create_explosion(int sock, int x, int y)
     char *encoded_explosion;
     EGB_Entity *explosion, *wall;
     EGB_Component_Position *position;
+    EGB_Component_Collision *collision;
     EGB_Component_Networkable *networkable;
 
     wall = EGBS_FindEntityByPosition(
@@ -133,9 +119,11 @@ void create_explosion(int sock, int x, int y)
         100,
         100
     );
+    collision = EGB_Component_CreateCollision(1);
     networkable = EGB_Component_CreateNetworkable();
 
     EGB_Component_AddToEntity(explosion, position);
+    EGB_Component_AddToEntity(explosion, collision);
     EGB_Component_AddToEntity(explosion, networkable);
 
     encoded_explosion = EGB_Serializer_EncodeEntity(explosion);

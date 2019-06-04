@@ -180,7 +180,8 @@ int EGB_Component_DestroyCollision(EGB_Entity *entity)
  */
 int                                 EGB_Collide(
     EGB_Entity                      *entity,
-    EGB_Component_Position          *collision
+    EGB_Component_Position          *collision,
+    char                            **oui
 ) {
 	EGB_Entity_Manager 				*manager;
 	EGB_Entity_Manager_Element      *manager_iterator;
@@ -188,6 +189,9 @@ int                                 EGB_Collide(
 	EGB_Component_Collision 		*manager_entity_collision, *entity_collision;
 	EGB_Component_Position 			*entity_position_comp, *tmp_entity_pos_comp;
 	SDL_Rect 						entity_collision_box, tmp_entity_collision;
+
+
+    // *oui = strdup("oui");
 
 	entity_position_comp = (EGB_Component_Position *)EGB_FindComponentByName(
 		entity,
@@ -197,37 +201,51 @@ int                                 EGB_Collide(
         entity,
         "collision_component"
     );
-	if (entity_position_comp == NULL || entity_collision == NULL || !entity_collision->active)
+	if (entity_position_comp == NULL || entity_collision == NULL || !entity_collision->active) {
+        log_debug("Entity doesn't have position or collision not active");
 		return 0;
+    }
 	EGB_Component_PositionToRect(entity_position_comp, &entity_collision_box);
 
 	manager = EGB_Manager_Collision(EGB_Manager_Retrieve);
 	manager_iterator = manager->first;
 	while (manager_iterator != NULL) {
+
 		manager_entity = manager_iterator->entity;
         if (manager_entity != entity) {
+
     		manager_entity_collision = (EGB_Component_Collision *)EGB_FindComponentByName(
     			manager_entity,
     			"collision_component"
     		);
+
     		if (manager_entity_collision != NULL && manager_entity_collision->active == 1) {
-    			tmp_entity_pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(
+    			
+                tmp_entity_pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(
     				manager_entity,
     				"position_component"
     			);
+
     			if (tmp_entity_pos_comp->z >= entity_position_comp->z)
                 {
     				EGB_Component_PositionToRect(
                         tmp_entity_pos_comp,
                         &tmp_entity_collision
                     );
+
     				if (SDL_HasIntersection(&entity_collision_box, &tmp_entity_collision))
                     {
+                        log_debug("COLLIDE, manager_entity : %p", manager_entity);
+                        log_debug("COLLIDE, manager_entity : %s", manager_entity->name);
+
+                        *oui = strdup(manager_entity->name);
+                        log_debug("oui after strdup(name) : %s", *oui);
     					// TODO use collide box
                         collision->x = tmp_entity_collision.x;
                         collision->y = tmp_entity_collision.y;
                         collision->width = tmp_entity_collision.w;
                         collision->height = tmp_entity_collision.h;
+                        log_debug("RETURN 1");
                         return 1;
     				}
     			}
@@ -235,5 +253,7 @@ int                                 EGB_Collide(
         }
 		manager_iterator = manager_iterator->next;
 	}
+
+    log_debug("RETURN 0");
 	return 0;
 }
