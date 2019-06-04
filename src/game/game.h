@@ -23,6 +23,7 @@ typedef struct 	Animation_Description_s
 #include "./player/player.h"
 #include "./bomb/bomb.h"
 #include "./bomb/animations/animations.h"
+#include "./bonus/bonus.h"
 #include "./player/animations/animations.h"
 #include "./menus/home/home.h"
 

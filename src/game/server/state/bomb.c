@@ -42,8 +42,9 @@ void handle_bomb_explosion(int sock, EGB_Entity *bomb)
             log_debug("tmpx : %d, tmpy : %d", tmpx, tmpy);
             create_explosion(sock, tmpx, tmpy);
             destroy_players(sock, tmpx, tmpy);
-            if (destroy_wall(sock, tmpx, tmpy))
+            if (destroy_wall(sock, tmpx, tmpy)) {
                 break;
+            }
         }
     }
     check_game_over(sock);
@@ -71,6 +72,9 @@ int destroy_wall(int sock, int x, int y)
     floor = create_floor(x, y);
     encoded_floor = EGB_Serializer_EncodeEntity(floor);
     broadcast_to_players(sock, encoded_floor, NULL);
+    if (strcmp(wall->name, "wall") == 0)
+        generate_bonus(sock, x, y);
+
     destroy_entity(sock, wall);
     return 1;
 }

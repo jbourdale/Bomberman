@@ -45,4 +45,8 @@ int destroy_wall(int sock, int x, int y);
 void destroy_players(int sock, int x, int y);
 void create_explosion(int sock, int x, int y);
 
+// bonus.c
+void generate_bonus(int sock, int x, int y);
+void create_range_bonus(int sock, int x, int y);
+
 #endif

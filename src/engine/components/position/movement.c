@@ -20,6 +20,7 @@ int EGB_Position_Movable(EGB_Entity *entity)
 {
 	EGB_Component_Collision	*entity_collide_comp;
 	EGB_Component_Position	*entity_position_comp, collide_pos_comp;
+	char 					*tmp;
 
 	entity_position_comp = (EGB_Component_Position *)EGB_FindComponentByName(
 		entity,
@@ -35,7 +36,7 @@ int EGB_Position_Movable(EGB_Entity *entity)
 	if (
 		entity_collide_comp != NULL &&
 		entity_collide_comp->active == 1 &&
-		EGB_Collide(entity, &collide_pos_comp)
+		EGB_Collide(entity, &collide_pos_comp, &tmp)
 	) {
 			return 0;
 	}

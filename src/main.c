@@ -13,6 +13,9 @@ void onNewEntityRecv(EGB_Entity *entity) {
     } else if (strcmp(entity->name, "explosion") == 0) {
         create_explosion_animation(entity);
         EGB_Component_StartAnimation(entity, EXPLOSION_ANIMATION_ID);
+    } else if (strcmp(entity->name, "range_bonus") == 0) {
+        create_range_bonus_animation(entity);
+        EGB_Component_StartAnimation(entity, RANGE_BONUS_ANIMATION_ID);
     }
 }
 

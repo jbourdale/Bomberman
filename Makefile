@@ -53,6 +53,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/game/player/animations/idle.c \
 			./src/game/player/animations/walking.c \
 			./src/game/player/animations/animations.c \
+			./src/game/bonus/bonus.c \
 			./src/game/bomb/bomb.c \
 			./src/game/bomb/animations/animations.c \
 			./src/game/menus/home/home.c \
@@ -66,6 +67,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/game/server/state/bomb.c \
 			./src/game/server/state/players.c \
 			./src/game/server/state/wall.c \
+			./src/game/server/state/bonus.c \
 			./src/game/server/requests/join.c \
 			./src/game/server/requests/requests.c \
 			./src/game/server/requests/entities.c \

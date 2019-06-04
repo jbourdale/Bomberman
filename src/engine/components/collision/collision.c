@@ -235,17 +235,13 @@ int                                 EGB_Collide(
 
     				if (SDL_HasIntersection(&entity_collision_box, &tmp_entity_collision))
                     {
-                        log_debug("COLLIDE, manager_entity : %p", manager_entity);
-                        log_debug("COLLIDE, manager_entity : %s", manager_entity->name);
 
                         *oui = strdup(manager_entity->name);
-                        log_debug("oui after strdup(name) : %s", *oui);
     					// TODO use collide box
                         collision->x = tmp_entity_collision.x;
                         collision->y = tmp_entity_collision.y;
                         collision->width = tmp_entity_collision.w;
                         collision->height = tmp_entity_collision.h;
-                        log_debug("RETURN 1");
                         return 1;
     				}
     			}
@@ -253,7 +249,5 @@ int                                 EGB_Collide(
         }
 		manager_iterator = manager_iterator->next;
 	}
-
-    log_debug("RETURN 0");
 	return 0;
 }
