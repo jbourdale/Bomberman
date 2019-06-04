@@ -18,7 +18,7 @@ EGB_Component_Networkable       *EGB_Component_CreateNetworkable()
     component->name = strdup("networkable_component");
     component->id = malloc(EGB_NETWORKABLE_ID_LENGTH + 10); // + 10 is to store pid
     component->id = EGB_Network_GenerateId(component->id);
-    // component->owner = 0;
+    component->owner = 0;
     return component;
 }
 

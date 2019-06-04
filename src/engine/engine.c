@@ -129,4 +129,7 @@ void EGB_RegisterSerializers()
     EGB_Component_RegisterSerializer("range_component",
         EGB_Component_RangeSerializer, EGB_Component_RangeUnserializer
     );
+    EGB_Component_RegisterSerializer("counter_component",
+        EGB_Component_CounterSerializer, EGB_Component_CounterUnserializer
+    );
 }

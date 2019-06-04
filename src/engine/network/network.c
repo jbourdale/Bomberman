@@ -41,6 +41,7 @@ int                 EGB_Network_Handle()
     memset(recvdata, '\0', 1000);
     if (recvfrom(EGB_Network_UDPsock, (char*)recvdata, 1000, 0, NULL, NULL) == -1)
         return EGB_NETWORK_ERROR;
+    log_debug("[CLIENT SIDE] RECIEVED : %s", recvdata);
     switch (recvdata[0]) {
         case EGB_EVENT_NETWORK_IDENTIFIER:
             EGB_Network_ParseEventRequest(recvdata);

@@ -14,6 +14,7 @@ typedef struct EGB_Component_s EGB_Component;
 typedef struct EGB_Component_Position_s EGB_Component_Position;
 typedef struct EGB_Component_Animation_s EGB_Component_Animation;
 typedef struct EGB_Component_Velocity_s EGB_Component_Velocity;
+typedef struct EGB_Component_Counter_s EGB_Component_Counter;
 typedef struct EGB_Component_Event_s EGB_Component_Event;
 typedef struct EGB_Component_Id_s EGB_Component_Id;
 typedef struct EGB_Component_Collision_s EGB_Component_Collision;
@@ -63,6 +64,7 @@ typedef struct EGB_Resource_List_s EGB_Resource_List;
 #include "./components/components.h"
 #include "./components/events/events.h"
 #include "./components/id/id.h"
+#include "./components/counter/counter.h"
 #include "./components/range/range.h"
 #include "./components/events/click/click.h"
 #include "./components/events/hover/hover.h"
