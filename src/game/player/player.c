@@ -137,7 +137,7 @@ void handle_walk_into_explosion(EGB_Entity *player)
     EGB_Component_Position pos;
     EGB_Component_Velocity  *velocity;
     EGB_Component_Position  *position;
-    char *collide_with;
+    EGB_Entity *collide_with;
 
     velocity = EGB_FindComponentByName(player, "velocity_component");
     position = EGB_FindComponentByName(player, "position_component");
@@ -145,37 +145,58 @@ void handle_walk_into_explosion(EGB_Entity *player)
         return;
     }
 
+
     if (velocity->x > 0) {
         position->x += velocity->x;
-        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
-        {
-            EGB_Entity_Destroy(player);
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
         }
         position->x -= velocity->x;
     }
     else if (velocity->x < 0) {
-        position->x -= -velocity->x;
-        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
-        {
-            EGB_Entity_Destroy(player);
+        position->x += velocity->x;
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
         }
-        position->x += -velocity->x;
+        position->x -= velocity->x;
     }
 
     if (velocity->y > 0) {
-        position->y -= velocity->y;
-        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
-        {
-            EGB_Entity_Destroy(player);
-        }
         position->y += velocity->y;
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
+        }
+        position->y -= velocity->y;
     }
     else if (velocity->y < 0) {
-        position->y += -velocity->y;
-        if (EGB_Collide(player, &pos, &collide_with) && strcmp(collide_with, "explosion") == 0)
-        {
-            EGB_Entity_Destroy(player);
+        position->y += velocity->y;
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
         }
-        position->y -= -velocity->y;
+        position->y -= velocity->y;
     }
 }

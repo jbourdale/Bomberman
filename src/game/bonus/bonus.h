@@ -14,5 +14,6 @@
 #define RANGE_BONUS_ANIMATION_ID 12345
 
 void create_range_bonus_animation(EGB_Entity *bonus);
+void collect_range_bonus(EGB_Entity *player, EGB_Entity *bonus);
 
 #endif

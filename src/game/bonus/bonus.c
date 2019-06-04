@@ -47,3 +47,16 @@ void create_range_bonus_animation(EGB_Entity *bonus)
 
 	EGB_Component_AddToEntity(bonus, anim);
 }
+
+
+void collect_range_bonus(EGB_Entity *player, EGB_Entity *bonus)
+{
+    EGB_Component_Range *range;
+
+    range = EGB_FindComponentByName(player, "range_component");
+    range->range += 1;
+
+    EGB_Network_DestroyEntity(bonus);
+    EGB_Entity_Destroy(bonus);
+
+}

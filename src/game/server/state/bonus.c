@@ -28,6 +28,7 @@ void create_range_bonus(int sock, int x, int y)
 	EGB_Entity 					*range_bonus;
 	EGB_Component_Position 		*position;
 	EGB_Component_Networkable 	*network;
+	EGB_Component_Collision 	*collision;
 	char 						*encoded;
 
 	log_debug("CREATE RANGE BONUS AT (%d, %d)", x, y);
@@ -41,9 +42,11 @@ void create_range_bonus(int sock, int x, int y)
         50
 	);
 	network = EGB_Component_CreateNetworkable();
+	collision = EGB_Component_CreateCollision(1);
 
 	EGB_Component_AddToEntity(range_bonus, position);
 	EGB_Component_AddToEntity(range_bonus, network);
+	EGB_Component_AddToEntity(range_bonus, collision);
 
 	encoded = EGB_Serializer_EncodeEntity(range_bonus);
     broadcast_to_players(sock, encoded, NULL);

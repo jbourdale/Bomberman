@@ -181,7 +181,7 @@ int EGB_Component_DestroyCollision(EGB_Entity *entity)
 int                                 EGB_Collide(
     EGB_Entity                      *entity,
     EGB_Component_Position          *collision,
-    char                            **oui
+    EGB_Entity                      **collide_with
 ) {
 	EGB_Entity_Manager 				*manager;
 	EGB_Entity_Manager_Element      *manager_iterator;
@@ -235,8 +235,8 @@ int                                 EGB_Collide(
 
     				if (SDL_HasIntersection(&entity_collision_box, &tmp_entity_collision))
                     {
-
-                        *oui = strdup(manager_entity->name);
+                        log_debug("collide with : %s", manager_entity->name);
+                        *collide_with = manager_entity;
     					// TODO use collide box
                         collision->x = tmp_entity_collision.x;
                         collision->y = tmp_entity_collision.y;
