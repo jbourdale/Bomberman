@@ -28,6 +28,8 @@ void handle_bomb_explosion(int sock, EGB_Entity *bomb)
     if (position == NULL || range_comp == NULL)
         return ;
 
+    destroy_entity(sock, bomb);
+
     x = floor((position->x - 350)/ 100);
     y = floor(position->y / 100);
 
@@ -71,7 +73,8 @@ int destroy_wall(int sock, int x, int y)
 
     if (strcmp(wall->name, "bomb") == 0) {
         log_debug("A ANOTHER BOMB HAVE BEEN DESTROYED");
-        exit(1);
+        handle_bomb_explosion(sock, wall);
+        // exit(1);
     }
 
     floor = create_floor(x, y);
