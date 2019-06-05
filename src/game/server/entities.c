@@ -13,6 +13,7 @@ void handle_entities_request(int sock, char *raw, player_t *player)
 	handle_entity_destruction(sock, strdup(raw));
 	EGBS_Serializer_DecodeEntities(strdup(raw));
     broadcast_to_players(sock, raw, player);
+    check_game_over(sock);
 }
 
 

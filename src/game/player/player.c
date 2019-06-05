@@ -27,6 +27,10 @@ void player_on_destroy(EGB_Entity *entity) {
     EGB_Network_DestroyEntity(entity);
 }
 
+void on_player_destroy(EGB_Entity *player) {
+    EGB_Network_DestroyEntity(player);
+}
+
 /**
  * On player keystroke
  */
@@ -43,7 +47,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
         log_debug("LEFT TRIGGERED, repeat : %d", e.key.repeat);
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
             log_debug("START");
-            EGB_Component_Velocity_SetX(entity, -4);
+            EGB_Component_Velocity_SetX(entity, -5);
             EGB_Component_StartAnimation(entity, LEFT_WALKING_ANIMATION_ID);
         } else if (e.type == SDL_KEYUP) {
             log_debug("STOP");
@@ -54,7 +58,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
     }
     else if (e.key.keysym.sym == SDLK_RIGHT) {
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
-            EGB_Component_Velocity_SetX(entity, 4);
+            EGB_Component_Velocity_SetX(entity, 5);
             EGB_Component_StartAnimation(entity, RIGHT_WALKING_ANIMATION_ID);
         } else if (e.type == SDL_KEYUP) {
             EGB_Component_Velocity_SetX(entity, 0);
@@ -64,7 +68,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
     }
     else if (e.key.keysym.sym == SDLK_UP) {
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
-            EGB_Component_Velocity_SetY(entity, -4);
+            EGB_Component_Velocity_SetY(entity, -5);
             EGB_Component_StartAnimation(entity, BACK_WALKING_ANIMATION_ID);
         } else if (e.type == SDL_KEYUP) {
             EGB_Component_Velocity_SetY(entity, 0);
@@ -74,7 +78,7 @@ void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
     }
     else if (e.key.keysym.sym == SDLK_DOWN) {
         if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
-            EGB_Component_Velocity_SetY(entity, 4);
+            EGB_Component_Velocity_SetY(entity, 5);
             EGB_Component_StartAnimation(entity, FRONT_WALKING_ANIMATION_ID);
         } else if (e.type == SDL_KEYUP) {
             EGB_Component_Velocity_SetY(entity, 0);

@@ -3,6 +3,7 @@
 
 void onNewEntityRecv(EGB_Entity *entity) {
     if (strcmp(entity->name, "player") == 0) {
+        entity->on_destroy = on_player_destroy;
         entity->render = player_custom_renderer;
         add_idle_animations(entity);
         add_walking_animations(entity);
@@ -45,7 +46,7 @@ int main() {
     // init_map();
     // init_player();
     setup_home_menu();
-    EGB_SetFramerate(60);
+    EGB_SetFramerate(40);
 
     EGB_Run();
 

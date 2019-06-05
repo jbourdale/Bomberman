@@ -40,7 +40,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
     y = 100;
     switch(id) {
         case 1:
-            x = 100;
+            x = 900;
             y = 900;
             break;
         case 2:
@@ -48,7 +48,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
             y = 100;
             break;
         case 3:
-            x = 900;
+            x = 100;
             y = 900;
             break;
         default:
@@ -142,7 +142,7 @@ void check_game_over(int sock)
         players++;
     }
 
-    if (i < 1)
+    if (i < 2)
     {
         broadcast_event_to_players(sock, "END");
     }
