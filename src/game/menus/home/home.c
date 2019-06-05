@@ -67,7 +67,8 @@ void create_background() {
 
 void on_join_btn_click () {
     log_debug("on join btn click");
-    start_game();
+    create_join_modal();
+    //start_game();
 }
 
 void create_join_btn() {

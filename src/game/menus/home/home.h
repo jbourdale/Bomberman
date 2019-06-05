@@ -18,7 +18,7 @@ void on_host_btn_click();
 void create_background();
 void create_host_btn();
 
-
 void create_start_countdown();
 
+void create_join_modal();
 #endif
