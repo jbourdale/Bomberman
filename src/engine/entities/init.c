@@ -35,7 +35,6 @@ EGB_Entity        *EGB_Entity_Create(char *name)
 
 EGB_Entity        *EGB_Entity_Copy(EGB_Entity *entity)
 {
-    log_debug("copy_entity");
     EGB_Entity    *entity_copy;
 
     entity_copy = malloc(sizeof(EGB_Entity));
@@ -45,7 +44,6 @@ EGB_Entity        *EGB_Entity_Copy(EGB_Entity *entity)
     entity_copy->render = entity->render;
     entity_copy->displayed = 1;
 
-    log_debug("entity copyed : %p", entity_copy);
     return entity_copy;
 }
 
@@ -63,8 +61,6 @@ int                 EGB_Entity_Destroy(EGB_Entity *entity)
         return 1;
     if (entity->name == NULL)
         return 1;
-
-    log_debug("EGB_Entity_Destroy : %s", entity->name);
 
     if (strcmp(entity->name, "fps_indicator") == 0)
         return 1;

@@ -32,6 +32,8 @@ void *run_server(void *arg) {
         recvfrom(server_sock, (char *)request, REQUEST_MAX_LENGTH, MSG_WAITALL,
             (struct sockaddr *) &clientaddr, &addrlen);
 
+        log_debug("SERVER RECIEVED : %s", request);
+
         parse_request(server_sock, request, clientaddr);
 
         // sendto(server_sock, (const char *)request, strlen(request), 0,

@@ -85,12 +85,10 @@ EGB_Entity_Manager                            *EGB_Observable_Event_KeyStroke(Ui
         entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
         entry->next = NULL;
-        log_debug("will add entry (%p) to keystroke manager(%p)", entry, manager);
 
         if (manager == NULL) {
             manager = malloc(sizeof(EGB_Entity_Manager));
             manager->first = entry;
-            log_debug("create keystroke manager : %p", manager);
             return NULL;
         }
         if (manager->first == NULL) {
@@ -101,19 +99,16 @@ EGB_Entity_Manager                            *EGB_Observable_Event_KeyStroke(Ui
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL)
             entity_iterator = entity_iterator->next;
-        log_debug("add entry(%p) to %p", entry, entity_iterator);
         entity_iterator->next = entry;
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
-        log_debug("Deleting from keystroke manager");
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL || manager == NULL)
             return NULL;
 
-        log_debug("Deleting(%p) from keystroke manager", entity);
 
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;

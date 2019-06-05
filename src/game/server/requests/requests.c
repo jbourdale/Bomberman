@@ -26,9 +26,17 @@ int         broadcast_to_players(int sock, char *payload, player_t *player)
     player_t    **players;
     int         i;
 
+    log_debug("SERVER BROADCAST : %s", payload);
+
     players = get_players();
     i = 0;
-    while (players[i] != NULL && players[i] != player) {
+    while (players[i] != NULL) {
+        
+        if (players[i] == player) {
+            i++;
+            continue;
+        }
+
         sendto(
             sock,
             payload,
@@ -39,6 +47,7 @@ int         broadcast_to_players(int sock, char *payload, player_t *player)
         );
         i++;
     }
+    log_debug("MESSAGE BROADCASTED TO %d PLAYERS", i);
     return 0;
 }
 

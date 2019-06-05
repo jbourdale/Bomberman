@@ -72,7 +72,7 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
         components++;
     }
     payload[strlen(payload) - 1] = '#';
-    // log_debug("payload returned : %s", payload);
+    log_debug("Encoded entity : %s", payload);
     return payload;
 }
 
@@ -184,6 +184,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
 
     i = 0;
     while(serializedComponents[i] != NULL) {
+        log_debug("handling serializedComponents[%d] : %s", i, serializedComponents[i]);
         token = strtok(strdup(serializedComponents[i]), ";"); // retrieving the component name
 
         iterator = EGB_Components_Serializers->first;
@@ -197,6 +198,7 @@ EGB_Entity                          *EGB_Serializer_DecodeEntity(char *raw)
                 EGB_Component_AddToEntity(entity, recievedComp);
             }
             else {
+                log_debug("replacing component : %s", ((EGB_Component *)recievedComp)->name);
                 EGB_Entity_ReplaceComponent(entity, recievedComp);
             }
 
