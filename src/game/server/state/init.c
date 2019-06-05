@@ -12,15 +12,15 @@
 
 int base_map[11][11] = {
     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-    {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+    {3, 0, 0, 1, 1, 1, 1, 1, 0, 0, 3},
     {3, 0, 2, 1, 2, 1, 2, 1, 2, 0, 3},
-    {3, 0, 1, 1, 1, 1, 1, 1, 1, 0, 3},
+    {3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3},
+    {3, 1, 2, 1, 2, 1, 2, 1, 2, 1, 3},
+    {3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3},
+    {3, 1, 2, 1, 2, 1, 2, 1, 2, 1, 3},
+    {3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3},
     {3, 0, 2, 1, 2, 1, 2, 1, 2, 0, 3},
-    {3, 0, 1, 1, 1, 1, 1, 1, 1, 0, 3},
-    {3, 0, 2, 1, 2, 1, 2, 1, 2, 0, 3},
-    {3, 0, 1, 1, 1, 1, 1, 1, 1, 0, 3},
-    {3, 0, 2, 1, 2, 1, 2, 1, 2, 0, 3},
-    {3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3},
+    {3, 0, 0, 1, 1, 1, 1, 1, 0, 0, 3},
     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
 };
 
@@ -62,7 +62,7 @@ EGB_Entity                      *init_new_player(int id, struct sockaddr_in clie
     collision_comp = EGB_Component_CreateCollision(1);
     id_comp = EGB_Component_CreateId(id);
     nb_bomb = EGB_Component_CreateCounter(0, 1);
-    range_comp = EGB_Component_CreateRange(2);
+    range_comp = EGB_Component_CreateRange(1);
     velocity_comp = EGB_Component_CreateVelocity(0, 0);
     networkable_comp = EGB_Component_CreateNetworkable();
     asprintf(&addr, "%s:%d", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));

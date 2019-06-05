@@ -58,6 +58,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/game/bomb/bomb.c \
 			./src/game/bomb/animations/animations.c \
 			./src/game/menus/home/home.c \
+			./src/game/menus/home/start.c \
 			./src/game/server/init.c \
 			./src/game/server/parsing.c \
 			./src/game/server/entities.c \

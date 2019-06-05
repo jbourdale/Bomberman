@@ -74,7 +74,6 @@ int destroy_wall(int sock, int x, int y)
     if (strcmp(wall->name, "bomb") == 0) {
         log_debug("A ANOTHER BOMB HAVE BEEN DESTROYED");
         handle_bomb_explosion(sock, wall);
-        // exit(1);
     }
 
     floor = create_floor(x, y);

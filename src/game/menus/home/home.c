@@ -25,6 +25,7 @@ void    setup_home_menu() {
         }
     }
 
+    create_background();
     create_join_btn();
     create_host_btn();
 }
@@ -35,18 +36,33 @@ void on_game_end()
     setup_home_menu();
 }
 
-void on_game_start(char *data) {
-    log_debug("ON GAME START : %s", data);
+void on_game_start() {
     EGB_Network_RegisterEvent("END", on_game_end);
-    bind_my_player();
+    create_start_countdown();
 }
 
 void start_game() {
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_join"));
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_host"));
+    EGB_Entity_Destroy(EGB_Entity_FindFirstByName("background"));
 
     EGB_Network_RegisterEvent("START", on_game_start);
     EGB_Network_SendEvent("JOIN");
+}
+
+void create_background() {
+    EGB_Entity  *background;
+    EGB_Component_Position *pos;
+    EGB_Component_Texture  *texture;
+
+    EGB_Set_BackgroundColor(255, 155, 201, 255);
+
+    background = EGB_Entity_Create("background");
+    pos = EGB_Component_CreatePosition(0, 0, EGB_Position_Background, 1920, 1080);
+    texture = EGB_Component_CreateTexture("menus/home.png");
+
+    EGB_Component_AddToEntity(background, pos);
+    EGB_Component_AddToEntity(background, texture);
 }
 
 void on_join_btn_click () {
@@ -62,18 +78,40 @@ void create_join_btn() {
 
     btn = EGB_Entity_Create("btn_join");
     click_event = EGB_Component_CreateEventClick(on_join_btn_click);
-    pos_comp = EGB_Component_CreatePosition(500, 300, EGB_Position_Classic, 1000, 100);
-    texture_comp = EGB_Component_CreateTexture("btn_join.png");
+    pos_comp = EGB_Component_CreatePosition(1072, 811, EGB_Position_Classic, 182, 190);
+    texture_comp = EGB_Component_CreateTexture("menus/btn_join.png");
 
     EGB_Component_AddToEntity(btn, click_event);
     EGB_Component_AddToEntity(btn, pos_comp);
     EGB_Component_AddToEntity(btn, texture_comp);
 }
 
+void on_start_game_btn_click(EGB_Entity *btn) {
+    EGB_Entity_Destroy(btn);
+    EGB_Network_SendEvent("START");
+}
+
 void on_host_btn_click() {
+    EGB_Entity *start_game_btn;
+    EGB_Component_Position *pos;
+    EGB_Component_Texture *texture;
+    EGB_Component_Event   *click;
+
+
     log_debug("on host btn click");
     start_server_thread();
+
     start_game();
+    
+    start_game_btn = EGB_Entity_Create("start_game_btn");
+    pos = EGB_Component_CreatePosition(816, 390, EGB_Position_AlwaysOnTop, 287, 300);
+    texture = EGB_Component_CreateTexture("menus/start_game.png");
+    click = EGB_Component_CreateEventClick(on_start_game_btn_click);
+
+    EGB_Component_AddToEntity(start_game_btn, pos);
+    EGB_Component_AddToEntity(start_game_btn, click);
+    EGB_Component_AddToEntity(start_game_btn, texture);
+
 }
 
 void create_host_btn() {
@@ -84,8 +122,8 @@ void create_host_btn() {
 
     btn = EGB_Entity_Create("btn_host");
     click_event = EGB_Component_CreateEventClick(on_host_btn_click);
-    pos_comp = EGB_Component_CreatePosition(500, 500, EGB_Position_Classic, 1000, 100);
-    texture_comp = EGB_Component_CreateTexture("btn_host.png");
+    pos_comp = EGB_Component_CreatePosition(670, 811, EGB_Position_Classic, 182, 190);
+    texture_comp = EGB_Component_CreateTexture("menus/btn_host.png");
 
     EGB_Component_AddToEntity(btn, click_event);
     EGB_Component_AddToEntity(btn, pos_comp);
