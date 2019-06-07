@@ -38,9 +38,6 @@ int main() {
     EGB_FPSIndicator_Display(0);
     EGB_Network_OnEntityUpdated(onEntityUpdate);
     EGB_Network_OnNewEntityRecv(onNewEntityRecv);
-    EGB_Network_Configuration config= { "127.0.0.1", 1337 };
-    EGB_Network_SetConfiguration(config);
-    EGB_Network_Enable();
     EGB_Init();
 
     // init_map();

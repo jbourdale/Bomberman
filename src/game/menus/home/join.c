@@ -11,24 +11,53 @@
 
 void on_join_text_input(EGB_Entity *modal, SDL_Event e)
 {
+    EGB_Component_Textual *textual;
+    EGB_Component_Position *pos;
     char *input;
-    char key;
 
     if (e.type == SDL_KEYUP)
         return;
 
-    input = (char *)SDL_GetKeyName(e.key.keysym.sym);
-    key = input[0];
-
-    if (key < '0' || key > '9')
-        return;
-
     log_debug("Text input on : %s > %s", modal->name, SDL_GetKeyName(e.key.keysym.sym));
+    textual = EGB_FindComponentByName(modal, "textual_component");
+    pos = EGB_FindComponentByName(modal, "position_component");
+
+    input = (char *)SDL_GetKeyName(e.key.keysym.sym);
+    if (strcmp(input, "Backspace") == 0) {
+        textual->text[strlen(textual->text) - 1] = '\0';
+        pos->width = strlen(textual->text) * 50;
+        return;
+    } else if (strcmp(input, "Space") == 0) {
+        pos->width = strlen(textual->text) * 50;
+        textual->text = strcat(textual->text, ".");
+        return;
+    }
+
+    if (input[0] < '0' || input[0] > '9')
+        return ;
+
+    textual->text = strcat(textual->text, input);
+    pos->width = strlen(textual->text) * 50;
 }
 
-void on_join_start_btn_click()
+void on_join_start_btn_click(EGB_Entity *start_btn)
 {
+    EGB_Entity *text_input, *modal;
+    EGB_Component_Textual *textual;
 
+    text_input = EGB_Entity_FindFirstByName("join_text_input");
+    modal = EGB_Entity_FindFirstByName("join_modal");
+    textual = EGB_FindComponentByName(text_input, "textual_component");
+
+    EGB_Network_Configuration config= { textual->text, 1337 };
+    EGB_Network_SetConfiguration(config);
+    EGB_Network_Enable();
+
+    EGB_Entity_Destroy(text_input);
+    EGB_Entity_Destroy(modal);
+    EGB_Entity_Destroy(start_btn);
+
+    start_game();
 }
 
 void create_join_start_btn() {
@@ -52,18 +81,32 @@ void create_join_modal()
 	EGB_Entity 				*modal;
 	EGB_Component_Position 	*pos;
 	EGB_Component_Texture 	*texture;
-	EGB_Component_Event 	*keyboard;
 
 	modal = EGB_Entity_Create("join_modal");
 	pos = EGB_Component_CreatePosition(496, 169, EGB_Position_Top, 927, 742);
 	texture = EGB_Component_CreateTexture("menus/join.png");
-	keyboard = EGB_Component_CreateEventKeyStroke(on_join_text_input);
 
 	EGB_Component_AddToEntity(modal, pos);
 	EGB_Component_AddToEntity(modal, texture);
-	EGB_Component_AddToEntity(modal, keyboard);
 
 	create_join_start_btn();
+    create_text_input();
+}
+
+void create_text_input() {
+    EGB_Entity  *text_input;
+    EGB_Component_Position *pos;
+    EGB_Component_Textual *textual;
+	EGB_Component_Event 	*keyboard;
+
+    text_input = EGB_Entity_Create("join_text_input");
+	keyboard = EGB_Component_CreateEventKeyStroke(on_join_text_input);
+    pos = EGB_Component_CreatePosition(600, 500, EGB_Position_AlwaysOnTop, 0, 100);
+    textual = EGB_Component_CreateTextual("", "spacefont.ttf");
+
+    EGB_Component_AddToEntity(text_input, keyboard);
+    EGB_Component_AddToEntity(text_input, pos);
+    EGB_Component_AddToEntity(text_input, textual);
 }
 
 

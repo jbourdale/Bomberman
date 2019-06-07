@@ -60,7 +60,7 @@ void EGB_FPSIndicator_KeyStrokeEventHandler(EGB_Entity *entity, SDL_Event e)
 void                        EGB_FPSIndicator_Renderer(SDL_Renderer *renderer, EGB_Entity *entity)
 {
     SDL_Rect                screen_position;
-    EGB_Component_Position    *pos_comp;
+    EGB_Component_Position  *pos_comp;
     char                    *text;
     float                   fps;
     TTF_Font                *font;

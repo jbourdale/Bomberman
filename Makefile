@@ -40,6 +40,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/events/hover/hover.c \
 			./src/engine/components/events/click/click.c \
 			./src/engine/components/texture/texture.c \
+			./src/engine/components/textual/textual.c \
 			./src/engine/components/networkable/networkable.c \
 			./src/engine/components/networkable/serializer/serializer.c \
 			./src/engine/network/network.c \

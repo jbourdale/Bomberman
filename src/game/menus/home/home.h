@@ -16,9 +16,11 @@ void on_join_btn_click();
 void create_join_btn();
 void on_host_btn_click();
 void create_background();
+void start_game();
 void create_host_btn();
 
 void create_start_countdown();
 
 void create_join_modal();
+void create_text_input();
 #endif

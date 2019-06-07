@@ -51,9 +51,9 @@ int     EGB_Resource_SetFontSize(char *resource_path, int size)
 
 /**
  * @brief      Return the SDL resource (SDL_Texture, TTF_Font...) associated to the resource path
- * 
- * @note       For a root dir `./resources/` and a file `./resources/myImg.png`, 
- * the resource_path will be `myImg.png` 
+ *
+ * @note       For a root dir `./resources/` and a file `./resources/myImg.png`,
+ * the resource_path will be `myImg.png`
  *
  * @param      resource_path  The resource path
  *

@@ -60,6 +60,7 @@ void EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, EGB_Entity *entity);
 void EGB_Render_Entities();
 void EGB_Render_EntityTexture(SDL_Renderer*, EGB_Entity*, EGB_Component_Position*);
 void EGB_Render_EntityAnimation(SDL_Renderer*, EGB_Entity *, EGB_Component_Animation**, EGB_Component_Position*);
+void EGB_Render_EntityTextual(SDL_Renderer*, EGB_Entity*, EGB_Component_Position*, EGB_Component_Textual*);
 
 /*
  * manager.c
