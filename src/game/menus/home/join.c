@@ -9,9 +9,21 @@
 #include "home.h"
 #include "../../game.h"
 
-void on_join_text_input()
+void on_join_text_input(EGB_Entity *modal, SDL_Event e)
 {
+    char *input;
+    char key;
 
+    if (e.type == SDL_KEYUP)
+        return;
+
+    input = (char *)SDL_GetKeyName(e.key.keysym.sym);
+    key = input[0];
+
+    if (key < '0' || key > '9')
+        return;
+
+    log_debug("Text input on : %s > %s", modal->name, SDL_GetKeyName(e.key.keysym.sym));
 }
 
 void on_join_start_btn_click()
