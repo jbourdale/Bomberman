@@ -69,7 +69,7 @@ void on_bomb_explose(EGB_Entity *bomb) {
     EGB_Entity_Destroy(bomb);
 }
 
-void create_bomb_animation(EGB_Entity *bomb) 
+void create_bomb_animation(EGB_Entity *bomb)
 {
 	EGB_Component_Animation *anim;
 	int 	i, frame_id;
@@ -120,7 +120,6 @@ void create_explosion_animation(EGB_Entity *explosion)
         frame_id = EGB_Animation_AddKeyframe(anim, explosion_anim[i].duration, explosion_anim[i].x, explosion_anim[i].y);
         i++;
     }
-    frame_id = frame_id;
 
     EGB_Keyframe_Set_OnFinish(anim, frame_id, on_explosion_over);
     EGB_Component_AddToEntity(explosion, anim);
