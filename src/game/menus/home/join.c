@@ -49,7 +49,8 @@ void on_join_start_btn_click(EGB_Entity *start_btn)
     modal = EGB_Entity_FindFirstByName("join_modal");
     textual = EGB_FindComponentByName(text_input, "textual_component");
 
-    EGB_Network_Configuration config= { textual->text, 1337 };
+    EGB_Network_Configuration config= { strdup(textual->text), 1337 };
+    log_debug("SET CONFIGURATION ON JOIN START BTN CLICK");
     EGB_Network_SetConfiguration(config);
     EGB_Network_Enable();
 

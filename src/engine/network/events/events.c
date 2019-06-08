@@ -52,9 +52,9 @@ void EGB_Network_ParseEventRequest(char *payload)
 	char *event_name;
 	char *event_data;
 
-	strtok(payload, EGB_NETWORK_VALUE_SEPARATOR);
-	event_name = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
-	event_data = strtok(NULL, EGB_NETWORK_VALUE_SEPARATOR);
+	strtok_r(payload, EGB_NETWORK_VALUE_SEPARATOR, &payload);
+	event_name = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &payload);
+	event_data = strtok_r(NULL, EGB_NETWORK_VALUE_SEPARATOR, &payload);
 
 	EGB_Network_CallEventCallback(event_name, event_data);
 }

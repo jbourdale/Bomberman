@@ -140,8 +140,8 @@ void                        *EGB_Component_CollisionUnserializer(char *raw)
     if (raw == NULL)
         return NULL;
 
-    token = strtok(raw, ";");
-    token = strtok(NULL, ";");
+    token = strtok_r(raw, ";", &raw);
+    token = strtok_r(NULL, ";", &raw);
     return EGB_Component_CreateCollision(atoi(token));
 }
 

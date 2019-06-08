@@ -71,9 +71,9 @@ void                        *EGB_Component_VelocityUnserializer(char *raw)
         log_debug("no raw data to parse");
         return NULL;
     }
-    strtok(raw, ";");
-    x = strtok(NULL, ";");
-    y = strtok(NULL, ";");
+    strtok_r(raw, ";", &raw);
+    x = strtok_r(NULL, ";", &raw);
+    y = strtok_r(NULL, ";", &raw);
 
     return EGB_Component_CreateVelocity(atoi(x), atoi(y));
 }

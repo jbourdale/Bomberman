@@ -47,16 +47,16 @@ void    *EGB_Component_PositionUnserializer(char *raw)
     if (raw == NULL)
         return NULL;
 
-    token = strtok(raw, ";");
-    token = strtok(NULL, ";");
+    token = strtok_r(raw, ";", &raw);
+    token = strtok_r(NULL, ";", &raw);
     x = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     y = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     z = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     w = atoi(token);
-    token = strtok(NULL, ";");
+    token = strtok_r(NULL, ";", &raw);
     h = atoi(token);
 
     comp = EGB_Component_CreatePosition(x, y, z, w, h);

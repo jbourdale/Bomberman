@@ -47,9 +47,9 @@ void                        *EGB_Component_CounterUnserializer(char *raw)
         log_debug("no raw data to parse");
         return NULL;
     }
-    strtok(raw, ";");
-    max = strtok(NULL, ";");
-    counter = strtok(NULL, ";");
+    strtok_r(raw, ";", &raw);
+    max = strtok_r(NULL, ";", &raw);
+    counter = strtok_r(NULL, ";", &raw);
 
     return EGB_Component_CreateCounter(atoi(counter), atoi(max));
 }

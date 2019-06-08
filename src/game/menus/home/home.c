@@ -15,6 +15,10 @@ void    setup_home_menu() {
     EGB_Entity_Manager          *manager;
     EGB_Entity_Manager_Element  *iterator;
 
+    log_debug("on host btn click");
+    EGB_Network_Enable();
+
+
     // destroy all entities
     manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
     if (manager != NULL) {
@@ -45,6 +49,8 @@ void start_game() {
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_join"));
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("btn_host"));
     EGB_Entity_Destroy(EGB_Entity_FindFirstByName("background"));
+
+    log_debug("START GAME");
 
     EGB_Network_RegisterEvent("START", on_game_start);
     EGB_Network_SendEvent("JOIN");
@@ -88,6 +94,7 @@ void create_join_btn() {
 }
 
 void on_start_game_btn_click(EGB_Entity *btn) {
+
     EGB_Entity_Destroy(btn);
     EGB_Network_SendEvent("START");
 }
@@ -98,10 +105,10 @@ void on_host_btn_click() {
     EGB_Component_Texture *texture;
     EGB_Component_Event   *click;
 
-
-    log_debug("on host btn click");
+    EGB_Network_Configuration config= { "127.0.0.1", 1337 };
+    EGB_Network_SetConfiguration(config);
+    
     start_server_thread();
-
     start_game();
     
     start_game_btn = EGB_Entity_Create("start_game_btn");

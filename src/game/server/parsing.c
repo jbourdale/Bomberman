@@ -12,9 +12,11 @@ int             parse_event_requests(int sock, char *event_request, player_t *pl
     char        *token;
 
     log_debug("event request : %s", event_request);
-    token = strtok(event_request, "\n");
-    token = strtok(event_request, "|");
-    token = strtok(NULL, "|");
+    // token = strtok_r(event_request, "\n", &event_request);
+    token = strtok_r(event_request, "|", &event_request);
+    log_debug("token : %s", token);
+    token = strtok_r(NULL, "|", &event_request);
+    log_debug("token : %s", token);
 
     if (strcmp(token, "JOIN") == 0) {
         join_game(sock, player);
@@ -39,12 +41,12 @@ int parse_request(int sock, char *payload, struct sockaddr_in clientaddr) {
 
     switch (payload[0]) {
         case EGB_EVENT_NETWORK_IDENTIFIER:
-            parse_event_requests(sock, payload, player);
+            parse_event_requests(sock, strdup(payload), player);
             break;
         case EGB_ERROR_NETWORK_IDENTIFIER:
             break;
         case EGB_ENTITY_NETWORK_IDENTIFIER:
-            handle_entities_request(sock, payload, player);
+            handle_entities_request(sock, strdup(payload), player);
             break;
         default:
             log_debug("RECV UNPARSABLE DATA");

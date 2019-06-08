@@ -43,8 +43,8 @@ void                        *EGB_Component_RangeUnserializer(char *raw)
         log_debug("no raw data to parse");
         return NULL;
     }
-    token = strtok(raw, ";");
-    token = strtok(NULL, ";");
+    token = strtok_r(raw, ";", &raw);
+    token = strtok_r(NULL, ";", &raw);
 
     return EGB_Component_CreateRange(atoi(token));
 }

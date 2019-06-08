@@ -38,7 +38,7 @@ int EGB_Position_Movable(EGB_Entity *entity)
 		entity_collide_comp->active == 1 &&
 		EGB_Collide(entity, &collide_pos_comp, &tmp)
 	) {
-			return 0;
+		return 0;
 	}
 	return 1;
 }
