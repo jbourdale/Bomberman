@@ -7,6 +7,8 @@
 */
 #include "entities.h"
 
+SDL_Color   EGB_Color_White = {255, 255, 255, 255};
+
 /**
  * @brief      Default renderer for entities
  *
@@ -22,8 +24,10 @@ void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, E
 {
     EGB_Component_Animation   **animation_comps;
     EGB_Component_Position    *pos_comp;
+    EGB_Component_Textual     *textual_comp;
 
     if (!entity->displayed) {
+        log_debug("Entity not displayed (%s)", entity->name);
         return ;
     }
 
@@ -33,14 +37,19 @@ void                        EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, E
         return ;
     }
 
+    EGB_Entity_HandleVelocity(entity);
+
     animation_comps = (EGB_Component_Animation **)EGB_FindComponentsByName(
         entity,
         "animation_component"
     );
-    if (animation_comps == NULL) {
-        EGB_Render_EntityTexture(renderer, entity, pos_comp);
-    } else {
+    textual_comp = EGB_FindComponentByName(entity, "textual_component");
+    if (animation_comps != NULL) {
         EGB_Render_EntityAnimation(renderer, entity, animation_comps, pos_comp);
+    } else if (textual_comp != NULL) {
+        EGB_Render_EntityTextual(renderer, entity, pos_comp, textual_comp);
+    } else {
+        EGB_Render_EntityTexture(renderer, entity, pos_comp);
     }
 }
 
@@ -64,7 +73,8 @@ void                        EGB_Render_Entities()
     while (manager_iterator != NULL)
     {
         entity = manager_iterator->entity;
-        entity->render(renderer, entity);
+        if (entity->render != NULL)
+            entity->render(renderer, entity);
         manager_iterator = manager_iterator->next;
         i++;
     }
@@ -178,4 +188,29 @@ void                        EGB_Render_EntityTexture(
 
     EGB_Component_PositionToRect(pos_comp, &position_on_screen);
     SDL_RenderCopy(renderer, comp->texture, NULL, &position_on_screen);
+}
+
+
+void                        EGB_Render_EntityTextual(
+    SDL_Renderer            *renderer,
+    EGB_Entity              *entity,
+    EGB_Component_Position  *pos_comp,
+    EGB_Component_Textual   *textual
+) {
+    SDL_Rect                screen_position;
+
+    pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
+    if (pos_comp == NULL) {
+        return ;
+    }
+    EGB_Component_PositionToRect(pos_comp, &screen_position);
+
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(
+        textual->font_resource, textual->text, EGB_Color_White
+    );
+    SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+
+    SDL_RenderCopy(renderer, message, NULL, &screen_position);
+    SDL_DestroyTexture(message);
+    SDL_FreeSurface(surfaceMessage);
 }

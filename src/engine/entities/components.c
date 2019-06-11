@@ -35,7 +35,9 @@ int             EGB_Component_AddToEntity(EGB_Entity *entity, void *component)
     entity->components = realloc(entity->components, (nb_comp + 2) * sizeof(void *));
     entity->components[nb_comp] = component;
     entity->components[nb_comp + 1] = NULL;
-    EGB_Observables_RegisterEntity(entity, (EGB_Component *)component);
+
+    if (!entity->server_side)
+        EGB_Observables_RegisterEntity(entity, (EGB_Component *)component);
     return 0;
 }
 
@@ -112,30 +114,23 @@ int EGB_Entity_ReplaceComponent(EGB_Entity *entity, EGB_Component *component)
 
     if (component == NULL || entity == NULL)
         return 1;
-    log_debug("replace component %s in entity : %s", component->name, entity->name);
 
     tmp_comp = entity->components;
     if (entity->components == NULL)
         return 1;
     nb_comp = 0;
     while(*tmp_comp != NULL) {
-        log_debug("here");
         EGB_Component *comp = (*tmp_comp);
         if (comp == NULL)
             continue;
-        log_debug("comp->name : %s, component->name : %s", comp->name, component->name);
         if (strcmp(comp->name, component->name) == 0) {
-            log_debug("comp->name == component->name (%s)", component->name);
-            log_debug("nb_comp : %d", nb_comp);
             break;
         }
         tmp_comp++;
         nb_comp++;
     }
 
-    log_debug("nb_comp : %d", nb_comp);
-    EGB_Component *comp = entity->components[nb_comp];
-    log_debug("entity component at %d : %s", nb_comp, comp->name);
+    // EGB_Component *comp = entity->components[nb_comp];
     entity->components[nb_comp] = component;
 
     return 0;

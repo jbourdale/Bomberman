@@ -7,12 +7,12 @@
 */
 
 #include "../../engine/engine.h"
-#include "../map/map.h"
+#include "../server/server.h"
 
 /**
- * MARIO HANDLER CLICK
+ * PLAYER HANDLER CLICK
  */
-void on_mario_click(EGB_Entity *entity, SDL_Event e)
+void on_player_click(EGB_Entity *entity, SDL_Event e)
 {
     log_debug("on click on : %s", entity->name);
     log_debug("e : %p", &e);
@@ -20,90 +20,195 @@ void on_mario_click(EGB_Entity *entity, SDL_Event e)
 }
 
 void player_on_destroy(EGB_Entity *entity) {
+    EGB_Component_Networkable *networkable;
+
+    networkable = EGB_FindComponentByName(entity, "networkable_component");
+    log_debug("PLAYER DESTROYED, NETWORK OWNER : %d", networkable->owner);
     EGB_Network_DestroyEntity(entity);
 }
 
-void on_explosion(EGB_Entity *entity) {
-    log_debug("BOMB EXPLOSED : %s", entity->name);
-}
-void on_start(EGB_Entity *entity) {
-    log_debug("BOMB PLACED : %s", entity->name);
+void on_player_destroy(EGB_Entity *player) {
+    EGB_Network_DestroyEntity(player);
 }
 
 /**
- * On mario keystroke
+ * On player keystroke
  */
-void on_mario_keystroke(EGB_Entity *entity) {
-    EGB_Component_Position    *pos_comp;
-    const Uint8             *key_state = SDL_GetKeyboardState(NULL);
+void on_player_keystroke(EGB_Entity *entity, SDL_Event e) {
+    // EGB_Component_Position    *pos_comp;
+    // const Uint8             *key_state = SDL_GetKeyboardState(NULL);
 
-    key_state = SDL_GetKeyboardState(NULL);
-    pos_comp = (EGB_Component_Position*)EGB_FindComponentByName(entity, "position_component");
-    if(key_state[SDL_SCANCODE_LEFT]) {
-        EGB_Position_Move_Left(entity, 10);
+    if (e.type == SDL_KEYUP) {
+        EGB_Component_Velocity_SetX(entity, 0);
+        EGB_Component_Velocity_SetY(entity, 0);
+    }
+
+    if (e.key.keysym.sym == SDLK_LEFT) {
+        log_debug("LEFT TRIGGERED, repeat : %d", e.key.repeat);
+        if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+            log_debug("START");
+            EGB_Component_Velocity_SetX(entity, -5);
+            EGB_Component_StartAnimation(entity, LEFT_WALKING_ANIMATION_ID);
+        } else if (e.type == SDL_KEYUP) {
+            log_debug("STOP");
+            EGB_Component_Velocity_SetX(entity, 0);
+            EGB_Component_StartAnimation(entity, LEFT_IDLE_ANIMATION_ID);
+        }
         EGB_Network_SendEntity(entity);
     }
-    if (key_state[SDL_SCANCODE_RIGHT]) {
-        EGB_Position_Move_Right(entity, 10);
+    else if (e.key.keysym.sym == SDLK_RIGHT) {
+        if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+            EGB_Component_Velocity_SetX(entity, 5);
+            EGB_Component_StartAnimation(entity, RIGHT_WALKING_ANIMATION_ID);
+        } else if (e.type == SDL_KEYUP) {
+            EGB_Component_Velocity_SetX(entity, 0);
+            EGB_Component_StartAnimation(entity, RIGHT_IDLE_ANIMATION_ID);
+        }
         EGB_Network_SendEntity(entity);
     }
-    if (key_state[SDL_SCANCODE_UP]) {
-        EGB_Position_Move_Up(entity, 10);
+    else if (e.key.keysym.sym == SDLK_UP) {
+        if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+            EGB_Component_Velocity_SetY(entity, -5);
+            EGB_Component_StartAnimation(entity, BACK_WALKING_ANIMATION_ID);
+        } else if (e.type == SDL_KEYUP) {
+            EGB_Component_Velocity_SetY(entity, 0);
+            EGB_Component_StartAnimation(entity, BACK_IDLE_ANIMATION_ID);
+        }
         EGB_Network_SendEntity(entity);
     }
-    if (key_state[SDL_SCANCODE_DOWN]) {
-        EGB_Position_Move_Down(entity, 10);
+    else if (e.key.keysym.sym == SDLK_DOWN) {
+        if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+            EGB_Component_Velocity_SetY(entity, 5);
+            EGB_Component_StartAnimation(entity, FRONT_WALKING_ANIMATION_ID);
+        } else if (e.type == SDL_KEYUP) {
+            EGB_Component_Velocity_SetY(entity, 0);
+            EGB_Component_StartAnimation(entity, FRONT_IDLE_ANIMATION_ID);
+        }
         EGB_Network_SendEntity(entity);
     }
-    if (key_state[SDL_SCANCODE_SPACE])
-    {
-        EGB_Entity *player = EGB_Entity_Create("bomb");
-        EGB_Component_Position *pos_comp2 = EGB_Component_CreatePosition(
-            pos_comp->x, pos_comp->y, EGB_Position_Background, 75, 75);
-        EGB_Component_Animation *animation_comp = EGB_Component_CreateAnimation(
-            "bomb.png", 0, 24, 24, 0
-        );
-        int start_keyframe = EGB_Animation_AddKeyframe(animation_comp, 400, 0, 0);
-        EGB_Keyframe_Set_OnStart(animation_comp, start_keyframe, on_start);
-        EGB_Animation_AddKeyframe(animation_comp, 400, 1, 0);
-        EGB_Animation_AddKeyframe(animation_comp, 400, 2, 0);
-        EGB_Animation_AddKeyframe(animation_comp, 200, 3, 0);
-        EGB_Animation_AddKeyframe(animation_comp, 200, 0, 4);
-        EGB_Animation_AddKeyframe(animation_comp, 200, 0, 3);
-        EGB_Animation_AddKeyframe(animation_comp, 200, 0, 2);
-        int keyframe_id = EGB_Animation_AddKeyframe(animation_comp, 200, 0, 1);
-        EGB_Keyframe_Set_OnFinish(animation_comp, keyframe_id, bomb_explose);
-        EGB_Component_AddToEntity(player, (void *)pos_comp2);
-        EGB_Component_AddToEntity(player, (void *)animation_comp);
-        EGB_Component_StartAnimation(player, 0);
+    else if (e.key.keysym.sym == SDLK_SPACE && e.type == SDL_KEYDOWN) {
+        place_bomb(entity);
     }
 }
 
 
-void 						init_player()
+void 						    bind_my_player()
 {
-	EGB_Entity 				   *mario;
-	EGB_Component_Position     *pos_comp;
-	EGB_Component_Texture 	   *texture_comp;
-	EGB_Component_Event 	   *keystroke_event, *click_event;
-    EGB_Component_Collision    *collision_comp;
-    EGB_Component_Networkable  *networkable_comp;
+	EGB_Entity 				    **players;
+    int                         i;
+    EGB_Component_Networkable   *network_comp;
+	EGB_Component_Event 	    *keystroke_event, *click_event;
 
-	mario = EGB_Entity_Create("player");
-    mario->on_destroy = player_on_destroy;
-    log_debug("entity mario : %p", mario);
-    keystroke_event = EGB_Component_CreateEventKeyStroke(on_mario_keystroke);
-    click_event = EGB_Component_CreateEventClick(on_mario_click);
-    pos_comp = EGB_Component_CreatePosition(125, 125, EGB_Position_Classic, 50, 50);
-    texture_comp = EGB_Component_CreateTexture("Mario.png");
-    texture_comp = EGB_Component_CreateTexture("Mario.png");
-    collision_comp = EGB_Component_CreateCollision(1);
-    networkable_comp = EGB_Component_CreateNetworkable();
+	players = EGB_Entity_FindByName("player");
+    if (players == NULL)
+        return ;
 
-    EGB_Component_AddToEntity(mario, keystroke_event);
-    EGB_Component_AddToEntity(mario, click_event);
-    EGB_Component_AddToEntity(mario, pos_comp);
-    EGB_Component_AddToEntity(mario, texture_comp);
-    EGB_Component_AddToEntity(mario, collision_comp);
-    EGB_Component_AddToEntity(mario, networkable_comp);
+    i = 0;
+    while (players[i] != NULL) {
+        network_comp = EGB_FindComponentByName(players[i], "networkable_component");
+        if (network_comp == NULL)
+            continue;
+        if (network_comp->owner)
+            break;
+        i++;
+    }
+    log_debug("[CLIENT SIDE] BIND MY PLAYER > MY PLAYER : %d", i);
+
+    players[i]->on_destroy = player_on_destroy;
+    keystroke_event = EGB_Component_CreateEventKeyStroke(on_player_keystroke);
+    click_event = EGB_Component_CreateEventClick(on_player_click);
+
+    EGB_Component_AddToEntity(players[i], keystroke_event);
+    EGB_Component_AddToEntity(players[i], click_event);
+}
+
+void test(char **str)
+{
+    char *oui;
+
+    oui = strdup("oui");
+    *str = oui;
+}
+
+void player_custom_renderer(SDL_Renderer *renderer, EGB_Entity *player)
+{
+    EGB_Entity_DefaultRenderer(renderer, player);
+    handle_walk_into_explosion(player);
+}
+
+void handle_walk_into_explosion(EGB_Entity *player)
+{
+    EGB_Component_Position pos;
+    EGB_Component_Velocity  *velocity;
+    EGB_Component_Position  *position;
+    EGB_Entity *collide_with;
+
+    velocity = EGB_FindComponentByName(player, "velocity_component");
+    position = EGB_FindComponentByName(player, "position_component");
+    if (velocity == NULL || position == NULL) {
+        return;
+    }
+
+
+    if (velocity->x > 0) {
+        position->x += velocity->x;
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
+        }
+        position->x -= velocity->x;
+    }
+    else if (velocity->x < 0) {
+        position->x += velocity->x;
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
+        }
+        position->x -= velocity->x;
+    }
+
+    if (velocity->y > 0) {
+        position->y += velocity->y;
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
+        }
+        position->y -= velocity->y;
+    }
+    else if (velocity->y < 0) {
+        position->y += velocity->y;
+
+        if (EGB_Collide(player, &pos, &collide_with)) { 
+            if (collide_with != NULL)
+                log_debug("COLLIDE WITH IN PLAYER.C : %s", collide_with->name);
+            if (strcmp(collide_with->name, "explosion") == 0)
+                EGB_Entity_Destroy(player);
+            else if(strcmp(collide_with->name, "range_bonus") == 0)
+                collect_range_bonus(player, collide_with);
+            else if(strcmp(collide_with->name, "add_bomb_bonus") == 0)
+                collect_add_bomb_bonus(player, collide_with);
+        }
+        position->y -= velocity->y;
+    }
 }

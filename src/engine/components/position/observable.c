@@ -55,6 +55,10 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
             manager->first = entry;
             return NULL;
         }
+        if (manager->first == NULL) {
+            manager->first = entry;
+            return NULL;
+        }
         // Add entry to manager
         entity_iterator = manager->first;
         while (
@@ -81,15 +85,11 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
-        log_debug("Deleting from position manager");
-        EGB_Debug_DisplayPositionManager();
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL || manager == NULL)
             return NULL;
-
-        log_debug("Deleting(%p) from position manager", entity);
 
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;
@@ -105,7 +105,6 @@ EGB_Entity_Manager                            *EGB_Observable_Position(Uint32 fl
         else {
             entity_iterator_prev->next = entity_iterator->next;
         }
-        EGB_Debug_DisplayPositionManager();
         return NULL;
     }
     return NULL;

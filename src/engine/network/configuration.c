@@ -22,6 +22,7 @@ int     EGB_Network_IsEnabled() {
 
 EGB_Network_Configuration		EGB_Network_Config;
 void	EGB_Network_SetConfiguration(EGB_Network_Configuration config) {
+	log_debug("SET CONFIGURATION %s:%d", config.ip, config.port);
 	EGB_Network_Config = config;
 }
 
@@ -48,5 +49,5 @@ void    EGB_Network_OnNewEntityRecv(void (*callback)(EGB_Entity *))
 
 void EGB_Network_TriggerOnNewEntityRecvCallback(EGB_Entity *entity)
 {
-    return EGB_OnEntityUpdatedCallback(entity);
+    return EGB_OnNewEntityRecvCallback(entity);
 }

@@ -1,3 +1,11 @@
+/*
+** entities.h for  in /Bomberman/bourda_j
+**
+** Made by BOURDALE Jules
+** Login   <bourda_j@etna-alternance.net>
+**
+*/
+
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
@@ -13,6 +21,9 @@ typedef struct          EGB_Entity_s {
     // GRAPHICAL
     void                (*render)(SDL_Renderer* renderer, EGB_Entity *self);
     int                 displayed;
+
+    // Tell if the entity is server side or not (if it need to be rendered or not)
+    int                 server_side;
 }                       EGB_Entity;
 
 typedef struct EGB_Entity_Manager_Element_s EGB_Entity_Manager_Element;
@@ -49,12 +60,14 @@ void EGB_Entity_DefaultRenderer(SDL_Renderer *renderer, EGB_Entity *entity);
 void EGB_Render_Entities();
 void EGB_Render_EntityTexture(SDL_Renderer*, EGB_Entity*, EGB_Component_Position*);
 void EGB_Render_EntityAnimation(SDL_Renderer*, EGB_Entity *, EGB_Component_Animation**, EGB_Component_Position*);
+void EGB_Render_EntityTextual(SDL_Renderer*, EGB_Entity*, EGB_Component_Position*, EGB_Component_Textual*);
 
 /*
- * observable.c
+ * manager.c
  **/
 EGB_Entity_Manager    *EGB_Manager_Entity(Uint32 flags, ...);
 EGB_Entity            *EGB_Entity_FindFirstByName(char *name);
+EGB_Entity            **EGB_Entity_FindByName(char *name);
 void                  EGB_Debug_DisplayManager();
 
 #define EGB_Manager_Retrieve            0x0001

@@ -10,6 +10,7 @@
 #define __NETWORKABLE_H__
 
 #include "../../engine.h"
+#include <pthread.h>
 
 #define EGB_NETWORKABLE_ID_LENGTH   64
 
@@ -17,6 +18,8 @@ typedef struct          EGB_Component_Networkable_s
 {
     char                *name;
     char                *id;
+    int                 owner;
+    char  				*owner_addr;
 }                       EGB_Component_Networkable;
 
 EGB_Component_Networkable   *EGB_Component_CreateNetworkable();

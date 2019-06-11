@@ -93,6 +93,10 @@ EGB_Entity_Manager              *EGB_Observable_Event_Click(Uint32 flags, ...)
             manager->first = entry;
             return NULL;
         }
+        if (manager->first == NULL) {
+            manager->first = entry;
+            return NULL;
+        }
         // Add entry to manager
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL)

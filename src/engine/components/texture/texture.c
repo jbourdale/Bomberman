@@ -1,5 +1,5 @@
 /*
-** sprite.c for  in /Bomberman/bourda_j
+** texture.c for  in /Bomberman/bourda_j
 **
 ** Made by BOURDALE Jules
 ** Login   <bourda_j@etna-alternance.net>
@@ -30,8 +30,6 @@ char    *EGB_Component_TextureSerializer(void **comp)
     EGB_Component_Texture *component, *cpy;
     char *payload;
 
-    log_debug("EGB_Component_TextureSerializer");
-
     component = (EGB_Component_Texture *)*comp;
 
     cpy = malloc(sizeof(EGB_Component_Texture));
@@ -47,14 +45,12 @@ void                        *EGB_Component_TextureUnserializer(char *raw)
 {
     char    *token;
 
-    log_debug("EGB_Component_TextureUnserializer");
-
     if (raw == NULL) {
         log_debug("no raw data to parse");
         return NULL;
     }
-    token = strtok(raw, ";");
-    token = strtok(NULL, ";");
+    token = strtok_r(raw, ";", &raw);
+    token = strtok_r(NULL, ";", &raw);
 
     return EGB_Component_CreateTexture(token);
 }

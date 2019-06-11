@@ -28,6 +28,8 @@ int                 EGB_Run()
     log_debug("EGB_Run");
 
     renderer = EGB_SDL_GetCurrentRenderer();
+    SDL_FlushEvent(SDL_MOUSEBUTTONDOWN);
+    SDL_FlushEvent(SDL_MOUSEBUTTONUP);
     SDL_SetRenderDrawColor(
         renderer,
         EGB_Background_Color.r,
@@ -38,8 +40,8 @@ int                 EGB_Run()
     quit = 0;
     while (quit == 0)
     {
-        EGB_Network_Handle();
         EGB_InitFPSRegulation();
+        EGB_Network_Handle();
         quit = EGB_Event_Handle();
         EGB_Render_Entities();
         EGB_RegulateFPS();
@@ -84,17 +86,6 @@ int EGB_Init()
  */
 int                             EGB_Quit()
 {
-    EGB_Entity_Manager          *manager;
-    EGB_Entity_Manager_Element  *iterator;
-
-    manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
-    if (manager != NULL) {
-        iterator = manager->first;
-        while (iterator != NULL) {
-            EGB_Entity_Destroy(iterator->entity);
-            iterator = iterator->next;
-        }
-    }
     SDL_DestroyRenderer(EGB_SDL_GetCurrentRenderer());
     SDL_DestroyWindow(SDL_GL_GetCurrentWindow());
     TTF_Quit();
@@ -128,5 +119,17 @@ void EGB_RegisterSerializers()
     );
     EGB_Component_RegisterSerializer("collision_component",
         EGB_Component_CollisionSerializer, EGB_Component_CollisionUnserializer
+    );
+    EGB_Component_RegisterSerializer("id_component",
+        EGB_Component_IdSerializer, EGB_Component_IdUnserializer
+    );
+    EGB_Component_RegisterSerializer("velocity_component",
+        EGB_Component_VelocitySerializer, EGB_Component_VelocityUnserializer
+    );
+    EGB_Component_RegisterSerializer("range_component",
+        EGB_Component_RangeSerializer, EGB_Component_RangeUnserializer
+    );
+    EGB_Component_RegisterSerializer("counter_component",
+        EGB_Component_CounterSerializer, EGB_Component_CounterUnserializer
     );
 }

@@ -25,6 +25,9 @@ void                *EGB_FindComponentByName(EGB_Entity *entity, char *name)
         return NULL;
 
     comp = (EGB_Component **)entity->components;
+    if (comp == NULL || *comp == NULL)
+        return NULL;
+    
     nb_comp = 0;
     while(comp != NULL && *comp++)
         nb_comp++;

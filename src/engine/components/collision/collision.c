@@ -49,6 +49,10 @@ EGB_Entity_Manager              *EGB_Manager_Collision(Uint32 flags, ...)
             manager->first = entry;
             return NULL;
         }
+        if (manager->first == NULL) {
+            manager->first = entry;
+            return NULL;
+        }
         entity_iterator = manager->first;
         while (entity_iterator->next != NULL)
             entity_iterator = entity_iterator->next;
@@ -56,14 +60,12 @@ EGB_Entity_Manager              *EGB_Manager_Collision(Uint32 flags, ...)
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
-        log_debug("Deleting from collision manager");
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL || manager == NULL)
             return NULL;
 
-        log_debug("Deleting(%p) from collision manager", entity);
 
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;
@@ -120,8 +122,6 @@ char    *EGB_Component_CollisionSerializer(void **comp)
     if (comp == NULL || *comp == NULL)
         return "";
 
-    log_debug("EGB_Component_CollisionSerializer");
-
     component = (EGB_Component_Collision*)*comp;
 
     cpy = malloc(sizeof(EGB_Component_Collision));
@@ -136,13 +136,12 @@ char    *EGB_Component_CollisionSerializer(void **comp)
 void                        *EGB_Component_CollisionUnserializer(char *raw)
 {
     char    *token;
-    log_debug("EGB_Component_CollisionUnserializer");
 
     if (raw == NULL)
         return NULL;
 
-    token = strtok(raw, ";");
-    token = strtok(NULL, ";");
+    token = strtok_r(raw, ";", &raw);
+    token = strtok_r(NULL, ";", &raw);
     return EGB_Component_CreateCollision(atoi(token));
 }
 
@@ -181,7 +180,8 @@ int EGB_Component_DestroyCollision(EGB_Entity *entity)
  */
 int                                 EGB_Collide(
     EGB_Entity                      *entity,
-    EGB_Component_Position          *collision
+    EGB_Component_Position          *collision,
+    EGB_Entity                      **collide_with
 ) {
 	EGB_Entity_Manager 				*manager;
 	EGB_Entity_Manager_Element      *manager_iterator;
@@ -189,6 +189,9 @@ int                                 EGB_Collide(
 	EGB_Component_Collision 		*manager_entity_collision, *entity_collision;
 	EGB_Component_Position 			*entity_position_comp, *tmp_entity_pos_comp;
 	SDL_Rect 						entity_collision_box, tmp_entity_collision;
+
+
+    // *oui = strdup("oui");
 
 	entity_position_comp = (EGB_Component_Position *)EGB_FindComponentByName(
 		entity,
@@ -198,33 +201,42 @@ int                                 EGB_Collide(
         entity,
         "collision_component"
     );
-    log_debug("ENTITY COLLISION : %d", entity_collision->active);
-	if (entity_position_comp == NULL || entity_collision == NULL || !entity_collision->active)
+	if (entity_position_comp == NULL || entity_collision == NULL || !entity_collision->active) {
+        log_debug("Entity doesn't have position or collision not active");
 		return 0;
+    }
 	EGB_Component_PositionToRect(entity_position_comp, &entity_collision_box);
 
 	manager = EGB_Manager_Collision(EGB_Manager_Retrieve);
 	manager_iterator = manager->first;
 	while (manager_iterator != NULL) {
+
 		manager_entity = manager_iterator->entity;
         if (manager_entity != entity) {
+
     		manager_entity_collision = (EGB_Component_Collision *)EGB_FindComponentByName(
     			manager_entity,
     			"collision_component"
     		);
+
     		if (manager_entity_collision != NULL && manager_entity_collision->active == 1) {
-    			tmp_entity_pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(
+    			
+                tmp_entity_pos_comp = (EGB_Component_Position *)EGB_FindComponentByName(
     				manager_entity,
     				"position_component"
     			);
+
     			if (tmp_entity_pos_comp->z >= entity_position_comp->z)
                 {
     				EGB_Component_PositionToRect(
                         tmp_entity_pos_comp,
                         &tmp_entity_collision
                     );
+
     				if (SDL_HasIntersection(&entity_collision_box, &tmp_entity_collision))
                     {
+                        log_debug("collide with : %s", manager_entity->name);
+                        *collide_with = manager_entity;
     					// TODO use collide box
                         collision->x = tmp_entity_collision.x;
                         collision->y = tmp_entity_collision.y;

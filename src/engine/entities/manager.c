@@ -39,7 +39,6 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         if (entity == NULL) {
             return NULL;
         }
-        log_debug("Adding entity %s (%p) to manager", entity->name, entity);
 
         entry = malloc(sizeof(EGB_Entity_Manager_Element));
         entry->entity = entity;
@@ -50,27 +49,25 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
             manager->first = entry;
             return NULL;
         }
+        if (manager->first == NULL) {
+            manager->first = entry;
+            return NULL;
+        }
         // Add entry to manager
         entity_iterator = manager->first;
-        log_debug("entity_iterator : %p", entity_iterator);
         while (entity_iterator->next != NULL) {
             entity_iterator = entity_iterator->next;
-            log_debug("iterator over manager");
         }
-        log_debug("adding it to manager");
         entity_iterator->next = entry;
         return NULL;
     }
     if (flags & EGB_Manager_Delete) {
-        log_debug("Deleting from manager");
-        EGB_Debug_DisplayManager();
         va_start(argp, flags);
         entity = va_arg(argp, EGB_Entity*);
         va_end(argp);
         if (entity == NULL || manager == NULL)
             return NULL;
 
-        log_debug("Deleting(%p) from manager", entity);
 
         entity_iterator_prev = NULL;
         entity_iterator = manager->first;
@@ -86,7 +83,6 @@ EGB_Entity_Manager                            *EGB_Manager_Entity(Uint32 flags, 
         else {
             entity_iterator_prev->next = entity_iterator->next;
         }
-        EGB_Debug_DisplayManager();
         return NULL;
     }
     return NULL;
@@ -133,4 +129,38 @@ EGB_Entity                        *EGB_Entity_FindFirstByName(char *name)
         manager_entry = manager_entry->next;
     }
     return NULL;
+}
+
+/**
+ * @brief      Return entities for the given name
+ *
+ * @param      name  The entity name to search for
+ *
+ * @return     array terminated by NULL. NULL if not found.
+ */
+EGB_Entity                        **EGB_Entity_FindByName(char *name)
+{
+    EGB_Entity                    **founded;
+    int                           nb_founded;
+    EGB_Entity_Manager            *manager;
+    EGB_Entity_Manager_Element    *manager_entry;
+
+    manager = EGB_Manager_Entity(EGB_Manager_Retrieve);
+    if (manager == NULL)
+        return NULL;
+    manager_entry = manager->first;
+
+    nb_founded = 0;
+    founded = NULL;
+    while(manager_entry != NULL)
+    {
+        if (strcmp(manager_entry->entity->name, name) == 0) {
+            founded = realloc(founded, (nb_founded + 2) * sizeof(void *));
+            founded[nb_founded] = manager_entry->entity;
+            founded[nb_founded + 1] = NULL;
+            nb_founded++;
+        }
+        manager_entry = manager_entry->next;
+    }
+    return founded;
 }

@@ -17,11 +17,19 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/entities/manager.c \
 			./src/engine/entities/components.c \
 			./src/engine/entities/render.c \
+			./src/engine/server/entities/init.c \
+			./src/engine/server/entities/serializer.c \
+			./src/engine/server/manager/manager.c \
 			./src/engine/sdl/sprite/sprite.c \
 			./src/engine/sdl/sdl.c \
 			./src/engine/components/fpsrate/fpsrate.c \
 			./src/engine/components/components.c \
 			./src/engine/components/animation/animation.c \
+			./src/engine/components/id/id.c \
+			./src/engine/components/counter/counter.c \
+			./src/engine/components/range/range.c \
+			./src/engine/components/velocity/velocity.c \
+			./src/engine/components/velocity/movement.c \
 			./src/engine/components/animation/keyframe.c \
 			./src/engine/components/collision/collision.c \
 			./src/engine/components/position/observable.c \
@@ -32,18 +40,41 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/engine/components/events/hover/hover.c \
 			./src/engine/components/events/click/click.c \
 			./src/engine/components/texture/texture.c \
+			./src/engine/components/textual/textual.c \
 			./src/engine/components/networkable/networkable.c \
 			./src/engine/components/networkable/serializer/serializer.c \
 			./src/engine/network/network.c \
+			./src/engine/network/events/events.c \
 			./src/engine/network/configuration.c \
 			./src/engine/tools/entities/fps_indicator/fps_indicator.c \
 			./src/engine/events/events.c \
 			./src/engine/framerate/framerate.c \
 			./src/engine/log/log.c \
 			./src/engine/engine.c \
-			./src/game/map/map.c \
 			./src/game/player/player.c \
-			./src/game/menus/home/home.c
+			./src/game/player/animations/idle.c \
+			./src/game/player/animations/walking.c \
+			./src/game/player/animations/animations.c \
+			./src/game/bonus/bonus.c \
+			./src/game/bomb/bomb.c \
+			./src/game/bomb/animations/animations.c \
+			./src/game/menus/home/home.c \
+			./src/game/menus/home/join.c \
+			./src/game/menus/home/start.c \
+			./src/game/server/init.c \
+			./src/game/server/parsing.c \
+			./src/game/server/entities.c \
+			./src/game/server/server.c \
+			./src/game/server/player.c \
+			./src/game/server/state/state.c \
+			./src/game/server/state/init.c \
+			./src/game/server/state/bomb.c \
+			./src/game/server/state/players.c \
+			./src/game/server/state/wall.c \
+			./src/game/server/state/bonus.c \
+			./src/game/server/requests/join.c \
+			./src/game/server/requests/requests.c \
+			./src/game/server/requests/entities.c \
 
 
 SRC 	= 	$(BASE_SRC)\
@@ -58,7 +89,7 @@ OBJ		=	$(SRC:.c=.o)
 
 TEST_OBJ =	$(TEST_SRC:.c=.o)
 
-CFLAGS	+=	-W -Wall -Werror -g
+CFLAGS	+=	-W -Wall -Werror -g -D_GNU_SOURCE
 
 LDFLAGS	=	`sdl2-config --cflags --libs` -lSDL2_image -lSDL2_ttf -lpthread -lm
 

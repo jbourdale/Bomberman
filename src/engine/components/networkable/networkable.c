@@ -12,22 +12,22 @@ EGB_Component_Networkable       *EGB_Component_CreateNetworkable()
 {
     EGB_Component_Networkable   *component;
 
-    log_debug("EGB_Component_CreateNetworkable");
+    // log_debug("EGB_Component_CreateNetworkable");
 
     component = malloc(sizeof(EGB_Component_FPSRate));
     component->name = strdup("networkable_component");
     component->id = malloc(EGB_NETWORKABLE_ID_LENGTH + 10); // + 10 is to store pid
     component->id = EGB_Network_GenerateId(component->id);
+    component->owner = 0;
     return component;
 }
 
 char                    *EGB_Network_GenerateId(char *str)
 {
-    char                *pid; // Used to generate different ID between different clients
+    char                *pid, *thread_id; // Used to generate different ID between different clients
     size_t       length = EGB_NETWORKABLE_ID_LENGTH;
     static const char   charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJK...";
 
-    log_debug("EGB_Network_GenerateId");
     --length;
     for (size_t n = 0; n < length; n++) {
         int key = rand() % (int) (sizeof(charset) - 1);
@@ -37,6 +37,9 @@ char                    *EGB_Network_GenerateId(char *str)
     pid = malloc(10);
     sprintf(pid, "%d", getpid());
     str = strcat(str, pid);
+    thread_id = malloc(10);
+    sprintf(thread_id, "%d", (unsigned int)pthread_self());
+    str = strcat(str, thread_id);
     return str;
 }
 
@@ -68,7 +71,7 @@ int                         EGB_Component_DestroyNetworkable(EGB_Entity *entity)
 {
     EGB_Component_Position    *comp;
 
-    log_debug("EGB_Component_DestroyNetworkable");
+    // log_debug("EGB_Component_DestroyNetworkable");
     comp = (EGB_Component_Position *)EGB_FindComponentByName(entity, "networkable_component");
     if (comp == NULL)
         return 1;

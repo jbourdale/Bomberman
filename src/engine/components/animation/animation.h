@@ -11,6 +11,9 @@
 
 #include "../../engine.h"
 
+#define EGB_Animation_Looping 		1
+#define EGB_Animation_NotLooping 	0
+
 typedef struct EGB_Animation_Keyframe_s EGB_Animation_Keyframe;
 
 typedef struct 		EGB_Animation_Keyframe_s
@@ -48,6 +51,7 @@ typedef struct 		EGB_Component_Animation_s
 EGB_Component_Animation	*EGB_Component_CreateAnimation(char*, int, int, int, int);
 int 					EGB_Component_StartAnimation(EGB_Entity *, int);
 int						EGB_Component_StopAnimation(EGB_Entity *, int);
+int 					EGB_Component_FindRunningAnimation(EGB_Entity *entity);
 
 // keyframe.c
 int 	EGB_Animation_AddKeyframe(EGB_Component_Animation *, int, int, int);
