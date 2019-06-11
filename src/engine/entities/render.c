@@ -205,7 +205,9 @@ void                        EGB_Render_EntityTextual(
     }
     EGB_Component_PositionToRect(pos_comp, &screen_position);
 
-    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(textual->font_resource, textual->text, EGB_Color_White);
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(
+        textual->font_resource, textual->text, EGB_Color_White
+    );
     SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
 
     SDL_RenderCopy(renderer, message, NULL, &screen_position);

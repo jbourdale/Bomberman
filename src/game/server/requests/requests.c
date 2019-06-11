@@ -67,7 +67,9 @@ int                            send_state(int sock, player_t *player)
     {
         networkable_component = NULL;
         if (strcmp(iterator->entity->name, "player") == 0) {
-            networkable_component = EGB_FindComponentByName(iterator->entity, "networkable_component");
+            networkable_component = EGB_FindComponentByName(
+                iterator->entity, "networkable_component"
+            );
             if(strcmp(networkable_component->owner_addr, player->s_addr) == 0) {
                 networkable_component->owner = 1;
             }

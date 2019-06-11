@@ -29,7 +29,6 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
         "networkable_component"
     );
     if (networkable_comp == NULL) {
-        log_error("TRYING TO SERIALIZE ENTITY (%s) THAT DOESN'T HAVE NETWORKABLE COMP", entity->name);
         return NULL;
     }
 
@@ -76,8 +75,11 @@ char                                *EGB_Serializer_EncodeEntity(EGB_Entity *ent
     return payload;
 }
 
-int                                 EGB_Component_RegisterSerializer(char *name, char *(*serializer)(), void *(*unserializer)())
-{
+int EGB_Component_RegisterSerializer(
+    char *name,
+    char *(*serializer)(),
+    void *(*unserializer)()
+) {
     EGB_Components_SerializerListEl *el, *iterator;
 
     el = malloc(sizeof(EGB_Components_SerializerListEl));

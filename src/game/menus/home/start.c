@@ -33,7 +33,9 @@ void create_start_countdown()
 
 	i = 0;
 	while(i < 4) {
-		frame_id = EGB_Animation_AddKeyframe(anim, countdown_anim[i].duration, countdown_anim[i].x, countdown_anim[i].y);
+		frame_id = EGB_Animation_AddKeyframe(
+			anim, countdown_anim[i].duration, countdown_anim[i].x, countdown_anim[i].y
+		);
 		i++;
 	}
 

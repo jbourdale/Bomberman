@@ -117,7 +117,9 @@ void create_explosion_animation(EGB_Entity *explosion)
 
     i = 0;
     while (i < 9) {
-        frame_id = EGB_Animation_AddKeyframe(anim, explosion_anim[i].duration, explosion_anim[i].x, explosion_anim[i].y);
+        frame_id = EGB_Animation_AddKeyframe(
+            anim, explosion_anim[i].duration, explosion_anim[i].x, explosion_anim[i].y
+        );
         i++;
     }
 

@@ -81,7 +81,7 @@ EGB_Entity                          *EGBS_Serializer_DecodeEntity(char *raw)
 
     i = 0;
     while(serializedComponents[i] != NULL) {
-        token = strtok_r(strdup(serializedComponents[i]), ";", &raw); // retrieving the component name
+        token = strtok_r(strdup(serializedComponents[i]), ";", &raw);
 
         iterator = EGB_Components_Serializers->first;
         while(iterator != NULL && strcmp(iterator->component_name, token) != 0) {

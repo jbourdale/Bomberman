@@ -41,7 +41,9 @@ void create_range_bonus_animation(EGB_Entity *bonus)
 
 	i = 0;
 	while(i < 19) {
-		EGB_Animation_AddKeyframe(anim, range_bonus_anim[i].duration, range_bonus_anim[i].x, range_bonus_anim[i].y);
+		EGB_Animation_AddKeyframe(
+            anim, range_bonus_anim[i].duration, range_bonus_anim[i].x, range_bonus_anim[i].y
+        );
 		i++;
 	}
 
@@ -100,7 +102,10 @@ void create_add_bomb_bonus_animation(EGB_Entity *bonus)
 
     i = 0;
     while(i < 24) {
-        EGB_Animation_AddKeyframe(anim, add_bomb_bonus_anim[i].duration, add_bomb_bonus_anim[i].x, add_bomb_bonus_anim[i].y);
+        EGB_Animation_AddKeyframe(
+            anim,
+            add_bomb_bonus_anim[i].duration, add_bomb_bonus_anim[i].x, add_bomb_bonus_anim[i].y
+        );
         i++;
     }
 

@@ -91,7 +91,7 @@ disable-rules:
   # - UseBoxedExpression                    # Priority 3
   # - UseContainerLiteral                   # Priority 3
   # - UseObjectSubscripting                 # Priority 3
-  # - UselessParentheses                    # Priority 3
+  - UselessParentheses                    # Priority 3
 
 # Enable Clang Static Analyzer, and integrate results into OCLint report
 #

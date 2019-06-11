@@ -53,6 +53,7 @@ int                 EGB_Network_Handle()
             break;
         default:
             log_debug("RECV UNPARSABLE DATA");
+            break;
     }
 
     return EGB_NETWORK_SUCCESS;
@@ -134,13 +135,9 @@ int     EGB_Network_SendEvent(char *event) {
     payload[2] = '\0';
     strcat(payload, event);
 
-    log_debug("NETWORK CONFIG : %s:%d", EGB_Network_GetConfiguration().ip, EGB_Network_GetConfiguration().port);
-
     servaddr.sin_family = AF_INET;
     servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);
     servaddr.sin_addr.s_addr = inet_addr(EGB_Network_GetConfiguration().ip);
-
-    log_debug("Sending %s to %s:%d", payload, EGB_Network_GetConfiguration().ip, EGB_Network_GetConfiguration().port);
 
     return sendto(
         EGB_Network_UDPsock,

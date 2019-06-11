@@ -75,7 +75,9 @@ EGB_Entity *create_floor(int x, int y)
 
     floor = EGBS_Entity_Create("floor");
     texture_comp = EGB_Component_CreateTexture("floor.png");
-    pos_comp = EGB_Component_CreatePosition((x * 100) + 350, y * 100, EGB_Position_Background, 100, 100);
+    pos_comp = EGB_Component_CreatePosition(
+        (x * 100) + 350, y * 100, EGB_Position_Background, 100, 100
+    );
     networkable_comp = EGB_Component_CreateNetworkable();
 
     EGB_Component_AddToEntity(floor, texture_comp);
