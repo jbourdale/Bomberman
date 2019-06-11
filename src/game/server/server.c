@@ -21,12 +21,15 @@ void *run_server(void *arg) {
     log_debug("arg : %p", arg);
 
     server_sock = init_server_socket(1337);
+    if (server_sock == -1)
+        pthread_cond_signal(&SERVER_INIT_DONE_COND);
     if (server_sock < 0) {
         return NULL;
     }
     init_game();
+    start_server();
     pthread_cond_signal(&SERVER_INIT_DONE_COND);
-    while(1) {
+    while(is_server_running()) {
         request = malloc(REQUEST_MAX_LENGTH);
         memset(request, '\0', REQUEST_MAX_LENGTH);
         recvfrom(server_sock, (char *)request, REQUEST_MAX_LENGTH, MSG_WAITALL,
@@ -35,17 +38,20 @@ void *run_server(void *arg) {
         log_debug("SERVER RECIEVED : %s", request);
 
         parse_request(server_sock, request, clientaddr);
-
-        // sendto(server_sock, (const char *)request, strlen(request), 0,
-        //     (const struct sockaddr *) &clientaddr, addrlen);
     }
+    clear_players();
+    close(server_sock);
+    pthread_exit(NULL);
+    return NULL;
 }
 
 pthread_t start_server_thread()
 {
     pthread_t server_th;
 
+    log_debug("STARTING NEW SERVER");
     if(pthread_create(&server_th, NULL, run_server, NULL) == -1) {
+        log_debug("UNABLE TO CREATE THREAD");
         return (pthread_t) -1;
     }
     pthread_cond_wait(&SERVER_INIT_DONE_COND, &SERVER_INIT_DONE_MUTEX);

@@ -93,7 +93,21 @@ void create_join_btn() {
     EGB_Component_AddToEntity(btn, texture_comp);
 }
 
-void on_start_game_btn_click(EGB_Entity *btn) {
+void on_start_game_btn_click(EGB_Entity *btn) 
+{
+    EGB_Entity **players;
+    int i;
+
+    players = EGB_Entity_FindByName("player");
+    if (players == NULL)
+        return;
+
+    i = 0;
+    while (players[i] != NULL)
+        i++;
+
+    if (i < 2)
+        return; 
 
     EGB_Entity_Destroy(btn);
     EGB_Network_SendEvent("START");
@@ -108,7 +122,9 @@ void on_host_btn_click() {
     EGB_Network_Configuration config= { "127.0.0.1", 1337 };
     EGB_Network_SetConfiguration(config);
     
+    log_debug("START SERVER THREAD");
     start_server_thread();
+    log_debug("START GAME");
     start_game();
     
     start_game_btn = EGB_Entity_Create("start_game_btn");

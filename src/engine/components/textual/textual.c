@@ -22,13 +22,15 @@ EGB_Component_Textual    *EGB_Component_CreateTextual(char *text, char *font)
 
 int     EGB_Component_Textual_SetText(EGB_Component_Textual *comp, char *new_text)
 {
+    char *new = strdup(new_text);
+
     if (comp == NULL)
         return 1;
 
     if (comp->text != NULL)
         free(comp->text);
 
-    comp->text = strdup(new_text);
+    comp->text = new;
     return 0;
 }
 

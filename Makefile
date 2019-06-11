@@ -73,6 +73,7 @@ BASE_SRC =	./src/engine/resources/manager.c \
 			./src/game/server/state/wall.c \
 			./src/game/server/state/bonus.c \
 			./src/game/server/requests/join.c \
+			./src/game/server/requests/ping.c \
 			./src/game/server/requests/requests.c \
 			./src/game/server/requests/entities.c \
 

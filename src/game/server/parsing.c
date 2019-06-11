@@ -22,6 +22,8 @@ int             parse_event_requests(int sock, char *event_request, player_t *pl
         join_game(sock, player);
     } else if (strcmp(token, "START") == 0) {
         broadcast_event_to_players(sock, "START");
+    } else if (strcmp(token, "PING") == 0) {
+        ping(sock, player);
     }
     return 0;
 }

@@ -36,12 +36,17 @@ void on_join_text_input(EGB_Entity *modal, SDL_Event e)
     if (input[0] < '0' || input[0] > '9')
         return ;
 
-    textual->text = strcat(textual->text, input);
+    EGB_Component_Textual_SetText(textual, strcat(textual->text, input));
     pos->width = strlen(textual->text) * 50;
 }
 
 void on_join_start_btn_click(EGB_Entity *start_btn)
 {
+    int error = 0;
+
+    char *recvdata = malloc(1000);
+    memset(recvdata, '\0', 1000);
+
     EGB_Entity *text_input, *modal;
     EGB_Component_Textual *textual;
 
@@ -54,11 +59,31 @@ void on_join_start_btn_click(EGB_Entity *start_btn)
     EGB_Network_SetConfiguration(config);
     EGB_Network_Enable();
 
+    EGB_Network_SendEvent("PING");
+    
+    log_debug("BEFORE TIMEOUT");
+    SDL_Delay(2000);
+    log_debug("TIMEOUT POP");
+
+    log_debug("READABLE");
+    if (recvfrom(EGB_Network_GetSocket(), recvdata, 1000, MSG_DONTWAIT, NULL, NULL) == -1) {
+        log_debug("UNABLE TO READ");
+        error = 1;
+    }
+    log_debug("recvdata : %s", recvdata);
+    if (strcmp(recvdata, "PONG") != 0) {
+        log_debug("RECIEVED SOMETHING ELSE THAT PONG");
+        error = 1;
+    }
+
     EGB_Entity_Destroy(text_input);
     EGB_Entity_Destroy(modal);
     EGB_Entity_Destroy(start_btn);
 
-    start_game();
+    log_debug("ERROR : %d", error);
+
+    if (error == 0)
+        start_game();
 }
 
 void create_join_start_btn() {

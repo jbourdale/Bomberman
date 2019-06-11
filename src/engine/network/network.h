@@ -33,6 +33,7 @@ int EGB_Network_Handle();
 int EGB_Network_SendEntity(EGB_Entity *entity);
 int EGB_Network_DestroyEntity(EGB_Entity *entity);
 int EGB_Network_SendEvent(char *event);
+SOCKET EGB_Network_GetSocket();
 
 //configuration.c
 void    EGB_Network_Enable();

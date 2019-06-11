@@ -35,6 +35,7 @@ EGB_Entity *create_floor(int x, int y);
 EGB_Entity *add_player(player_t *player);
 player_t **get_players();
 int     get_nb_players();
+void clear_players();
 
 // state.c
 char *encode_state();

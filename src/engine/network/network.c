@@ -139,6 +139,8 @@ int     EGB_Network_SendEvent(char *event) {
     servaddr.sin_port = htons(EGB_Network_GetConfiguration().port);
     servaddr.sin_addr.s_addr = inet_addr(EGB_Network_GetConfiguration().ip);
 
+    log_debug("SENDING %s to %s:%d", payload, EGB_Network_GetConfiguration().ip, EGB_Network_GetConfiguration().port);
+
     return sendto(
         EGB_Network_UDPsock,
         (const char *)payload,
@@ -147,4 +149,8 @@ int     EGB_Network_SendEvent(char *event) {
         (const struct sockaddr*) &servaddr,
         sizeof(servaddr)
     );
+}
+
+SOCKET EGB_Network_GetSocket() {
+    return EGB_Network_UDPsock;
 }

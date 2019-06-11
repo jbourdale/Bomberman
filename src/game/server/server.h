@@ -15,6 +15,9 @@
 
 // init.c
 int init_server_socket(int port);
+int is_server_running();
+void stop_server();
+void start_server();
 
 // parsing.c
 int parse_event_requests(int sock, char *event_request, player_t *player);

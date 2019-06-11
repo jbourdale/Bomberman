@@ -9,6 +9,7 @@
 #include "../../../engine/engine.h"
 #include "state.h"
 #include "../requests/requests.h"
+#include "../server.h"
 
 int base_map[11][11] = {
     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
@@ -132,6 +133,7 @@ void check_game_over(int sock)
     players = EGBS_Entity_FindByName("player");
     if (players == NULL || *players == NULL) {
         broadcast_event_to_players(sock, "END");
+        stop_server();
         return ;
     }
 
@@ -145,5 +147,6 @@ void check_game_over(int sock)
     if (i < 2)
     {
         broadcast_event_to_players(sock, "END");
+        stop_server();
     }
 }

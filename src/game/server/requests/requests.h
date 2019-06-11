@@ -21,4 +21,7 @@ int send_state(int sock, player_t *player);
 // entities.c
 void destroy_entity(int sock, EGB_Entity *entity);
 
+// ping.c
+int             ping(int sock, player_t *player);
+
 #endif
